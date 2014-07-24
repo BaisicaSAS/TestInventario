@@ -1,0 +1,54 @@
+Tipdoc:
+    type: entity
+    table: tipdoc
+    uniqueConstraints:
+        txTipDoc_UNIQUE:
+            columns:
+                - txTipDoc
+    id:
+        idtipdoc:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idTipDoc
+            generator:
+                strategy: IDENTITY
+    fields:
+        txtipdoc:
+            type: string
+            nullable: false
+            length: 7
+            fixed: false
+            comment: ''
+            column: txTipDoc
+        txnomdoc:
+            type: string
+            nullable: false
+            length: 50
+            fixed: false
+            comment: ''
+            column: txNomDoc
+        inafecta:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: "0: Suma\n1: Resta\n2: Proyectado Salida\n3:Proyectado ingreso\n4: Segun signo \n5: Neutro\n"
+            default: '0'
+            column: inAfecta
+        intipter:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: '0: Cliente 1: Proveedor'
+            default: '0'
+            column: inTipTer
+        txobservplantilla:
+            type: string
+            nullable: true
+            length: 45
+            fixed: false
+            comment: 'La observación que va en el documento por defecto.'
+            column: txObservPlantilla
+    lifecycleCallbacks: {  }

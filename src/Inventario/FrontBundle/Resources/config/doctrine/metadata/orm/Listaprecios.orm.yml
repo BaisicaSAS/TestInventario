@@ -1,0 +1,29 @@
+Listaprecios:
+    type: entity
+    table: listaprecios
+    id:
+        idlistaprecios:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idListaPrecios
+            generator:
+                strategy: IDENTITY
+    fields:
+        txnomlista:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+            column: txNomLista
+        inactiva:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: '0: Inactiva - 1: Activa'
+            default: '1'
+            column: inActiva
+    lifecycleCallbacks: {  }

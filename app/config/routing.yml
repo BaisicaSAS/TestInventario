@@ -1,0 +1,4 @@
+inventario_front:
+    resource: "@InventarioFrontBundle/Resources/config/routing.yml"
+    prefix:   /
+

@@ -1,0 +1,73 @@
+Estadisticasmes:
+    type: entity
+    table: estadisticasmes
+    indexes:
+        fk_Estadisticas_Terceros1_idx:
+            columns:
+                - idTercero
+        fk_Estadisticas_Productos1_idx:
+            columns:
+                - Productos_idProducto
+    id:
+        idestadistica:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idEstadistica
+            generator:
+                strategy: IDENTITY
+    fields:
+        fefechaini:
+            type: datetime
+            nullable: false
+            comment: ''
+            column: feFechaIni
+        fefechafin:
+            type: datetime
+            nullable: false
+            comment: ''
+            column: feFechaFin
+        incantidad:
+            type: string
+            nullable: true
+            length: 45
+            fixed: false
+            comment: ''
+            column: inCantidad
+        dbvalor:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            comment: ''
+            default: '0'
+            column: dbValor
+        intipotrx:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: '1: compra 2: venta'
+            default: '2'
+            column: inTipoTrx
+    manyToOne:
+        idtercero:
+            targetEntity: Terceros
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idTercero:
+                    referencedColumnName: idTercero
+            orphanRemoval: false
+        productosproducto:
+            targetEntity: Productos
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                Productos_idProducto:
+                    referencedColumnName: idProducto
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

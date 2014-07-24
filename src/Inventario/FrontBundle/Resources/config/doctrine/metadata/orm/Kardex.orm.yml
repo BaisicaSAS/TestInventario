@@ -1,0 +1,50 @@
+Kardex:
+    type: entity
+    table: kardex
+    indexes:
+        fk_Kardex_Productos1_idx:
+            columns:
+                - idProducto
+    id:
+        idkardex:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idKardex
+            generator:
+                strategy: IDENTITY
+    fields:
+        fefecha:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+            column: feFecha
+        intipotrx:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: '1: compra 2: venta'
+            default: '1'
+            column: inTipoTrx
+        itcantidad:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            default: '0'
+            column: itCantidad
+    manyToOne:
+        idproducto:
+            targetEntity: Productos
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idProducto:
+                    referencedColumnName: idProducto
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

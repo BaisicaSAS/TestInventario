@@ -1,0 +1,48 @@
+Valoresproductos:
+    type: entity
+    table: valoresproductos
+    indexes:
+        fk_ValoresProductos_Productos1_idx:
+            columns:
+                - idProducto
+    id:
+        idvaloresproductos:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idValoresProductos
+            generator:
+                strategy: IDENTITY
+    fields:
+        fefecha:
+            type: datetime
+            nullable: false
+            comment: ''
+            column: feFecha
+        dbpromventa:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            comment: ''
+            column: dbPromVenta
+        dbpromcompra:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            comment: ''
+            column: dbPromCompra
+    manyToOne:
+        idproducto:
+            targetEntity: Productos
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idProducto:
+                    referencedColumnName: idProducto
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

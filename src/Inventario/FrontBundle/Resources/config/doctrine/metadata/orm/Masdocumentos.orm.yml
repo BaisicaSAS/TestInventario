@@ -1,0 +1,107 @@
+Masdocumentos:
+    type: entity
+    table: masdocumentos
+    indexes:
+        fk_MasDocumentos_TipDoc_idx:
+            columns:
+                - inidTipDoc
+        fk_MasDocumentos_Terceros1_idx:
+            columns:
+                - inidTercero
+        fk_MasDocumentos_Vendedores1_idx:
+            columns:
+                - Vendedores_idVendedor
+    id:
+        idmasdocumento:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idMasDocumento
+            generator:
+                strategy: IDENTITY
+    fields:
+        txnumdoc:
+            type: string
+            nullable: false
+            length: 20
+            fixed: false
+            comment: ''
+            column: txNumDoc
+        fefecha:
+            type: datetime
+            nullable: false
+            comment: ''
+            column: feFecha
+        fevencimiento:
+            type: datetime
+            nullable: false
+            comment: 'Vencimiento de la factura ??'
+            column: feVencimiento
+        txobservaciones:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: 'Heredada del tipo de documento'
+            column: txObservaciones
+        txcondpago:
+            type: string
+            nullable: true
+            length: 100
+            fixed: false
+            comment: 'Se arma "por defecto" con condiciones de pago del tercero'
+            column: txCondPago
+        dbvalneto:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            comment: ''
+            default: '0'
+            column: dbValNeto
+        dbvaliva:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            comment: ''
+            default: '0'
+            column: dbValIva
+        dbtotal:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            comment: ''
+            default: '0'
+            column: dbTotal
+    manyToOne:
+        inidtipdoc:
+            targetEntity: Tipdoc
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                inidTipDoc:
+                    referencedColumnName: idTipDoc
+            orphanRemoval: false
+        inidtercero:
+            targetEntity: Terceros
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                inidTercero:
+                    referencedColumnName: idTercero
+            orphanRemoval: false
+        vendedoresvendedor:
+            targetEntity: Vendedores
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                Vendedores_idVendedor:
+                    referencedColumnName: idVendedor
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

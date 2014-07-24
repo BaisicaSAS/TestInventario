@@ -1,9 +1,8 @@
-# This file is auto-generated during the composer install
 parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
     database_port: null
-    database_name: symfony
+    database_name: Inventario
     database_user: root
     database_password: null
     mailer_transport: smtp
@@ -11,4 +10,5 @@ parameters:
     mailer_user: null
     mailer_password: null
     locale: en
-    secret: ThisTokenIsNotSoSecretChangeIt
+    secret: 1nv3n74r10r3pu35705m4r
+    database_path: null

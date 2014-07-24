@@ -1,0 +1,63 @@
+Detdocumentos:
+    type: entity
+    table: detdocumentos
+    indexes:
+        fk_DetDocumentos_MasDocumentos1_idx:
+            columns:
+                - inidMasDocumento
+        fk_DetDocumentos_Productos1_idx:
+            columns:
+                - Productos_idProducto
+    id:
+        iddetdocumentos:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idDetDocumentos
+            generator:
+                strategy: IDENTITY
+    fields:
+        incantidad:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            default: '0'
+            column: inCantidad
+        dbvalunitario:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            comment: ''
+            default: '0'
+            column: dbValUnitario
+        dbvaltotal:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            comment: ''
+            column: dbValtotal
+    manyToOne:
+        inidmasdocumento:
+            targetEntity: Masdocumentos
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                inidMasDocumento:
+                    referencedColumnName: idMasDocumento
+            orphanRemoval: false
+        productosproducto:
+            targetEntity: Productos
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                Productos_idProducto:
+                    referencedColumnName: idProducto
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,36 @@
+Clasifproductos:
+    type: entity
+    table: clasifproductos
+    indexes:
+        fk_ClasifProductos_ClasifProductos1_idx:
+            columns:
+                - inPadre
+    id:
+        idclasifproductos:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idClasifProductos
+            generator:
+                strategy: IDENTITY
+    fields:
+        txdescripcion:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            comment: ''
+            column: txDescripcion
+    manyToOne:
+        inpadre:
+            targetEntity: Clasifproductos
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                inPadre:
+                    referencedColumnName: idClasifProductos
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,29 @@
+Vendedores:
+    type: entity
+    table: vendedores
+    id:
+        idvendedor:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idVendedor
+            generator:
+                strategy: IDENTITY
+    fields:
+        txdocvendedor:
+            type: string
+            nullable: true
+            length: 15
+            fixed: false
+            comment: ''
+            column: txDocVendedor
+        txnomvendedor:
+            type: string
+            nullable: true
+            length: 50
+            fixed: false
+            comment: ''
+            column: txNomVendedor
+    lifecycleCallbacks: {  }

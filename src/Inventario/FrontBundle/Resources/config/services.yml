@@ -1,0 +1,7 @@
+parameters:
+#    inventario_front.example.class: Inventario\FrontBundle\Example
+
+services:
+#    inventario_front.example:
+#        class: %inventario_front.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,56 @@
+Detlistaprecios:
+    type: entity
+    table: detlistaprecios
+    indexes:
+        fk_DetListaPrecios_ListaPrecios1_idx:
+            columns:
+                - ListaPrecios_idListaPrecios
+        fk_DetListaPrecios_Productos1_idx:
+            columns:
+                - Productos_idProducto
+    id:
+        iddetlistaprecioscol:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idDetListaPrecioscol
+            generator:
+                strategy: IDENTITY
+    fields:
+        dbvalor:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            comment: ''
+            default: '0'
+            column: dbValor
+        tximagen:
+            type: string
+            nullable: true
+            length: 150
+            fixed: false
+            comment: ''
+            column: txImagen
+    manyToOne:
+        listaprecioslistaprecios:
+            targetEntity: Listaprecios
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ListaPrecios_idListaPrecios:
+                    referencedColumnName: idListaPrecios
+            orphanRemoval: false
+        productosproducto:
+            targetEntity: Productos
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                Productos_idProducto:
+                    referencedColumnName: idProducto
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

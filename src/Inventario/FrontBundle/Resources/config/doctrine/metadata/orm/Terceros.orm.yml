@@ -1,0 +1,95 @@
+Terceros:
+    type: entity
+    table: terceros
+    indexes:
+        fk_Terceros_ListaPrecios1_idx:
+            columns:
+                - idListaPrecios
+        fk_Terceros_DeptoCiudades1_idx:
+            columns:
+                - txDivipola
+    id:
+        idtercero:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idTercero
+            generator:
+                strategy: IDENTITY
+    fields:
+        txtipdoc:
+            type: string
+            nullable: false
+            length: 5
+            fixed: false
+            comment: 'Crear un dominio para esto'
+            column: txTipDoc
+        txdocumento:
+            type: string
+            nullable: false
+            length: 15
+            fixed: false
+            comment: ''
+            column: txDocumento
+        txnomtercero:
+            type: string
+            nullable: false
+            length: 100
+            fixed: false
+            comment: ''
+            column: txNomTercero
+        intipoter:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: '0: Cliente - 1: Proveedor - 2: Ambos'
+            default: '0'
+            column: inTipoTer
+        txdescuento:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: 'Descuento en % que se aplica tanto para compras como para ventas'
+            column: txDescuento
+        txdiasdescuento:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: txDiasDescuento
+        txdireccion:
+            type: string
+            nullable: true
+            length: 150
+            fixed: false
+            comment: ''
+            column: txDireccion
+        txtelefonos:
+            type: string
+            nullable: true
+            length: 80
+            fixed: false
+            comment: 'Separados por coma'
+            column: txTelefonos
+    manyToOne:
+        txdivipola:
+            targetEntity: Deptociudades
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                txDivipola:
+                    referencedColumnName: txDivipola
+            orphanRemoval: false
+        idlistaprecios:
+            targetEntity: Listaprecios
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idListaPrecios:
+                    referencedColumnName: idListaPrecios
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

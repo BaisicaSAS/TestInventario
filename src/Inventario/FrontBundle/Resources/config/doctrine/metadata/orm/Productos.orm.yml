@@ -1,0 +1,61 @@
+Productos:
+    type: entity
+    table: productos
+    indexes:
+        fk_Productos_ClasifProductos1_idx:
+            columns:
+                - idClasifProductos
+    uniqueConstraints:
+        txRefInterna_UNIQUE:
+            columns:
+                - txRefInterna
+    id:
+        idproducto:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: idProducto
+            generator:
+                strategy: IDENTITY
+    fields:
+        txrefinterna:
+            type: string
+            nullable: false
+            length: 50
+            fixed: false
+            comment: ''
+            column: txRefInterna
+        txrefexterna:
+            type: string
+            nullable: true
+            length: 50
+            fixed: false
+            comment: ''
+            column: txRefExterna
+        txnomproducto:
+            type: string
+            nullable: false
+            length: 100
+            fixed: false
+            comment: ''
+            column: txNomProducto
+        txdescripcion:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: 'La descripción larga de la aplicaicion del producto.'
+            column: txDescripcion
+    manyToOne:
+        idclasifproductos:
+            targetEntity: Clasifproductos
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idClasifProductos:
+                    referencedColumnName: idClasifProductos
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

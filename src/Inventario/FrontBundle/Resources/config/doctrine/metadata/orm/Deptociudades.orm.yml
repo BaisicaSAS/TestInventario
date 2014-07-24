@@ -1,0 +1,30 @@
+Deptociudades:
+    type: entity
+    table: deptociudades
+    id:
+        txdivipola:
+            type: string
+            nullable: false
+            length: 15
+            fixed: false
+            comment: ''
+            id: true
+            column: txDivipola
+            generator:
+                strategy: IDENTITY
+    fields:
+        txnombre:
+            type: string
+            nullable: false
+            length: 150
+            fixed: false
+            comment: ''
+            column: txNombre
+        idpadre:
+            type: string
+            nullable: true
+            length: 15
+            fixed: false
+            comment: 'Los departamentos no poseen Padre'
+            column: idPadre
+    lifecycleCallbacks: {  }
