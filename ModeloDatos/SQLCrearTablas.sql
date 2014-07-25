@@ -279,6 +279,17 @@ ENGINE = InnoDB;
 ALTER TABLE `TipDoc` 
 ADD UNIQUE INDEX `txTipDoc_UNIQUE` (`txTipDoc` ASC) ;
 
+ALTER TABLE `ClasifProductos` ADD COLUMN `inTipo` INT NOT NULL DEFAULT 0 COMMENT '0: Clasificacion de aplicación \n1: Clasificacion Marca Linea Modelo'  AFTER `txDescripcion` ;
+
+ALTER TABLE `Productos` ADD COLUMN `idMarcaProductos` INT NOT NULL AFTER `idClasifProductos` , 
+  ADD CONSTRAINT `fk_Productos_ClasifProductos2`
+  FOREIGN KEY (`idMarcaProductos` )
+  REFERENCES `ClasifProductos` (`idClasifProductos` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, ADD INDEX `fk_Productos_ClasifProductos2_idx` (`idMarcaProductos` ASC) ;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
