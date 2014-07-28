@@ -23,6 +23,13 @@ Clasifproductos:
             fixed: false
             comment: ''
             column: txDescripcion
+        intipo:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: "0: Clasificacion de aplicación \n1: Clasificacion Marca Linea Modelo"
+            default: '0'
+            column: inTipo
     manyToOne:
         inpadre:
             targetEntity: Clasifproductos

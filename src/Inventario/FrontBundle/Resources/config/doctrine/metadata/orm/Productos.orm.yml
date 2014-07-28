@@ -5,6 +5,9 @@ Productos:
         fk_Productos_ClasifProductos1_idx:
             columns:
                 - idClasifProductos
+        fk_Productos_ClasifProductos2_idx:
+            columns:
+                - idMarcaProductos
     uniqueConstraints:
         txRefInterna_UNIQUE:
             columns:
@@ -48,6 +51,12 @@ Productos:
             fixed: false
             comment: 'La descripción larga de la aplicaicion del producto.'
             column: txDescripcion
+        inactivo:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: '1: activo - 0: Inactivo'
+            column: inActivo
     manyToOne:
         idclasifproductos:
             targetEntity: Clasifproductos
@@ -56,6 +65,15 @@ Productos:
             inversedBy: null
             joinColumns:
                 idClasifProductos:
+                    referencedColumnName: idClasifProductos
+            orphanRemoval: false
+        idmarcaproductos:
+            targetEntity: Clasifproductos
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idMarcaProductos:
                     referencedColumnName: idClasifProductos
             orphanRemoval: false
     lifecycleCallbacks: {  }

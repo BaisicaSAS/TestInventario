@@ -78,6 +78,20 @@ class Terceros
     private $txtelefonos;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="inActivo", type="integer", nullable=false)
+     */
+    private $inactivo = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="inTipoDesc", type="integer", nullable=false)
+     */
+    private $intipodesc = '0';
+
+    /**
      * @var \Deptociudades
      *
      * @ORM\ManyToOne(targetEntity="Deptociudades")
@@ -291,6 +305,52 @@ class Terceros
     public function getTxtelefonos()
     {
         return $this->txtelefonos;
+    }
+
+    /**
+     * Set inactivo
+     *
+     * @param integer $inactivo
+     * @return Terceros
+     */
+    public function setInactivo($inactivo)
+    {
+        $this->inactivo = $inactivo;
+
+        return $this;
+    }
+
+    /**
+     * Get inactivo
+     *
+     * @return integer 
+     */
+    public function getInactivo()
+    {
+        return $this->inactivo;
+    }
+
+    /**
+     * Set intipodesc
+     *
+     * @param integer $intipodesc
+     * @return Terceros
+     */
+    public function setIntipodesc($intipodesc)
+    {
+        $this->intipodesc = $intipodesc;
+
+        return $this;
+    }
+
+    /**
+     * Get intipodesc
+     *
+     * @return integer 
+     */
+    public function getIntipodesc()
+    {
+        return $this->intipodesc;
     }
 
     /**

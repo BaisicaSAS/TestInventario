@@ -29,6 +29,13 @@ class Clasifproductos
     private $txdescripcion;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="inTipo", type="integer", nullable=false)
+     */
+    private $intipo = '0';
+
+    /**
      * @var \Clasifproductos
      *
      * @ORM\ManyToOne(targetEntity="Clasifproductos")
@@ -71,6 +78,29 @@ class Clasifproductos
     public function getTxdescripcion()
     {
         return $this->txdescripcion;
+    }
+
+    /**
+     * Set intipo
+     *
+     * @param integer $intipo
+     * @return Clasifproductos
+     */
+    public function setIntipo($intipo)
+    {
+        $this->intipo = $intipo;
+
+        return $this;
+    }
+
+    /**
+     * Get intipo
+     *
+     * @return integer 
+     */
+    public function getIntipo()
+    {
+        return $this->intipo;
     }
 
     /**

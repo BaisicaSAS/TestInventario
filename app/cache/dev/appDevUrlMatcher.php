@@ -140,6 +140,19 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\DefaultController::indexAction',  '_route' => 'inventario_front_homepage',);
         }
 
+        if (0 === strpos($pathinfo, '/terceros')) {
+            // listTerceros
+            if ($pathinfo === '/terceros') {
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\DefaultController::listTercerosAction',  '_route' => 'listTerceros',);
+            }
+
+            // newTercero
+            if ($pathinfo === '/terceros') {
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\DefaultController::newTerceroAction',  '_route' => 'newTercero',);
+            }
+
+        }
+
         // _welcome
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {

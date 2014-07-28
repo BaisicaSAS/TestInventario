@@ -73,6 +73,20 @@ Terceros:
             fixed: false
             comment: 'Separados por coma'
             column: txTelefonos
+        inactivo:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: '1: activo - 0: inactivo'
+            default: '1'
+            column: inActivo
+        intipodesc:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: '0: normal - 1: incluido - 2: pie factura'
+            default: '0'
+            column: inTipoDesc
     manyToOne:
         txdivipola:
             targetEntity: Deptociudades

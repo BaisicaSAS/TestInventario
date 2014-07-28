@@ -1,3 +1,13 @@
 inventario_front_homepage:
     pattern:  /inventario
     defaults: { _controller: InventarioFrontBundle:Default:index }
+
+
+listTerceros:
+    pattern:  /terceros
+    defaults: { _controller: InventarioFrontBundle:Default:listTerceros }
+
+
+newTercero:
+    pattern:  /terceros
+    defaults: { _controller: InventarioFrontBundle:Default:newTercero }

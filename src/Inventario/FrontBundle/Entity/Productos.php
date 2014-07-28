@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Productos
  *
- * @ORM\Table(name="productos", uniqueConstraints={@ORM\UniqueConstraint(name="txRefInterna_UNIQUE", columns={"txRefInterna"})}, indexes={@ORM\Index(name="fk_Productos_ClasifProductos1_idx", columns={"idClasifProductos"})})
+ * @ORM\Table(name="productos", uniqueConstraints={@ORM\UniqueConstraint(name="txRefInterna_UNIQUE", columns={"txRefInterna"})}, indexes={@ORM\Index(name="fk_Productos_ClasifProductos1_idx", columns={"idClasifProductos"}), @ORM\Index(name="fk_Productos_ClasifProductos2_idx", columns={"idMarcaProductos"})})
  * @ORM\Entity
  */
 class Productos
@@ -50,6 +50,13 @@ class Productos
     private $txdescripcion;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="inActivo", type="integer", nullable=false)
+     */
+    private $inactivo;
+
+    /**
      * @var \Clasifproductos
      *
      * @ORM\ManyToOne(targetEntity="Clasifproductos")
@@ -58,6 +65,16 @@ class Productos
      * })
      */
     private $idclasifproductos;
+
+    /**
+     * @var \Clasifproductos
+     *
+     * @ORM\ManyToOne(targetEntity="Clasifproductos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idMarcaProductos", referencedColumnName="idClasifProductos")
+     * })
+     */
+    private $idmarcaproductos;
 
 
 
@@ -164,6 +181,29 @@ class Productos
     }
 
     /**
+     * Set inactivo
+     *
+     * @param integer $inactivo
+     * @return Productos
+     */
+    public function setInactivo($inactivo)
+    {
+        $this->inactivo = $inactivo;
+
+        return $this;
+    }
+
+    /**
+     * Get inactivo
+     *
+     * @return integer 
+     */
+    public function getInactivo()
+    {
+        return $this->inactivo;
+    }
+
+    /**
      * Set idclasifproductos
      *
      * @param \Inventario\FrontBundle\Entity\Clasifproductos $idclasifproductos
@@ -184,5 +224,28 @@ class Productos
     public function getIdclasifproductos()
     {
         return $this->idclasifproductos;
+    }
+
+    /**
+     * Set idmarcaproductos
+     *
+     * @param \Inventario\FrontBundle\Entity\Clasifproductos $idmarcaproductos
+     * @return Productos
+     */
+    public function setIdmarcaproductos(\Inventario\FrontBundle\Entity\Clasifproductos $idmarcaproductos = null)
+    {
+        $this->idmarcaproductos = $idmarcaproductos;
+
+        return $this;
+    }
+
+    /**
+     * Get idmarcaproductos
+     *
+     * @return \Inventario\FrontBundle\Entity\Clasifproductos 
+     */
+    public function getIdmarcaproductos()
+    {
+        return $this->idmarcaproductos;
     }
 }

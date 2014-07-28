@@ -290,6 +290,11 @@ ALTER TABLE `Productos` ADD COLUMN `idMarcaProductos` INT NOT NULL AFTER `idClas
 , ADD INDEX `fk_Productos_ClasifProductos2_idx` (`idMarcaProductos` ASC) ;
 
 
+ALTER TABLE `Productos` ADD COLUMN `inActivo` INT NOT NULL DEFAULT 1 COMMENT '1: activo - 0: Inactivo'  AFTER `idMarcaProductos` ;
+
+
+ALTER TABLE `Terceros` ADD COLUMN `inActivo` INT NOT NULL DEFAULT 1 COMMENT '1: activo - 0: inactivo'  AFTER `txDivipola` , ADD COLUMN `inTipoDesc` INT NOT NULL DEFAULT 0 COMMENT '0: normal - 1: incluido - 2: pie factura'  AFTER `inActivo` ;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
