@@ -28,57 +28,74 @@ class __TwigTemplate_9daa3cde6d845399dbb2e5f8c9f3e69d877ecfec12edc05763b6afa9238
     public function block_body($context, array $blocks = array())
     {
         // line 4
-        echo "  <tr>
-    <td>Tipo Doc</td>
-    <td>Documento</td>
-    <td>Razón Social</td>
-    <td>Cliente/Proveedor</td>
-    <td>Descuento</td>
-    <td>Dirección</td>
-    <td>Teléfonos</td>
-    <td>Activo</td>
- </tr>
- ";
-        // line 14
+        echo "
+    <div id=\"menubar\"> 
+        <ul id=\"menu\">
+          <!-- put class=\"selected\" in the li tag for the selected page - to highlight which page you're on -->
+          <li class=\"selected\"><a href=\"";
+        // line 8
+        echo $this->env->getExtension('routing')->getPath("listTerceros");
+        echo "\">Lista de terceros</a></li>
+          <li><a href=\"";
+        // line 9
+        echo $this->env->getExtension('routing')->getPath("newTerceros");
+        echo "\">Crear tercero</a></li>
+        </ul>
+    </div>    
+    
+    <table>
+    <tr>
+        <td>Tipo Doc</td>
+        <td>Documento</td>
+        <td>Razón Social</td>
+        <td>Cliente/Proveedor</td>
+        <td>Descuento</td>
+        <td>Dirección</td>
+        <td>Teléfonos</td>
+        <td>Activo</td>
+     </tr>
+
+    ";
+        // line 25
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["Terceros"]) ? $context["Terceros"] : $this->getContext($context, "Terceros")));
         foreach ($context['_seq'] as $context["_key"] => $context["terceros"]) {
-            // line 15
+            // line 26
             echo "     <tr>
         <td> ";
-            // line 16
+            // line 27
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["terceros"]) ? $context["terceros"] : $this->getContext($context, "terceros")), "txtipdoc"), "html", null, true);
             echo " </td>
         <td> ";
-            // line 17
+            // line 28
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["terceros"]) ? $context["terceros"] : $this->getContext($context, "terceros")), "txdocumento"), "html", null, true);
             echo " </td>
         <td> ";
-            // line 18
+            // line 29
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["terceros"]) ? $context["terceros"] : $this->getContext($context, "terceros")), "txnomtercero"), "html", null, true);
             echo " </td>
         <td> ";
-            // line 19
+            // line 30
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["terceros"]) ? $context["terceros"] : $this->getContext($context, "terceros")), "intipoter"), "html", null, true);
             echo " </td>
         <td> ";
-            // line 20
+            // line 31
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["terceros"]) ? $context["terceros"] : $this->getContext($context, "terceros")), "txdescuento"), "html", null, true);
-            echo " ";
+            echo "% ";
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["terceros"]) ? $context["terceros"] : $this->getContext($context, "terceros")), "txdiasdescuento"), "html", null, true);
-            echo " ";
+            echo " dias ";
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["terceros"]) ? $context["terceros"] : $this->getContext($context, "terceros")), "intipodesc"), "html", null, true);
             echo " </td>
         <td> ";
-            // line 21
+            // line 32
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["terceros"]) ? $context["terceros"] : $this->getContext($context, "terceros")), "txdireccion"), "html", null, true);
             echo " </td>
         <td> ";
-            // line 22
+            // line 33
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["terceros"]) ? $context["terceros"] : $this->getContext($context, "terceros")), "txtelefonos"), "html", null, true);
             echo " </td>
         <td> ";
-            // line 23
+            // line 34
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["terceros"]) ? $context["terceros"] : $this->getContext($context, "terceros")), "inactivo"), "html", null, true);
             echo " </td>
      </tr>
@@ -87,8 +104,9 @@ class __TwigTemplate_9daa3cde6d845399dbb2e5f8c9f3e69d877ecfec12edc05763b6afa9238
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['terceros'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 25
+        // line 36
         echo "    
+    </table>
 ";
     }
 
@@ -104,6 +122,6 @@ class __TwigTemplate_9daa3cde6d845399dbb2e5f8c9f3e69d877ecfec12edc05763b6afa9238
 
     public function getDebugInfo()
     {
-        return array (  91 => 25,  82 => 23,  78 => 22,  74 => 21,  66 => 20,  62 => 19,  58 => 18,  54 => 17,  50 => 16,  47 => 15,  43 => 14,  31 => 4,  28 => 3,);
+        return array (  108 => 36,  99 => 34,  95 => 33,  91 => 32,  83 => 31,  79 => 30,  75 => 29,  71 => 28,  67 => 27,  64 => 26,  60 => 25,  41 => 9,  37 => 8,  31 => 4,  28 => 3,);
     }
 }

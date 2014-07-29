@@ -4,10 +4,10 @@ inventario_front_homepage:
 
 
 listTerceros:
-    pattern:  /terceros
+    pattern:  /listterceros
     defaults: { _controller: InventarioFrontBundle:Default:listTerceros }
 
 
-newTercero:
-    pattern:  /terceros
-    defaults: { _controller: InventarioFrontBundle:Default:newTercero }
+newTerceros:
+    pattern:  /newterceros
+    defaults: { _controller: InventarioFrontBundle:Default:newTerceros }

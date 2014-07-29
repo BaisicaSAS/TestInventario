@@ -98,7 +98,7 @@ ol li
   height: 170px;}
 
 #logo
-{ width: 860px;
+{ width: 920px;
   position: relative;
   height: 134px;}
 
@@ -108,7 +108,7 @@ ol li
 #logo h1
 { padding: 24px 0 0 0;
   margin: 0;
-  color: #FFF;}
+  color: #CC9E52;}
 
 #logo h2
 { font-size: 120%;
@@ -117,7 +117,7 @@ ol li
 
 #logo h1, #logo h1 a, #logo h1 a:hover 
 { padding: 22px 0 0 0;
-  color: #FFF;
+  color: #CC9E52;
   text-decoration: none;}
 
 #logo h1 a .logo_colour
@@ -128,7 +128,7 @@ ol li
 
 #menubar
 { height: 24px;
-  width: 900px;} 
+  width: 920px;} 
 
 ul#menu
 { float: right;
@@ -160,7 +160,7 @@ ul#menu li a:hover
 { color: #B60000;}
 
 #site_content
-{ width: 858px;
+{ width: 920px;
   overflow: hidden;
   margin: 0 auto 0 auto;
   padding: 10px 20px 20px 20px;
@@ -169,11 +169,11 @@ ul#menu li a:hover
 
 .sidebar
 { float: right;
-  width: 190px;
+  width: 0px;
   padding: 0 15px 20px 15px;}
 
 .sidebar ul
-{ width: 178px; 
+{ width: 0px; 
   padding: 4px 0 0 0; 
   margin: 4px 0 30px 0;}
 
@@ -192,11 +192,11 @@ ul#menu li a:hover
 
 #content
 { text-align: left;
-  width: 613px;
+  width: 920px;
   padding: 0;}
 
 #footer
-{ width: 916px;
+{ width: 920px;
   font-family: sans-serif;
   font-size: 90%;
   height: 28px;
@@ -232,7 +232,7 @@ ul#menu li a:hover
 
 .form_settings span
 { float: left; 
-  width: 200px; 
+  width: 300px; 
   text-align: left;}
   
 .form_settings input, .form_settings textarea
@@ -276,11 +276,11 @@ ul#menu li a:hover
   margin: 0 0 20px 0;}
   
 table
-{ margin: 10px 0 30px 0;}
+{ margin: 10px 0 10px 0;}
 
 table tr th, table tr td
 { background: #3B3B3B;
-  color: #FFF;
+  color: #CC9E52;
   padding: 7px 4px;
   text-align: left;}
   

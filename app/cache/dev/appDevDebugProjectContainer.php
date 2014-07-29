@@ -114,6 +114,7 @@ class appDevDebugProjectContainer extends Container
             'fragment.renderer.hinclude' => 'getFragment_Renderer_HincludeService',
             'fragment.renderer.inline' => 'getFragment_Renderer_InlineService',
             'http_kernel' => 'getHttpKernelService',
+            'inventario_front.tipotercero' => 'getInventarioFront_TipoterceroService',
             'kernel' => 'getKernelService',
             'locale_listener' => 'getLocaleListenerService',
             'logger' => 'getLoggerService',
@@ -1354,6 +1355,19 @@ class appDevDebugProjectContainer extends Container
     protected function getHttpKernelService()
     {
         return $this->services['http_kernel'] = new \Symfony\Component\HttpKernel\DependencyInjection\ContainerAwareHttpKernel($this->get('debug.event_dispatcher'), $this, $this->get('debug.controller_resolver'), $this->get('request_stack'));
+    }
+
+    /**
+     * Gets the 'inventario_front.tipotercero' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Inventario\FrontBundle\Form\TipoterceroType A Inventario\FrontBundle\Form\TipoterceroType instance.
+     */
+    protected function getInventarioFront_TipoterceroService()
+    {
+        return $this->services['inventario_front.tipotercero'] = new \Inventario\FrontBundle\Form\TipoterceroType(array(0 => 'Cliente', 1 => 'Proveedor', 2 => 'Ambos'));
     }
 
     /**
@@ -3459,6 +3473,15 @@ class appDevDebugProjectContainer extends Container
             'locale' => 'en',
             'secret' => '1nv3n74r10r3pu35705m4r',
             'database_path' => NULL,
+            'tipotercero' => array(
+                0 => 'Cliente',
+                1 => 'Proveedor',
+                2 => 'Ambos',
+            ),
+            'estadotercero' => array(
+                0 => 'Inactivo',
+                1 => 'Activo',
+            ),
             'controller_resolver.class' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver',
             'controller_name_converter.class' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerNameParser',
             'response_listener.class' => 'Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener',
@@ -3873,8 +3896,8 @@ class appDevDebugProjectContainer extends Container
             'assetic.variables' => array(
 
             ),
-            'assetic.java.bin' => 'C:\\Windows\\system32\\java.EXE',
-            'assetic.node.bin' => 'C:\\Program Files\\nodejs\\\\node.EXE',
+            'assetic.java.bin' => 'C:\\Program Files (x86)\\Java\\jdk1.7.0_40\\bin\\java.EXE',
+            'assetic.node.bin' => '/usr/bin/node',
             'assetic.ruby.bin' => '/usr/bin/ruby',
             'assetic.sass.bin' => '/usr/bin/sass',
             'assetic.filter.cssrewrite.class' => 'Assetic\\Filter\\CssRewriteFilter',

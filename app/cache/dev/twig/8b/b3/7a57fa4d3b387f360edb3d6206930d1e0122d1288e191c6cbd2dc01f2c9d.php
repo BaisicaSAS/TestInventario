@@ -80,7 +80,10 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
         // line 15
         echo "      <div id=\"logo\">
         <!-- class=\"logo_colour\", allows you to change the colour of the text -->
-        <h1><a href=\"/index\">Distribuidora de repuestos <span class=\"logo_colour\">MAR</span></a></h1>
+        <h1><a href=\" ";
+        // line 17
+        echo $this->env->getExtension('routing')->getPath("inventario_front_homepage");
+        echo " \">Distribuidora de repuestos <span class=\"logo_colour\">MAR</span></a></h1>
         <h2>Prueba de inventario.</h2>
       </div>
       <div id=\"menubar\"> ";
@@ -149,6 +152,6 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
 
     public function getDebugInfo()
     {
-        return array (  132 => 35,  129 => 34,  122 => 28,  118 => 27,  114 => 26,  110 => 25,  106 => 24,  102 => 23,  98 => 21,  95 => 20,  90 => 30,  88 => 20,  81 => 15,  78 => 14,  72 => 40,  70 => 34,  65 => 31,  62 => 14,  59 => 13,  53 => 5,  46 => 42,  44 => 13,  37 => 9,  30 => 5,  24 => 1,);
+        return array (  135 => 35,  132 => 34,  125 => 28,  121 => 27,  117 => 26,  113 => 25,  109 => 24,  105 => 23,  101 => 21,  98 => 20,  93 => 30,  91 => 20,  85 => 17,  81 => 15,  78 => 14,  72 => 40,  70 => 34,  65 => 31,  62 => 14,  59 => 13,  53 => 5,  46 => 42,  44 => 13,  37 => 9,  30 => 5,  24 => 1,);
     }
 }
