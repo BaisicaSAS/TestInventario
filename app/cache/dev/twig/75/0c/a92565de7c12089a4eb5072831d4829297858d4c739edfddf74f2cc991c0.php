@@ -39,7 +39,7 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
         </div>    
     </div>    
 
-    <h1>Clasifproductos list</h1>
+    <h1>Clases de productos</h1>
 
     <table class=\"records_list\">
         <thead>

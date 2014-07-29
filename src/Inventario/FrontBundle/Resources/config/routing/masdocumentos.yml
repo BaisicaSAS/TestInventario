@@ -1,0 +1,30 @@
+masdocumentos:
+    pattern:  /
+    defaults: { _controller: "InventarioFrontBundle:Masdocumentos:index" }
+
+masdocumentos_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InventarioFrontBundle:Masdocumentos:show" }
+
+masdocumentos_new:
+    pattern:  /new
+    defaults: { _controller: "InventarioFrontBundle:Masdocumentos:new" }
+
+masdocumentos_create:
+    pattern:  /create
+    defaults: { _controller: "InventarioFrontBundle:Masdocumentos:create" }
+    requirements: { _method: post }
+
+masdocumentos_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InventarioFrontBundle:Masdocumentos:edit" }
+
+masdocumentos_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InventarioFrontBundle:Masdocumentos:update" }
+    requirements: { _method: post|put }
+
+masdocumentos_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InventarioFrontBundle:Masdocumentos:delete" }
+    requirements: { _method: post|delete }

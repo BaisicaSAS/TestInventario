@@ -2,26 +2,17 @@
 
 {% block body -%}
 
-   <div id="sitecontent"> 
+    <div id="sitecontent"> 
         <div id="menubar"> 
             <ul id="menu">
-              <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-              <li class="selected"><a href="{{ path('terceros') }}">Lista de terceros</a></li>
-              <li><a href="{{ path('terceros') }}">Crear tercero</a></li>
+                <li><a href="{{ path('tipdoc') }}">Volver al listado</a></li>
+                <li>{{ form(delete_form) }}</li>
             </ul>
         </div>    
+        <h1>Modificar tipos de documento</h1>
+
+        {{ form(edit_form) }}
     </div>    
 
-    <h1>Tipdoc edit</h1>
 
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('tipdoc') }}">
-            Volver al listado
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}

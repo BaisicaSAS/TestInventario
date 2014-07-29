@@ -1,0 +1,65 @@
+{% extends "InventarioFrontBundle:Default:index.html.twig" %}
+
+{% block body -%}
+
+   <div id="sitecontent"> 
+        <div id="menubar"> 
+            <ul id="menu">
+              <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+              <li class="selected"><a href="{{ path('terceros') }}">Lista de terceros</a></li>
+              <li><a href="{{ path('terceros') }}">Crear tercero</a></li>
+            </ul>
+        </div>    
+    </div>    
+    <h1>Masdocumentos list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Txnumdoc</th>
+                <th>Fefecha</th>
+                <th>Fevencimiento</th>
+                <th>Txobservaciones</th>
+                <th>Txcondpago</th>
+                <th>Dbvalneto</th>
+                <th>Dbvaliva</th>
+                <th>Dbtotal</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('masdocumentos_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.txnumdoc }}</td>
+                <td>{% if entity.fefecha %}{{ entity.fefecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.fevencimiento %}{{ entity.fevencimiento|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.txobservaciones }}</td>
+                <td>{{ entity.txcondpago }}</td>
+                <td>{{ entity.dbvalneto }}</td>
+                <td>{{ entity.dbvaliva }}</td>
+                <td>{{ entity.dbtotal }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('masdocumentos_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('masdocumentos_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('masdocumentos_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

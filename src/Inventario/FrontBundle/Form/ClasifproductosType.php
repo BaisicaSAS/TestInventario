@@ -14,10 +14,17 @@ class ClasifproductosType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        
         $builder
-            ->add('txdescripcion')
-            ->add('intipo')
-            ->add('inpadre')
+            ->add('txdescripcion', 'text', array("label" => "Descripcion de la clasificación"))
+            ->add('intipo','choice', array(
+                    "label" => "Aplicacion de la clase",
+                    'choices' => array(
+                        '0' => 'Aplicacion',
+                        '1' => 'Marca'
+            )))
+            ->add('inpadre', 'text', array("label" => "Clase principal"))
         ;
     }
     

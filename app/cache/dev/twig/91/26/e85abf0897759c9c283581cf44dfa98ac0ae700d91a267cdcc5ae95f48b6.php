@@ -28,65 +28,49 @@ class __TwigTemplate_9126e85abf0897759c9c283581cf44dfa98ac0ae700d91a267cdcc5ae95
     public function block_body($context, array $blocks = array())
     {
         // line 5
-        echo "<div id=\"sitecontent\"> 
-        <div id=\"menubar\"> 
-            <ul id=\"menu\">
-              <!-- put class=\"selected\" in the li tag for the selected page - to highlight which page you're on -->
-              <li class=\"selected\"><a href=\"";
-        // line 9
-        echo $this->env->getExtension('routing')->getPath("terceros");
-        echo "\">Lista de terceros</a></li>
-              <li><a href=\"";
-        // line 10
-        echo $this->env->getExtension('routing')->getPath("terceros");
-        echo "\">Crear tercero</a></li>
-            </ul>
-        </div>    
-    </div>    
-
-    <h1>Tipdoc</h1>
+        echo "<h1>Tipos de documento</h1>
 
     <table class=\"record_properties\">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>";
-        // line 21
+        // line 11
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"), "html", null, true);
         echo "</td>
             </tr>
             <tr>
                 <th>Txtipdoc</th>
                 <td>";
-        // line 25
+        // line 15
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txtipdoc"), "html", null, true);
         echo "</td>
             </tr>
             <tr>
                 <th>Txnomdoc</th>
                 <td>";
-        // line 29
+        // line 19
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txnomdoc"), "html", null, true);
         echo "</td>
             </tr>
             <tr>
                 <th>Inafecta</th>
                 <td>";
-        // line 33
+        // line 23
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "inafecta"), "html", null, true);
         echo "</td>
             </tr>
             <tr>
                 <th>Intipter</th>
                 <td>";
-        // line 37
+        // line 27
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "intipter"), "html", null, true);
         echo "</td>
             </tr>
             <tr>
                 <th>Txobservplantilla</th>
                 <td>";
-        // line 41
+        // line 31
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txobservplantilla"), "html", null, true);
         echo "</td>
             </tr>
@@ -96,7 +80,7 @@ class __TwigTemplate_9126e85abf0897759c9c283581cf44dfa98ac0ae700d91a267cdcc5ae95
         <ul class=\"record_actions\">
     <li>
         <a href=\"";
-        // line 48
+        // line 38
         echo $this->env->getExtension('routing')->getPath("tipdoc");
         echo "\">
             Volver al listado
@@ -104,14 +88,14 @@ class __TwigTemplate_9126e85abf0897759c9c283581cf44dfa98ac0ae700d91a267cdcc5ae95
     </li>
     <li>
         <a href=\"";
-        // line 53
+        // line 43
         echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("tipdoc_edit", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
         echo "\">
-            Edit
+            Modificar
         </a>
     </li>
     <li>";
-        // line 57
+        // line 47
         echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["delete_form"]) ? $context["delete_form"] : $this->getContext($context, "delete_form")), 'form');
         echo "</li>
 </ul>
@@ -130,6 +114,6 @@ class __TwigTemplate_9126e85abf0897759c9c283581cf44dfa98ac0ae700d91a267cdcc5ae95
 
     public function getDebugInfo()
     {
-        return array (  115 => 57,  108 => 53,  100 => 48,  90 => 41,  83 => 37,  76 => 33,  69 => 29,  62 => 25,  55 => 21,  41 => 10,  37 => 9,  31 => 5,  28 => 3,);
+        return array (  99 => 47,  92 => 43,  84 => 38,  74 => 31,  67 => 27,  60 => 23,  53 => 19,  46 => 15,  39 => 11,  31 => 5,  28 => 3,);
     }
 }

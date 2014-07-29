@@ -137,17 +137,17 @@ ul#menu
 
 ul#menu li
 { float: left;
-  padding: 0;
+  padding: 0px;
   list-style: none;
-  margin: 2px 2px 0 0;}
+  margin: 0px 0px 0px 0px;}
 
 ul#menu li a
 { font: normal 100% 'trebuchet ms', sans-serif;
   display: block; 
   float: left; 
   height: 20px;
-  padding: 3px 20px 3px 20px;
-  text-align: center;
+  padding: 3px 10px 3px 10px;
+  text-align: left;
   color: #000;
   text-decoration: none;
   background: #E0E0E0;} 
@@ -163,7 +163,7 @@ ul#menu li a:hover
 { width: 90%;
   overflow: hidden;
   margin: 0 auto 0 auto;
-  padding: 10px 20px 20px 20px;
+  padding: 5px 20px 5px 20px;
   background: #F6F6F0 url(back.png) repeat-y;
   border: 15px solid #FFF;} 
 

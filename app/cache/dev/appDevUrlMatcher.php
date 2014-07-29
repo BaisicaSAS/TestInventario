@@ -563,6 +563,66 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        if (0 === strpos($pathinfo, '/masdocumentos')) {
+            // masdocumentos
+            if (rtrim($pathinfo, '/') === '/masdocumentos') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'masdocumentos');
+                }
+
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::indexAction',  '_route' => 'masdocumentos',);
+            }
+
+            // masdocumentos_show
+            if (preg_match('#^/masdocumentos/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'masdocumentos_show')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::showAction',));
+            }
+
+            // masdocumentos_new
+            if ($pathinfo === '/masdocumentos/new') {
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::newAction',  '_route' => 'masdocumentos_new',);
+            }
+
+            // masdocumentos_create
+            if ($pathinfo === '/masdocumentos/create') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_masdocumentos_create;
+                }
+
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::createAction',  '_route' => 'masdocumentos_create',);
+            }
+            not_masdocumentos_create:
+
+            // masdocumentos_edit
+            if (preg_match('#^/masdocumentos/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'masdocumentos_edit')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::editAction',));
+            }
+
+            // masdocumentos_update
+            if (preg_match('#^/masdocumentos/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
+                    $allow = array_merge($allow, array('POST', 'PUT'));
+                    goto not_masdocumentos_update;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'masdocumentos_update')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::updateAction',));
+            }
+            not_masdocumentos_update:
+
+            // masdocumentos_delete
+            if (preg_match('#^/masdocumentos/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                    $allow = array_merge($allow, array('POST', 'DELETE'));
+                    goto not_masdocumentos_delete;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'masdocumentos_delete')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::deleteAction',));
+            }
+            not_masdocumentos_delete:
+
+        }
+
         // _welcome
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {

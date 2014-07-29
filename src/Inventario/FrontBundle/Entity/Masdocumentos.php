@@ -82,7 +82,7 @@ class Masdocumentos
      *
      * @ORM\ManyToOne(targetEntity="Tipdoc")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="inidTipDoc", referencedColumnName="idTipDoc")
+     *   @ORM\JoinColumn(name="inidTipDoc", referencedColumnName="id")
      * })
      */
     private $inidtipdoc;
@@ -92,7 +92,7 @@ class Masdocumentos
      *
      * @ORM\ManyToOne(targetEntity="Terceros")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="inidTercero", referencedColumnName="idTercero")
+     *   @ORM\JoinColumn(name="inidTercero", referencedColumnName="id")
      * })
      */
     private $inidtercero;
@@ -102,7 +102,7 @@ class Masdocumentos
      *
      * @ORM\ManyToOne(targetEntity="Vendedores")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Vendedores_idVendedor", referencedColumnName="idVendedor")
+     *   @ORM\JoinColumn(name="Vendedores_idVendedor", referencedColumnName="id")
      * })
      */
     private $vendedoresvendedor;
@@ -114,7 +114,7 @@ class Masdocumentos
      *
      * @return integer 
      */
-    public function get()
+    public function getId()
     {
         return $this->id;
     }

@@ -84,7 +84,7 @@ Masdocumentos:
             inversedBy: null
             joinColumns:
                 inidTipDoc:
-                    referencedColumnName: idTipDoc
+                    referencedColumnName: id
             orphanRemoval: false
         inidtercero:
             targetEntity: Terceros
@@ -93,7 +93,7 @@ Masdocumentos:
             inversedBy: null
             joinColumns:
                 inidTercero:
-                    referencedColumnName: idTercero
+                    referencedColumnName: id
             orphanRemoval: false
         vendedoresvendedor:
             targetEntity: Vendedores
@@ -102,6 +102,6 @@ Masdocumentos:
             inversedBy: null
             joinColumns:
                 Vendedores_idVendedor:
-                    referencedColumnName: idVendedor
+                    referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }

@@ -30,3 +30,7 @@ InventarioFrontBundle_tipdoc:
 InventarioFrontBundle_vendedores:
     resource: "@InventarioFrontBundle/Resources/config/routing/vendedores.yml"
     prefix:   /vendedores    
+    
+InventarioFrontBundle_masdocumentos:
+    resource: "@InventarioFrontBundle/Resources/config/routing/masdocumentos.yml"
+    prefix:   /masdocumentos    
