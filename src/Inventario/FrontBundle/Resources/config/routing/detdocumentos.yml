@@ -1,0 +1,30 @@
+detdocumentos:
+    pattern:  /
+    defaults: { _controller: "InventarioFrontBundle:Detdocumentos:index" }
+
+detdocumentos_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InventarioFrontBundle:Detdocumentos:show" }
+
+detdocumentos_new:
+    pattern:  /new
+    defaults: { _controller: "InventarioFrontBundle:Detdocumentos:new" }
+
+detdocumentos_create:
+    pattern:  /create
+    defaults: { _controller: "InventarioFrontBundle:Detdocumentos:create" }
+    requirements: { _method: post }
+
+detdocumentos_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InventarioFrontBundle:Detdocumentos:edit" }
+
+detdocumentos_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InventarioFrontBundle:Detdocumentos:update" }
+    requirements: { _method: post|put }
+
+detdocumentos_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InventarioFrontBundle:Detdocumentos:delete" }
+    requirements: { _method: post|delete }

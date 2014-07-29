@@ -1,0 +1,45 @@
+{% extends "InventarioFrontBundle:Default:index.html.twig" %}
+
+{% block body %}
+
+   <div id="sitecontent"> 
+        <div id="menubar"> 
+            <ul id="menu">
+              <li class="selected"><a href="{{ path('vendedores_new') }}">Crear vendedor</a></li>
+            </ul>
+        </div>    
+    </div>    
+
+    <h1>Vendedores</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Txdocvendedor</th>
+                <th>Txnomvendedor</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('vendedores_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.txdocvendedor }}</td>
+                <td>{{ entity.txnomvendedor }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('vendedores_show', { 'id': entity.id }) }}">Ver</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('vendedores_edit', { 'id': entity.id }) }}">Modificar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

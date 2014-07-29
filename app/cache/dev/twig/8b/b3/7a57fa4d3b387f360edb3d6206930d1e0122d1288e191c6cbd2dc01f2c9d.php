@@ -42,7 +42,7 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
   <div id=\"main\">";
         // line 13
         $this->displayBlock('main', $context, $blocks);
-        // line 42
+        // line 44
         echo "</div>
 </body>
 </html>
@@ -61,16 +61,14 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
         // line 14
         echo "    <div id=\"header\"> ";
         $this->displayBlock('header', $context, $blocks);
-        // line 31
+        // line 34
         echo "</div>
     <div id=\"site_content\">
-
-      <div id=\"content\">";
-        // line 34
+      ";
+        // line 36
         $this->displayBlock('body', $context, $blocks);
-        // line 40
-        echo "</div>
-    </div>
+        // line 43
+        echo "    </div>
   ";
     }
 
@@ -89,7 +87,7 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
       <div id=\"menubar\"> ";
         // line 20
         $this->displayBlock('menubar', $context, $blocks);
-        // line 30
+        // line 33
         echo "</div>
     ";
     }
@@ -104,34 +102,46 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
         // line 23
         echo $this->env->getExtension('routing')->getPath("inventario_front_homepage");
         echo "\">Inicio</a></li>
-          <li><a href=\"";
+          <li><a href=\" ";
         // line 24
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("examples.html"), "html", null, true);
-        echo "\">Crear documentos</a></li>
+        echo $this->env->getExtension('routing')->getPath("vendedores");
+        echo "\">Vendedores</a></li>
           <li><a href=\" ";
         // line 25
-        echo $this->env->getExtension('routing')->getPath("listTerceros");
-        echo " \">Administrar terceros</a></li>
-          <li><a href=\"";
+        echo $this->env->getExtension('routing')->getPath("tipdoc");
+        echo "\">Tipos documentos</a></li>
+          <li><a href=\" ";
         // line 26
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("another_page.html"), "html", null, true);
-        echo "\">Administrar productos</a></li>
-          <li><a href=\"";
+        echo $this->env->getExtension('routing')->getPath("clasifproductos");
+        echo "\">Clases productos</a></li>
+          <li><a href=\" ";
         // line 27
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("contact.html"), "html", null, true);
-        echo "\">Administrar listas de precios</a></li>
-          <li><a href=\"";
+        echo $this->env->getExtension('routing')->getPath("detlistaprecios");
+        echo "\">Listas de precios</a></li>
+          <li><a href=\" ";
         // line 28
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("contact.html"), "html", null, true);
+        echo $this->env->getExtension('routing')->getPath("terceros");
+        echo " \">Terceros</a></li>
+          <li><a href=\" ";
+        // line 29
+        echo $this->env->getExtension('routing')->getPath("productos");
+        echo "\">Productos</a></li>
+          <li><a href=\" ";
+        // line 30
+        echo $this->env->getExtension('routing')->getPath("detdocumentos");
+        echo "\">Documentos</a></li>
+          <li><a href=\" ";
+        // line 31
+        echo $this->env->getExtension('routing')->getPath("inventario_front_homepage");
         echo "\">Informes</a></li>
         </ul>
       ";
     }
 
-    // line 34
+    // line 36
     public function block_body($context, array $blocks = array())
     {
-        // line 35
+        // line 37
         echo "        <h1>Inventarios Autopartes MAR</h1>
         <p>This standards compliant, simple, fixed width website template is released as an 'open source' design (under a <a href=\"http://creativecommons.org/licenses/by/3.0\">Creative Commons Attribution 3.0 Licence</a>), which means that you are free to download and use it for anything you want (including modifying and amending it). All I ask is that you leave the 'design from HTML5webtemplates.co.uk' link in the footer of the template, but other than that...</p>
         <p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS</strong>, and can be validated using the links in the footer.</p>
@@ -152,6 +162,6 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
 
     public function getDebugInfo()
     {
-        return array (  135 => 35,  132 => 34,  125 => 28,  121 => 27,  117 => 26,  113 => 25,  109 => 24,  105 => 23,  101 => 21,  98 => 20,  93 => 30,  91 => 20,  85 => 17,  81 => 15,  78 => 14,  72 => 40,  70 => 34,  65 => 31,  62 => 14,  59 => 13,  53 => 5,  46 => 42,  44 => 13,  37 => 9,  30 => 5,  24 => 1,);
+        return array (  145 => 37,  142 => 36,  135 => 31,  131 => 30,  127 => 29,  123 => 28,  119 => 27,  115 => 26,  111 => 25,  107 => 24,  103 => 23,  99 => 21,  96 => 20,  91 => 33,  89 => 20,  83 => 17,  79 => 15,  76 => 14,  71 => 43,  69 => 36,  65 => 34,  62 => 14,  59 => 13,  53 => 5,  46 => 44,  44 => 13,  37 => 9,  30 => 5,  24 => 1,);
     }
 }

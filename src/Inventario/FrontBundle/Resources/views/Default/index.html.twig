@@ -21,23 +21,25 @@
         <ul id="menu">
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
           <li class="selected"><a href="{{ path ('inventario_front_homepage') }}">Inicio</a></li>
-          <li><a href="{{ asset('examples.html') }}">Crear documentos</a></li>
-          <li><a href=" {{ path('listTerceros') }} ">Administrar terceros</a></li>
-          <li><a href="{{ asset('another_page.html') }}">Administrar productos</a></li>
-          <li><a href="{{ asset('contact.html') }}">Administrar listas de precios</a></li>
-          <li><a href="{{ asset('contact.html') }}">Informes</a></li>
+          <li><a href=" {{ path('vendedores') }}">Vendedores</a></li>
+          <li><a href=" {{ path('tipdoc') }}">Tipos documentos</a></li>
+          <li><a href=" {{ path('clasifproductos') }}">Clases productos</a></li>
+          <li><a href=" {{ path('detlistaprecios') }}">Listas de precios</a></li>
+          <li><a href=" {{ path('terceros') }} ">Terceros</a></li>
+          <li><a href=" {{ path('productos') }}">Productos</a></li>
+          <li><a href=" {{ path('detdocumentos') }}">Documentos</a></li>
+          <li><a href=" {{ path('inventario_front_homepage') }}">Informes</a></li>
         </ul>
       {% endblock %}</div>
     {% endblock %}</div>
     <div id="site_content">
-
-      <div id="content">{% block body %}
+      {% block body %}
         <h1>Inventarios Autopartes MAR</h1>
         <p>This standards compliant, simple, fixed width website template is released as an 'open source' design (under a <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 Licence</a>), which means that you are free to download and use it for anything you want (including modifying and amending it). All I ask is that you leave the 'design from HTML5webtemplates.co.uk' link in the footer of the template, but other than that...</p>
         <p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS</strong>, and can be validated using the links in the footer.</p>
         <p>You can view more free HTML5 web templates <a href="http://www.html5webtemplates.co.uk">here</a>.</p>
         <p>This template is a fully functional 5 page website, with an <a href="examples.html">examples</a> page that gives examples of all the styles available with this design.</p>
-      {% endblock %}</div>
+      {% endblock %}
     </div>
   {% endblock %}</div>
 </body>

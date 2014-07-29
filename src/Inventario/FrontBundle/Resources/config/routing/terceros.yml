@@ -1,0 +1,30 @@
+terceros:
+    pattern:  /
+    defaults: { _controller: "InventarioFrontBundle:Terceros:index" }
+
+terceros_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InventarioFrontBundle:Terceros:show" }
+
+terceros_new:
+    pattern:  /new
+    defaults: { _controller: "InventarioFrontBundle:Terceros:new" }
+
+terceros_create:
+    pattern:  /create
+    defaults: { _controller: "InventarioFrontBundle:Terceros:create" }
+    requirements: { _method: post }
+
+terceros_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InventarioFrontBundle:Terceros:edit" }
+
+terceros_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InventarioFrontBundle:Terceros:update" }
+    requirements: { _method: post|put }
+
+terceros_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InventarioFrontBundle:Terceros:delete" }
+    requirements: { _method: post|delete }

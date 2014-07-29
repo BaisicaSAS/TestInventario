@@ -1,0 +1,30 @@
+detlistaprecios:
+    pattern:  /
+    defaults: { _controller: "InventarioFrontBundle:Detlistaprecios:index" }
+
+detlistaprecios_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InventarioFrontBundle:Detlistaprecios:show" }
+
+detlistaprecios_new:
+    pattern:  /new
+    defaults: { _controller: "InventarioFrontBundle:Detlistaprecios:new" }
+
+detlistaprecios_create:
+    pattern:  /create
+    defaults: { _controller: "InventarioFrontBundle:Detlistaprecios:create" }
+    requirements: { _method: post }
+
+detlistaprecios_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InventarioFrontBundle:Detlistaprecios:edit" }
+
+detlistaprecios_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InventarioFrontBundle:Detlistaprecios:update" }
+    requirements: { _method: post|put }
+
+detlistaprecios_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InventarioFrontBundle:Detlistaprecios:delete" }
+    requirements: { _method: post|delete }

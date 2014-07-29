@@ -19,7 +19,7 @@ class Productos
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idproducto;
+    private $id;
 
     /**
      * @var string
@@ -83,9 +83,9 @@ class Productos
      *
      * @return integer 
      */
-    public function getIdproducto()
+    public function getId()
     {
-        return $this->idproducto;
+        return $this->id;
     }
 
     /**

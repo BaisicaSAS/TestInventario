@@ -19,7 +19,7 @@ class Detdocumentos
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $iddetdocumentos;
+    private $id;
 
     /**
      * @var integer
@@ -69,9 +69,9 @@ class Detdocumentos
      *
      * @return integer 
      */
-    public function getIddetdocumentos()
+    public function getId()
     {
-        return $this->iddetdocumentos;
+        return $this->id;
     }
 
     /**

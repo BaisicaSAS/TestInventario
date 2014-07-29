@@ -19,7 +19,7 @@ class Clasifproductos
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idclasifproductos;
+    private $id;
 
     /**
      * @var string
@@ -52,9 +52,9 @@ class Clasifproductos
      *
      * @return integer 
      */
-    public function getIdclasifproductos()
+    public function getId()
     {
-        return $this->idclasifproductos;
+        return $this->id;
     }
 
     /**

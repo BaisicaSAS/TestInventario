@@ -1,0 +1,59 @@
+{% extends "InventarioFrontBundle:Default:index.html.twig" %}
+
+{% block body %}
+
+    <div id="sitecontent"> 
+        <div id="menubar"> 
+            <ul id="menu">
+              <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+              <li class="selected"><a href="{{ path('productos') }}">Lista de terceros</a></li>
+              <li><a href="{{ path('productos') }}">Crear tercero</a></li>
+            </ul>
+        </div>    
+    </div>  
+    <h1>Productos list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Txrefinterna</th>
+                <th>Txrefexterna</th>
+                <th>Txnomproducto</th>
+                <th>Txdescripcion</th>
+                <th>Inactivo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('productos_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.txrefinterna }}</td>
+                <td>{{ entity.txrefexterna }}</td>
+                <td>{{ entity.txnomproducto }}</td>
+                <td>{{ entity.txdescripcion }}</td>
+                <td>{{ entity.inactivo }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('productos_show', { 'id': entity.id }) }}">Ver</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('productos_edit', { 'id': entity.id }) }}">Modificar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('productos_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

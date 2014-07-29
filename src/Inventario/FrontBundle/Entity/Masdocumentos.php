@@ -19,7 +19,7 @@ class Masdocumentos
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idmasdocumento;
+    private $id;
 
     /**
      * @var string
@@ -114,9 +114,9 @@ class Masdocumentos
      *
      * @return integer 
      */
-    public function getIdmasdocumento()
+    public function get()
     {
-        return $this->idmasdocumento;
+        return $this->id;
     }
 
     /**

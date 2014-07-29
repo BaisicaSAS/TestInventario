@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Detdocumentos</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Incantidad</th>
+                <td>{{ entity.incantidad }}</td>
+            </tr>
+            <tr>
+                <th>Dbvalunitario</th>
+                <td>{{ entity.dbvalunitario }}</td>
+            </tr>
+            <tr>
+                <th>Dbvaltotal</th>
+                <td>{{ entity.dbvaltotal }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('detdocumentos') }}">
+            Volver al listado
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('detdocumentos_edit', { 'id': entity.id }) }}">
+            Modificar
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

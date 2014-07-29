@@ -1,0 +1,47 @@
+{% extends "InventarioFrontBundle:Default:index.html.twig" %}
+
+{% block body -%}
+
+   <div id="sitecontent"> 
+        <div id="menubar"> 
+            <ul id="menu">
+              <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+              <li class="selected"><a href="{{ path('terceros') }}">Lista de terceros</a></li>
+              <li><a href="{{ path('terceros') }}">Crear tercero</a></li>
+            </ul>
+        </div>    
+    </div>    
+
+    <h1>Clasifproductos</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Txdescripcion</th>
+                <td>{{ entity.txdescripcion }}</td>
+            </tr>
+            <tr>
+                <th>Intipo</th>
+                <td>{{ entity.intipo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('clasifproductos') }}">
+            Volver al listado
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('clasifproductos_edit', { 'id': entity.id }) }}">
+            Modificar
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

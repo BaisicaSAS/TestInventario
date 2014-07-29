@@ -19,7 +19,7 @@ class Tipdoc
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idtipdoc;
+    private $id;
 
     /**
      * @var string
@@ -63,9 +63,9 @@ class Tipdoc
      *
      * @return integer 
      */
-    public function getIdtipdoc()
+    public function getId()
     {
-        return $this->idtipdoc;
+        return $this->id;
     }
 
     /**

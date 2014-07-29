@@ -1,0 +1,30 @@
+tipdoc:
+    pattern:  /
+    defaults: { _controller: "InventarioFrontBundle:Tipdoc:index" }
+
+tipdoc_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InventarioFrontBundle:Tipdoc:show" }
+
+tipdoc_new:
+    pattern:  /new
+    defaults: { _controller: "InventarioFrontBundle:Tipdoc:new" }
+
+tipdoc_create:
+    pattern:  /create
+    defaults: { _controller: "InventarioFrontBundle:Tipdoc:create" }
+    requirements: { _method: post }
+
+tipdoc_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InventarioFrontBundle:Tipdoc:edit" }
+
+tipdoc_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InventarioFrontBundle:Tipdoc:update" }
+    requirements: { _method: post|put }
+
+tipdoc_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InventarioFrontBundle:Tipdoc:delete" }
+    requirements: { _method: post|delete }

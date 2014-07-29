@@ -1,0 +1,30 @@
+clasifproductos:
+    pattern:  /
+    defaults: { _controller: "InventarioFrontBundle:Clasifproductos:index" }
+
+clasifproductos_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InventarioFrontBundle:Clasifproductos:show" }
+
+clasifproductos_new:
+    pattern:  /new
+    defaults: { _controller: "InventarioFrontBundle:Clasifproductos:new" }
+
+clasifproductos_create:
+    pattern:  /create
+    defaults: { _controller: "InventarioFrontBundle:Clasifproductos:create" }
+    requirements: { _method: post }
+
+clasifproductos_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InventarioFrontBundle:Clasifproductos:edit" }
+
+clasifproductos_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InventarioFrontBundle:Clasifproductos:update" }
+    requirements: { _method: post|put }
+
+clasifproductos_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InventarioFrontBundle:Clasifproductos:delete" }
+    requirements: { _method: post|delete }

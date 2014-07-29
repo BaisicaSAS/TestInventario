@@ -19,7 +19,7 @@ class Detlistaprecios
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $iddetlistaprecioscol;
+    private $id;
 
     /**
      * @var float
@@ -62,9 +62,9 @@ class Detlistaprecios
      *
      * @return integer 
      */
-    public function getIddetlistaprecioscol()
+    public function getId()
     {
-        return $this->iddetlistaprecioscol;
+        return $this->id;
     }
 
     /**

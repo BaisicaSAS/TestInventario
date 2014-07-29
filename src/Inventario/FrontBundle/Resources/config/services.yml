@@ -2,7 +2,7 @@ parameters:
 #    inventario_front.example.class: Inventario\FrontBundle\Example
 
 services:
-    inventario_front.tipotercero:
-        class: Inventario\FrontBundle\Form\TipoterceroType
-        arguments: 
-            - "%tipotercero%"
+#    inventario_front.tipotercero:
+#        class: Inventario\FrontBundle\Form\TipoterceroType
+#        arguments: 
+#            - "%tipotercero%"

@@ -1,0 +1,30 @@
+vendedores:
+    pattern:  /
+    defaults: { _controller: "InventarioFrontBundle:Vendedores:index" }
+
+vendedores_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InventarioFrontBundle:Vendedores:show" }
+
+vendedores_new:
+    pattern:  /new
+    defaults: { _controller: "InventarioFrontBundle:Vendedores:new" }
+
+vendedores_create:
+    pattern:  /create
+    defaults: { _controller: "InventarioFrontBundle:Vendedores:create" }
+    requirements: { _method: post }
+
+vendedores_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InventarioFrontBundle:Vendedores:edit" }
+
+vendedores_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InventarioFrontBundle:Vendedores:update" }
+    requirements: { _method: post|put }
+
+vendedores_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InventarioFrontBundle:Vendedores:delete" }
+    requirements: { _method: post|delete }

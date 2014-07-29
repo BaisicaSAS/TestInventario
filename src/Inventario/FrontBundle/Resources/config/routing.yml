@@ -3,11 +3,30 @@ inventario_front_homepage:
     defaults: { _controller: InventarioFrontBundle:Default:index }
 
 
-listTerceros:
-    pattern:  /listterceros
-    defaults: { _controller: InventarioFrontBundle:Default:listTerceros }
+InventarioFrontBundle_clasifproductos:
+    resource: "@InventarioFrontBundle/Resources/config/routing/clasifproductos.yml"
+    prefix:   /clasifproductos
 
+InventarioFrontBundle_productos:
+    resource: "@InventarioFrontBundle/Resources/config/routing/productos.yml"
+    prefix:   /productos
 
-newTerceros:
-    pattern:  /newterceros
-    defaults: { _controller: InventarioFrontBundle:Default:newTerceros }
+InventarioFrontBundle_terceros:
+    resource: "@InventarioFrontBundle/Resources/config/routing/terceros.yml"
+    prefix:   /terceros
+    
+InventarioFrontBundle_detdocumentos:
+    resource: "@InventarioFrontBundle/Resources/config/routing/detdocumentos.yml"
+    prefix:   /detdocumentos
+    
+InventarioFrontBundle_detlistaprecios:
+    resource: "@InventarioFrontBundle/Resources/config/routing/detlistaprecios.yml"
+    prefix:   /detlistaprecios
+    
+InventarioFrontBundle_tipdoc:
+    resource: "@InventarioFrontBundle/Resources/config/routing/tipdoc.yml"
+    prefix:   /tipdoc
+
+InventarioFrontBundle_vendedores:
+    resource: "@InventarioFrontBundle/Resources/config/routing/vendedores.yml"
+    prefix:   /vendedores    

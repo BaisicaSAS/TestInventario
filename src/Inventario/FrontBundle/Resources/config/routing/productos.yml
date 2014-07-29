@@ -1,0 +1,30 @@
+productos:
+    pattern:  /
+    defaults: { _controller: "InventarioFrontBundle:Productos:index" }
+
+productos_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InventarioFrontBundle:Productos:show" }
+
+productos_new:
+    pattern:  /new
+    defaults: { _controller: "InventarioFrontBundle:Productos:new" }
+
+productos_create:
+    pattern:  /create
+    defaults: { _controller: "InventarioFrontBundle:Productos:create" }
+    requirements: { _method: post }
+
+productos_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InventarioFrontBundle:Productos:edit" }
+
+productos_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InventarioFrontBundle:Productos:update" }
+    requirements: { _method: post|put }
+
+productos_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InventarioFrontBundle:Productos:delete" }
+    requirements: { _method: post|delete }

@@ -64,10 +64,10 @@ class Listaprecios extends \Inventario\FrontBundle\Entity\Listaprecios implement
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'idlistaprecios', 'txnomlista', 'inactiva');
+            return array('__isInitialized__', 'id', 'txnomlista', 'inactiva');
         }
 
-        return array('__isInitialized__', 'idlistaprecios', 'txnomlista', 'inactiva');
+        return array('__isInitialized__', 'id', 'txnomlista', 'inactiva');
     }
 
     /**
@@ -176,16 +176,16 @@ class Listaprecios extends \Inventario\FrontBundle\Entity\Listaprecios implement
     /**
      * {@inheritDoc}
      */
-    public function getIdlistaprecios()
+    public function getId()
     {
         if ($this->__isInitialized__ === false) {
-            return (int)  parent::getIdlistaprecios();
+            return (int)  parent::getId();
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIdlistaprecios', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
 
-        return parent::getIdlistaprecios();
+        return parent::getId();
     }
 
     /**

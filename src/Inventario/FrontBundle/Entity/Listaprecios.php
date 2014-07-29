@@ -19,7 +19,7 @@ class Listaprecios
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idlistaprecios;
+    private $id;
 
     /**
      * @var string
@@ -42,9 +42,9 @@ class Listaprecios
      *
      * @return integer 
      */
-    public function getIdlistaprecios()
+    public function getId()
     {
-        return $this->idlistaprecios;
+        return $this->id;
     }
 
     /**

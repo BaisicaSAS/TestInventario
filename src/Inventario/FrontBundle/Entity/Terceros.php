@@ -19,7 +19,7 @@ class Terceros
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idtercero;
+    private $id;
 
     /**
      * @var string
@@ -118,9 +118,9 @@ class Terceros
      *
      * @return integer 
      */
-    public function getIdtercero()
+    public function getId()
     {
-        return $this->idtercero;
+        return $this->id;
     }
 
     /**

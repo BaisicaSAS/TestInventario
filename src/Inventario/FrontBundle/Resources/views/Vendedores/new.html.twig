@@ -1,0 +1,16 @@
+{% extends "InventarioFrontBundle:Default:index.html.twig" %}
+
+{% block body %}
+
+    <h1>Nuevo vendedor</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('vendedores') }}">
+            Volver al listado
+        </a>
+    </li>
+</ul>
+{% endblock %}

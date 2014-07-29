@@ -19,7 +19,7 @@ class Vendedores
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idvendedor;
+    private $id;
 
     /**
      * @var string
@@ -42,9 +42,9 @@ class Vendedores
      *
      * @return integer 
      */
-    public function getIdvendedor()
+    public function getId()
     {
-        return $this->idvendedor;
+        return $this->id;
     }
 
     /**
