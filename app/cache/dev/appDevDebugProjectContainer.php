@@ -3882,8 +3882,8 @@ class appDevDebugProjectContainer extends Container
             'assetic.variables' => array(
 
             ),
-            'assetic.java.bin' => 'C:\\Windows\\system32\\java.EXE',
-            'assetic.node.bin' => 'C:\\Program Files\\nodejs\\\\node.EXE',
+            'assetic.java.bin' => 'C:\\Program Files (x86)\\Java\\jdk1.7.0_40\\bin\\java.EXE',
+            'assetic.node.bin' => '/usr/bin/node',
             'assetic.ruby.bin' => '/usr/bin/ruby',
             'assetic.sass.bin' => '/usr/bin/sass',
             'assetic.filter.cssrewrite.class' => 'Assetic\\Filter\\CssRewriteFilter',

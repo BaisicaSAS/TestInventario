@@ -24,8 +24,10 @@ class ClasifproductosType extends AbstractType
                         '0' => 'Aplicacion',
                         '1' => 'Marca'
             )))
-            ->add('inpadre', 'text', array("label" => "Clase principal"))
-        ;
+            ->add('inpadre', 'entity', array(
+                    "label" => "Clase principal",
+                    'class' => 'InventarioFrontBundle:Clasifproductos',
+                    'property' => 'txdescripcion',));
     }
     
     /**

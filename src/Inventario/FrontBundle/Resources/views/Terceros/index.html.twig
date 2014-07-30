@@ -1,5 +1,10 @@
 {% extends "InventarioFrontBundle:Default:index.html.twig" %}
 
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript" src="{{ asset('bundles/inventario/js/index.js') }}" ></script>
+{% endblock %}
+
 {% block body -%}
 
    <div id="sitecontent"> 
@@ -14,7 +19,7 @@
             
     <h1>Terceros list</h1>
 
-    <table class="records_list">
+    <table id="listado_terceros">
         <thead>
             <tr>
                 <th>Id</th>
@@ -60,7 +65,9 @@
         </tbody>
     </table>
 
-        <ul>
+    <div id='pagerTerceros' ></div>
+    <div id='resultado' ></div>
+    <ul>
         <li>
             <a href="{{ path('terceros_new') }}">
                 Create a new entry

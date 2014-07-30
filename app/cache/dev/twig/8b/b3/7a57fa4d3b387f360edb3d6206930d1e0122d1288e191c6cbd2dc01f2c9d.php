@@ -11,6 +11,8 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
 
         $this->blocks = array(
             'title' => array($this, 'block_title'),
+            'stylesheets' => array($this, 'block_stylesheets'),
+            'javascripts' => array($this, 'block_javascripts'),
             'main' => array($this, 'block_main'),
             'header' => array($this, 'block_header'),
             'menubar' => array($this, 'block_menubar'),
@@ -32,17 +34,25 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
   <meta name=\"description\" content=\"Esta es una prueba de desarrollo en PHP, de uso academico\" />
   <meta name=\"keywords\" content=\"prueba, desarrollo\" />
   <meta http-equiv=\"content-type\" content=\"text/html; charset=windows-1252\" />
-  <link rel=\"stylesheet\" type=\"text/css\" href=\"";
-        // line 9
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/inventario/style/style.css"), "html", null, true);
-        echo "\" />
+  
+";
+        // line 10
+        $this->displayBlock('stylesheets', $context, $blocks);
+        // line 14
+        echo " 
+ 
+";
+        // line 16
+        $this->displayBlock('javascripts', $context, $blocks);
+        // line 19
+        echo " 
 </head>
 
 <body>
   <div id=\"main\">";
-        // line 13
+        // line 23
         $this->displayBlock('main', $context, $blocks);
-        // line 44
+        // line 54
         echo "</div>
 </body>
 </html>
@@ -55,93 +65,122 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
         echo "Prueba Inventario";
     }
 
-    // line 13
+    // line 10
+    public function block_stylesheets($context, array $blocks = array())
+    {
+        // line 11
+        echo "  <link href=\"";
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/jquery/css/ui.jqgrid.css"), "html", null, true);
+        echo "\" rel=\"stylesheet\"  type=\"text/css\" media=\"all\"/>
+  <link rel=\"stylesheet\" type=\"text/css\" href=\"";
+        // line 12
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/inventario/style/style.css"), "html", null, true);
+        echo "\" />
+";
+    }
+
+    // line 16
+    public function block_javascripts($context, array $blocks = array())
+    {
+        echo "   
+        <script type=\"text/javascript\" src=\"";
+        // line 17
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/jquery/js/i18n/grid.locale-es.js"), "html", null, true);
+        echo "\"></script>
+        <script type=\"text/javascript\" src=\"";
+        // line 18
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/jquery/js/jquery.jqGrid.min.js"), "html", null, true);
+        echo "\" ></script>
+";
+    }
+
+    // line 23
     public function block_main($context, array $blocks = array())
     {
-        // line 14
+        // line 24
         echo "    <div id=\"header\"> ";
         $this->displayBlock('header', $context, $blocks);
-        // line 34
+        // line 44
         echo "</div>
     <div id=\"site_content\">
       ";
-        // line 36
+        // line 46
         $this->displayBlock('body', $context, $blocks);
-        // line 43
+        // line 53
         echo "    </div>
   ";
     }
 
-    // line 14
+    // line 24
     public function block_header($context, array $blocks = array())
     {
-        // line 15
+        // line 25
         echo "      <div id=\"logo\">
         <!-- class=\"logo_colour\", allows you to change the colour of the text -->
         <h1><a href=\" ";
-        // line 17
+        // line 27
         echo $this->env->getExtension('routing')->getPath("inventario_front_homepage");
         echo " \">Distribuidora de repuestos <span class=\"logo_colour\">MAR</span></a></h1>
         <h2>Prueba de inventario.</h2>
       </div>
       <div id=\"menubar\"> ";
-        // line 20
+        // line 30
         $this->displayBlock('menubar', $context, $blocks);
-        // line 33
+        // line 43
         echo "</div>
     ";
     }
 
-    // line 20
+    // line 30
     public function block_menubar($context, array $blocks = array())
     {
-        // line 21
+        // line 31
         echo "        <ul id=\"menu\">
           <!-- put class=\"selected\" in the li tag for the selected page - to highlight which page you're on -->
           <li class=\"selected\"><a href=\"";
-        // line 23
+        // line 33
         echo $this->env->getExtension('routing')->getPath("inventario_front_homepage");
         echo "\">Inicio</a></li>
           <li><a href=\" ";
-        // line 24
+        // line 34
         echo $this->env->getExtension('routing')->getPath("vendedores");
         echo "\">Vendedores</a></li>
           <li><a href=\" ";
-        // line 25
+        // line 35
         echo $this->env->getExtension('routing')->getPath("tipdoc");
         echo "\">Tipos documentos</a></li>
           <li><a href=\" ";
-        // line 26
+        // line 36
         echo $this->env->getExtension('routing')->getPath("clasifproductos");
         echo "\">Clases productos</a></li>
           <li><a href=\" ";
-        // line 27
+        // line 37
         echo $this->env->getExtension('routing')->getPath("detlistaprecios");
         echo "\">Listas de precios</a></li>
           <li><a href=\" ";
-        // line 28
+        // line 38
         echo $this->env->getExtension('routing')->getPath("terceros");
         echo " \">Terceros</a></li>
           <li><a href=\" ";
-        // line 29
+        // line 39
         echo $this->env->getExtension('routing')->getPath("productos");
         echo "\">Productos</a></li>
           <li><a href=\" ";
-        // line 30
+        // line 40
         echo $this->env->getExtension('routing')->getPath("masdocumentos");
         echo "\">Documentos</a></li>
           <li><a href=\" ";
-        // line 31
+        // line 41
         echo $this->env->getExtension('routing')->getPath("inventario_front_homepage");
         echo "\">Informes</a></li>
         </ul>
       ";
     }
 
-    // line 36
+    // line 46
     public function block_body($context, array $blocks = array())
     {
-        // line 37
+        // line 47
         echo "        <h1>Inventarios Autopartes MAR</h1>
         <p>This standards compliant, simple, fixed width website template is released as an 'open source' design (under a <a href=\"http://creativecommons.org/licenses/by/3.0\">Creative Commons Attribution 3.0 Licence</a>), which means that you are free to download and use it for anything you want (including modifying and amending it). All I ask is that you leave the 'design from HTML5webtemplates.co.uk' link in the footer of the template, but other than that...</p>
         <p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS</strong>, and can be validated using the links in the footer.</p>
@@ -155,13 +194,8 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
         return "InventarioFrontBundle:Default:index.html.twig";
     }
 
-    public function isTraitable()
-    {
-        return false;
-    }
-
     public function getDebugInfo()
     {
-        return array (  145 => 37,  142 => 36,  135 => 31,  131 => 30,  127 => 29,  123 => 28,  119 => 27,  115 => 26,  111 => 25,  107 => 24,  103 => 23,  99 => 21,  96 => 20,  91 => 33,  89 => 20,  83 => 17,  79 => 15,  76 => 14,  71 => 43,  69 => 36,  65 => 34,  62 => 14,  59 => 13,  53 => 5,  46 => 44,  44 => 13,  37 => 9,  30 => 5,  24 => 1,);
+        return array (  184 => 47,  181 => 46,  174 => 41,  170 => 40,  166 => 39,  162 => 38,  158 => 37,  154 => 36,  150 => 35,  146 => 34,  142 => 33,  138 => 31,  135 => 30,  130 => 43,  128 => 30,  122 => 27,  118 => 25,  115 => 24,  110 => 53,  108 => 46,  104 => 44,  101 => 24,  98 => 23,  92 => 18,  88 => 17,  83 => 16,  77 => 12,  72 => 11,  69 => 10,  63 => 5,  56 => 54,  54 => 23,  48 => 19,  46 => 16,  42 => 14,  40 => 10,  32 => 5,  26 => 1,);
     }
 }

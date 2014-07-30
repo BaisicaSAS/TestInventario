@@ -16,9 +16,10 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Txdescripcion</th>
-                <th>Intipo</th>
-                <th>Actions</th>
+                <th>Descripcion</th>
+                <th>Padre</th>
+                <th>Tipo</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
             <tr>
                 <td><a href="{{ path('clasifproductos_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.txdescripcion }}</td>
+                <td>{{ "PADRE" }}</td>
                 <td>{{ entity.intipo }}</td>
                 <td>
                 <ul>

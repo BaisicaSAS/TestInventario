@@ -6,7 +6,16 @@
   <meta name="description" content="Esta es una prueba de desarrollo en PHP, de uso academico" />
   <meta name="keywords" content="prueba, desarrollo" />
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  
+{% block stylesheets %}
+  <link href="{{asset('bundles/jquery/css/ui.jqgrid.css')}}" rel="stylesheet"  type="text/css" media="all"/>
   <link rel="stylesheet" type="text/css" href="{{ asset('bundles/inventario/style/style.css') }}" />
+{% endblock %}
+  
+{% block javascripts %}   
+        <script type="text/javascript" src="{{asset('bundles/jquery/js/i18n/grid.locale-es.js')}}"></script>
+        <script type="text/javascript" src="{{asset('bundles/jquery/js/jquery.jqGrid.min.js')}}" ></script>
+{% endblock %} 
 </head>
 
 <body>
