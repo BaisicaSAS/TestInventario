@@ -34,3 +34,7 @@ InventarioFrontBundle_vendedores:
 InventarioFrontBundle_masdocumentos:
     resource: "@InventarioFrontBundle/Resources/config/routing/masdocumentos.yml"
     prefix:   /masdocumentos    
+    
+InventarioFrontBundle_listaprecios:
+    resource: "@InventarioFrontBundle/Resources/config/routing/listaprecios.yml"
+    prefix:   /listaprecios

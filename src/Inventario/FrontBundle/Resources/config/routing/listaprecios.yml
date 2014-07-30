@@ -1,0 +1,30 @@
+listaprecios:
+    pattern:  /
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:index" }
+
+listaprecios_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:show" }
+
+listaprecios_new:
+    pattern:  /new
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:new" }
+
+listaprecios_create:
+    pattern:  /create
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:create" }
+    requirements: { _method: post }
+
+listaprecios_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:edit" }
+
+listaprecios_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:update" }
+    requirements: { _method: post|put }
+
+listaprecios_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:delete" }
+    requirements: { _method: post|delete }

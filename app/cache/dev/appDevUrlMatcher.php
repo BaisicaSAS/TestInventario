@@ -623,6 +623,66 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        if (0 === strpos($pathinfo, '/listaprecios')) {
+            // listaprecios
+            if (rtrim($pathinfo, '/') === '/listaprecios') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'listaprecios');
+                }
+
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::indexAction',  '_route' => 'listaprecios',);
+            }
+
+            // listaprecios_show
+            if (preg_match('#^/listaprecios/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'listaprecios_show')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::showAction',));
+            }
+
+            // listaprecios_new
+            if ($pathinfo === '/listaprecios/new') {
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::newAction',  '_route' => 'listaprecios_new',);
+            }
+
+            // listaprecios_create
+            if ($pathinfo === '/listaprecios/create') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_listaprecios_create;
+                }
+
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::createAction',  '_route' => 'listaprecios_create',);
+            }
+            not_listaprecios_create:
+
+            // listaprecios_edit
+            if (preg_match('#^/listaprecios/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'listaprecios_edit')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::editAction',));
+            }
+
+            // listaprecios_update
+            if (preg_match('#^/listaprecios/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
+                    $allow = array_merge($allow, array('POST', 'PUT'));
+                    goto not_listaprecios_update;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'listaprecios_update')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::updateAction',));
+            }
+            not_listaprecios_update:
+
+            // listaprecios_delete
+            if (preg_match('#^/listaprecios/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                    $allow = array_merge($allow, array('POST', 'DELETE'));
+                    goto not_listaprecios_delete;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'listaprecios_delete')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::deleteAction',));
+            }
+            not_listaprecios_delete:
+
+        }
+
         // _welcome
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {

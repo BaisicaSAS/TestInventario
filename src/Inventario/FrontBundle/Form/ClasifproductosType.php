@@ -20,10 +20,15 @@ class ClasifproductosType extends AbstractType
             ->add('txdescripcion', 'text', array("label" => "Descripcion de la clasificación"))
             ->add('intipo','choice', array(
                     "label" => "Aplicacion de la clase",
+                    'attr' => array('class' => 'styled'),
                     'choices' => array(
                         '0' => 'Aplicacion',
                         '1' => 'Marca'
-            )))
+                ),
+                'multiple' => false,
+                'expanded' => true,
+                'required' => true,
+            ))
             ->add('inpadre', 'entity', array(
                     "label" => "Clase principal",
                     'class' => 'InventarioFrontBundle:Clasifproductos',

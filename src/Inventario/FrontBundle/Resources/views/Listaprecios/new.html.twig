@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+           jQuery("#tbdetlista").jqGrid({
+                    url:'Detlistaprecios.php',
+                    datatype: 'json',
+                    mtype: 'POST',
+                    colNames:['Producto','Precio'],
+                    colModel:[
+                        {name:'productosproducto', index:'productosproducto', width:50, resizable:false, align:"center"},
+                        {name:'dbvalor', index:'dbvalor', width:160,resizable:false, sortable:true},
+                    ],
+                    pager: '#paginacion',
+                    rowNum:10,
+                    rowList:[15,30],
+                    sortname: 'productosproducto',
+                    sortorder: 'asc',
+                    viewrecords: true,
+                    caption: 'LISTA DE PRECIOS'
+                });              
+            });
+        </script>
+
+{% block body -%}
+    <h1>Listaprecios creation</h1>
+
+    {{ form(form) }}
+
+        <table id="tblclientes"></table>
+        <div id="paginacion"> </div>
+    
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('listaprecios') }}">
+            Volver al listado
+        </a>
+    </li>
+</ul>
+{% endblock %}
