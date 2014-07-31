@@ -3,6 +3,8 @@
 namespace Inventario\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Inventario\FrontBundle\Entity\Clasifproductos;
@@ -23,12 +25,20 @@ class ClasifproductosController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InventarioFrontBundle:Clasifproductos')->findAll();
+        //$entities = $em->getRepository('InventarioFrontBundle:Clasifproductos')->findAll();
+        $entities = $em->createQuery('SELECT l FROM Inventario\FrontBundle\Entity\Clasifproductos l');
+        $jsonData = $entities->getArrayResult();
+        $headers = array('Content-Type' => 'application/json');
 
+        $response = new JsonResponse($jsonData, 200, $headers);
+        
+        //echo $response;
+        
         return $this->render('InventarioFrontBundle:Clasifproductos:index.html.twig', array(
-            'entities' => $entities,
+            'response' => $response,
         ));
     }
+    
     /**
      * Creates a new Clasifproductos entity.
      *

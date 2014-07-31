@@ -1,47 +1,43 @@
 {% extends "InventarioFrontBundle:Default:index.html.twig" %}
 
-{% block body -%}
+{% block head %}
+    {{ parent() }}     
+    <script type="text/javascript">
+        $(document).ready(function(){
+       jQuery("#tblclasprod").jqGrid({
+                url:'Clasifproductos::indexAction',
+                datatype: 'json',
+                mtype: 'POST',
+                colNames:['Id','Descripción', 'Aplicación','Pertenece a'],
+                colModel:[
+                    {name:'id', index:'id', width:50, resizable:false, align:"center"},
+                    {name:'txdescripcion', index:'txdescripcion', width:160,resizable:false, sortable:true},
+                    {name:'intipo', index:'intipo', width:150},
+                    {name:'inpadre', index:'inpadre', width:70},
+                ],
+                pager: '#paginacion',
+                rowNum:20,
+                rowList:[15,30],
+                sortname: 'txdescripcion',
+                sortorder: 'asc',
+                viewrecords: true,
+                gridview: true,
+                autoencode: true,
+                caption: 'CLASIFICACION DE PRODUCTOS'
+            });              
+        });
+    </script>
+{% endblock %}
 
-   <div id="sitecontent"> 
-        <div id="menubar"> 
-            <ul id="menu">
-                <li><a href="{{ path('clasifproductos_new') }}">Crear nueva clasificación</a></li>
-            </ul>
-        </div>    
-    </div>    
+{% block main %}
 
-    <h1>Clases de productos</h1>
-
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Descripcion</th>
-                <th>Padre</th>
-                <th>Tipo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('clasifproductos_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.txdescripcion }}</td>
-                <td>{{ "PADRE" }}</td>
-                <td>{{ entity.intipo }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('clasifproductos_show', { 'id': entity.id }) }}">Ver</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('clasifproductos_edit', { 'id': entity.id }) }}">Modificar</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    {% endblock %}
+  {{ parent() }}     
+  {% block body %}
+    <div id="sitecontent"><div id="menubar"><ul id="menu"> 
+            <li><a href="{{ path('clasifproductos_new') }}">Crear nueva clasificación</a></li>
+    </ul></div></div>
+    <table id="tblclasprod"></table>
+    <div id="paginacion"> </div>
+  {% endblock %}
+{% endblock %}
+   

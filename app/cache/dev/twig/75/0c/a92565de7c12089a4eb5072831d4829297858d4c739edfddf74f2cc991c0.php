@@ -10,6 +10,8 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
         $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Default:index.html.twig");
 
         $this->blocks = array(
+            'head' => array($this, 'block_head'),
+            'main' => array($this, 'block_main'),
             'body' => array($this, 'block_body'),
         );
     }
@@ -25,85 +27,66 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
     }
 
     // line 3
+    public function block_head($context, array $blocks = array())
+    {
+        // line 4
+        echo "    ";
+        $this->displayParentBlock("head", $context, $blocks);
+        echo "     
+    <script type=\"text/javascript\">
+        \$(document).ready(function(){
+       jQuery(\"#tblclasprod\").jqGrid({
+                url:'Clasifproductos::indexAction',
+                datatype: 'json',
+                mtype: 'POST',
+                colNames:['Id','Descripción', 'Aplicación','Pertenece a'],
+                colModel:[
+                    {name:'id', index:'id', width:50, resizable:false, align:\"center\"},
+                    {name:'txdescripcion', index:'txdescripcion', width:160,resizable:false, sortable:true},
+                    {name:'intipo', index:'intipo', width:150},
+                    {name:'inpadre', index:'inpadre', width:70},
+                ],
+                pager: '#paginacion',
+                rowNum:20,
+                rowList:[15,30],
+                sortname: 'txdescripcion',
+                sortorder: 'asc',
+                viewrecords: true,
+                gridview: true,
+                autoencode: true,
+                caption: 'CLASIFICACION DE PRODUCTOS'
+            });              
+        });
+    </script>
+";
+    }
+
+    // line 32
+    public function block_main($context, array $blocks = array())
+    {
+        // line 33
+        echo "
+  ";
+        // line 34
+        $this->displayParentBlock("main", $context, $blocks);
+        echo "     
+  ";
+        // line 35
+        $this->displayBlock('body', $context, $blocks);
+    }
+
     public function block_body($context, array $blocks = array())
     {
-        // line 5
-        echo "<div id=\"sitecontent\"> 
-        <div id=\"menubar\"> 
-            <ul id=\"menu\">
-                <li><a href=\"";
-        // line 8
+        // line 36
+        echo "    <div id=\"sitecontent\"><div id=\"menubar\"><ul id=\"menu\"> 
+            <li><a href=\"";
+        // line 37
         echo $this->env->getExtension('routing')->getPath("clasifproductos_new");
         echo "\">Crear nueva clasificación</a></li>
-            </ul>
-        </div>    
-    </div>    
-
-    <h1>Clases de productos</h1>
-
-    <table class=\"records_list\">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Descripcion</th>
-                <th>Padre</th>
-                <th>Tipo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        ";
-        // line 26
-        $context['_parent'] = (array) $context;
-        $context['_seq'] = twig_ensure_traversable((isset($context["entities"]) ? $context["entities"] : $this->getContext($context, "entities")));
-        foreach ($context['_seq'] as $context["_key"] => $context["entity"]) {
-            // line 27
-            echo "            <tr>
-                <td><a href=\"";
-            // line 28
-            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("clasifproductos_show", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
-            echo "\">";
-            echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"), "html", null, true);
-            echo "</a></td>
-                <td>";
-            // line 29
-            echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txdescripcion"), "html", null, true);
-            echo "</td>
-                <td>";
-            // line 30
-            echo "PADRE";
-            echo "</td>
-                <td>";
-            // line 31
-            echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "intipo"), "html", null, true);
-            echo "</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href=\"";
-            // line 35
-            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("clasifproductos_show", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
-            echo "\">Ver</a>
-                    </li>
-                    <li>
-                        <a href=\"";
-            // line 38
-            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("clasifproductos_edit", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
-            echo "\">Modificar</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        ";
-        }
-        $_parent = $context['_parent'];
-        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['entity'], $context['_parent'], $context['loop']);
-        $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 44
-        echo "        </tbody>
-    </table>
-
-    ";
+    </ul></div></div>
+    <table id=\"tblclasprod\"></table>
+    <div id=\"paginacion\"> </div>
+  ";
     }
 
     public function getTemplateName()
@@ -118,6 +101,6 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
 
     public function getDebugInfo()
     {
-        return array (  103 => 44,  91 => 38,  85 => 35,  78 => 31,  74 => 30,  70 => 29,  64 => 28,  61 => 27,  57 => 26,  36 => 8,  31 => 5,  28 => 3,);
+        return array (  84 => 37,  81 => 36,  75 => 35,  71 => 34,  68 => 33,  65 => 32,  33 => 4,  30 => 3,);
     }
 }
