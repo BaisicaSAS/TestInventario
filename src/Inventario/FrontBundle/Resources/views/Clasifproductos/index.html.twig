@@ -5,27 +5,47 @@
     <script type="text/javascript">
         $(document).ready(function(){
        jQuery("#tblclasprod").jqGrid({
-                url:'Clasifproductos::indexAction',
+                url:"{{ path('clasifproductos_listGrid') }}",
+                editurl:"{{ path('clasifproductos_listGrid') }}",
                 datatype: 'json',
+                height:'400px',
                 mtype: 'POST',
                 colNames:['Id','Descripción', 'Aplicación','Pertenece a'],
                 colModel:[
-                    {name:'id', index:'id', width:50, resizable:false, align:"center"},
-                    {name:'txdescripcion', index:'txdescripcion', width:160,resizable:false, sortable:true},
-                    {name:'intipo', index:'intipo', width:150},
-                    {name:'inpadre', index:'inpadre', width:70},
+                    {name:'id', index:'id', width:100, resizable:false, align:"center"},
+                    {name:'txdescripcion', index:'txdescripcion', width:250, resizable:false, sortable:true, editable: true},
+                    {name:'txtipo', index:'txtipo', width:150},
+                    {name:'txpadre', index:'txpadre', width:200},
                 ],
                 pager: '#paginacion',
-                rowNum:20,
-                rowList:[15,30],
-                sortname: 'txdescripcion',
+                rowList:[10,20,50,100,500],
+                sortname: 'txtipo',
                 sortorder: 'asc',
                 viewrecords: true,
-                gridview: true,
-                autoencode: true,
-                caption: 'CLASIFICACION DE PRODUCTOS'
-            });              
-        });
+                caption: 'CLASIFICACION DE PRODUCTOS',
+                grouping:true, 
+                groupingView : { 
+                    groupField : ['txtipo', 'txpadre']}
+            }); 
+            jQuery("#tblclasprod").jqGrid('tblclasprod',"#paginacion",{edit:true,add:true,del:true});
+
+            jQuery("#ed1").click( function() {
+                    jQuery("#tblclasprod").jqGrid('editRow',"1");
+                    this.disabled = 'true';
+                    jQuery("#sved1,#cned1").attr("disabled",false);
+            });
+            jQuery("#sved1").click( function() {
+                    jQuery("#tblclasprod").jqGrid('saveRow',"13");
+                    jQuery("#sved1,#cned1").attr("disabled",true);
+                    jQuery("#ed1").attr("disabled",false);
+            });
+            jQuery("#cned1").click( function() {
+                    jQuery("#tblclasprod").jqGrid('restoreRow',"13");
+                    jQuery("#sved1,#cned1").attr("disabled",true);
+                    jQuery("#ed1").attr("disabled",false);
+            });
+    });
+        
     </script>
 {% endblock %}
 
@@ -33,11 +53,12 @@
 
   {{ parent() }}     
   {% block body %}
-    <div id="sitecontent"><div id="menubar"><ul id="menu"> 
-            <li><a href="{{ path('clasifproductos_new') }}">Crear nueva clasificación</a></li>
-    </ul></div></div>
     <table id="tblclasprod"></table>
+    <input type="BUTTON" id="ed1" value="Edit row 13" />
+    <input type="BUTTON" id="sved1" disabled='true' value="Save row 13" />
+    <input type="BUTTON" id="cned1" disabled='true' value="Cancel Save" />
     <div id="paginacion"> </div>
+
   {% endblock %}
 {% endblock %}
    

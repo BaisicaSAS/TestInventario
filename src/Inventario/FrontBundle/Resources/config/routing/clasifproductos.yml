@@ -2,6 +2,10 @@ clasifproductos:
     pattern:  /
     defaults: { _controller: "InventarioFrontBundle:Clasifproductos:index" }
 
+clasifproductos_listGrid:
+    pattern:  /listGrid
+    defaults: { _controller: "InventarioFrontBundle:Clasifproductos:listGrid" }
+
 clasifproductos_show:
     pattern:  /{id}/show
     defaults: { _controller: "InventarioFrontBundle:Clasifproductos:show" }

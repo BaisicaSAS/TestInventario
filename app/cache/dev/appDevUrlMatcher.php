@@ -150,6 +150,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ClasifproductosController::indexAction',  '_route' => 'clasifproductos',);
             }
 
+            // clasifproductos_listGrid
+            if ($pathinfo === '/clasifproductos/listGrid') {
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ClasifproductosController::listGridAction',  '_route' => 'clasifproductos_listGrid',);
+            }
+
             // clasifproductos_show
             if (preg_match('#^/clasifproductos/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'clasifproductos_show')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ClasifproductosController::showAction',));

@@ -36,56 +36,80 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
     <script type=\"text/javascript\">
         \$(document).ready(function(){
        jQuery(\"#tblclasprod\").jqGrid({
-                url:'Clasifproductos::indexAction',
+                url:\"";
+        // line 8
+        echo $this->env->getExtension('routing')->getPath("clasifproductos_listGrid");
+        echo "\",
+                editurl:\"";
+        // line 9
+        echo $this->env->getExtension('routing')->getPath("clasifproductos_listGrid");
+        echo "\",
                 datatype: 'json',
+                height:'400px',
                 mtype: 'POST',
                 colNames:['Id','Descripción', 'Aplicación','Pertenece a'],
                 colModel:[
-                    {name:'id', index:'id', width:50, resizable:false, align:\"center\"},
-                    {name:'txdescripcion', index:'txdescripcion', width:160,resizable:false, sortable:true},
-                    {name:'intipo', index:'intipo', width:150},
-                    {name:'inpadre', index:'inpadre', width:70},
+                    {name:'id', index:'id', width:100, resizable:false, align:\"center\"},
+                    {name:'txdescripcion', index:'txdescripcion', width:250, resizable:false, sortable:true, editable: true},
+                    {name:'txtipo', index:'txtipo', width:150},
+                    {name:'txpadre', index:'txpadre', width:200},
                 ],
                 pager: '#paginacion',
-                rowNum:20,
-                rowList:[15,30],
-                sortname: 'txdescripcion',
+                rowList:[10,20,50,100,500],
+                sortname: 'txtipo',
                 sortorder: 'asc',
                 viewrecords: true,
-                gridview: true,
-                autoencode: true,
-                caption: 'CLASIFICACION DE PRODUCTOS'
-            });              
-        });
+                caption: 'CLASIFICACION DE PRODUCTOS',
+                grouping:true, 
+                groupingView : { 
+                    groupField : ['txtipo', 'txpadre']}
+            }); 
+            jQuery(\"#tblclasprod\").jqGrid('tblclasprod',\"#paginacion\",{edit:true,add:true,del:true});
+
+            jQuery(\"#ed1\").click( function() {
+                    jQuery(\"#tblclasprod\").jqGrid('editRow',\"1\");
+                    this.disabled = 'true';
+                    jQuery(\"#sved1,#cned1\").attr(\"disabled\",false);
+            });
+            jQuery(\"#sved1\").click( function() {
+                    jQuery(\"#tblclasprod\").jqGrid('saveRow',\"13\");
+                    jQuery(\"#sved1,#cned1\").attr(\"disabled\",true);
+                    jQuery(\"#ed1\").attr(\"disabled\",false);
+            });
+            jQuery(\"#cned1\").click( function() {
+                    jQuery(\"#tblclasprod\").jqGrid('restoreRow',\"13\");
+                    jQuery(\"#sved1,#cned1\").attr(\"disabled\",true);
+                    jQuery(\"#ed1\").attr(\"disabled\",false);
+            });
+    });
+        
     </script>
 ";
     }
 
-    // line 32
+    // line 52
     public function block_main($context, array $blocks = array())
     {
-        // line 33
+        // line 53
         echo "
   ";
-        // line 34
+        // line 54
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
   ";
-        // line 35
+        // line 55
         $this->displayBlock('body', $context, $blocks);
     }
 
     public function block_body($context, array $blocks = array())
     {
-        // line 36
-        echo "    <div id=\"sitecontent\"><div id=\"menubar\"><ul id=\"menu\"> 
-            <li><a href=\"";
-        // line 37
-        echo $this->env->getExtension('routing')->getPath("clasifproductos_new");
-        echo "\">Crear nueva clasificación</a></li>
-    </ul></div></div>
-    <table id=\"tblclasprod\"></table>
+        // line 56
+        echo "    <table id=\"tblclasprod\"></table>
+    <input type=\"BUTTON\" id=\"ed1\" value=\"Edit row 13\" />
+    <input type=\"BUTTON\" id=\"sved1\" disabled='true' value=\"Save row 13\" />
+    <input type=\"BUTTON\" id=\"cned1\" disabled='true' value=\"Cancel Save\" />
     <div id=\"paginacion\"> </div>
+
   ";
     }
 
@@ -101,6 +125,6 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
 
     public function getDebugInfo()
     {
-        return array (  84 => 37,  81 => 36,  75 => 35,  71 => 34,  68 => 33,  65 => 32,  33 => 4,  30 => 3,);
+        return array (  107 => 56,  101 => 55,  97 => 54,  94 => 53,  91 => 52,  45 => 9,  41 => 8,  33 => 4,  30 => 3,);
     }
 }

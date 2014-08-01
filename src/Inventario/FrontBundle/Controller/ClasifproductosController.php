@@ -2,6 +2,10 @@
 
 namespace Inventario\FrontBundle\Controller;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use  Symfony\Component\Serializer\Serializer;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,6 +25,34 @@ class ClasifproductosController extends Controller
      * Lists all Clasifproductos entities.
      *
      */
+    public function listGridAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT a.idClasifProductos as id, a.txDescripcion as txdescripcion, IF(a.inTipo=0, 'APLICACION', 'MARCA') as txtipo, "
+                    . "b.txdescripcion as txpadre FROM ClasifProductos a "
+                    . "LEFT JOIN ClasifProductos b ON a.inPadre = b.idClasifProductos "
+                    . "ORDER BY txTipo");
+        
+        $entities->execute();
+        
+        $result = $entities->fetchAll();
+        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+        
+    }
+    
+    /**
+     * Lists all Clasifproductos entities.
+     *
+     */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -31,8 +63,6 @@ class ClasifproductosController extends Controller
         $headers = array('Content-Type' => 'application/json');
 
         $response = new JsonResponse($jsonData, 200, $headers);
-        
-        //echo $response;
         
         return $this->render('InventarioFrontBundle:Clasifproductos:index.html.twig', array(
             'response' => $response,
