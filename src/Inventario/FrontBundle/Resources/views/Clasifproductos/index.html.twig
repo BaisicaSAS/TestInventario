@@ -6,45 +6,33 @@
         $(document).ready(function(){
        jQuery("#tblclasprod").jqGrid({
                 url:"{{ path('clasifproductos_listGrid') }}",
-                editurl:"{{ path('clasifproductos_listGrid') }}",
+                editurl:"{{ path('clasifproductos_guardaGrid') }}",
                 datatype: 'json',
                 height:'400px',
+                width:'900px', 
                 mtype: 'POST',
                 colNames:['Id','Descripción', 'Aplicación','Pertenece a'],
                 colModel:[
                     {name:'id', index:'id', width:100, resizable:false, align:"center"},
                     {name:'txdescripcion', index:'txdescripcion', width:250, resizable:false, sortable:true, editable: true},
-                    {name:'txtipo', index:'txtipo', width:150},
-                    {name:'txpadre', index:'txpadre', width:200},
+                    {name:'intipo', index:'intipo', width:150, editable: true, edittype:'select', formatter:'select', editoptions:{value: "0:APLICACION;1:MARCA"} },
+                    {name:'inpadre', index:'inpadre', width:200, editable: true}
                 ],
                 pager: '#paginacion',
+                rowNum:50,
                 rowList:[10,20,50,100,500],
-                sortname: 'txtipo',
+                sortname: 'intipo',
                 sortorder: 'asc',
                 viewrecords: true,
                 caption: 'CLASIFICACION DE PRODUCTOS',
                 grouping:true, 
                 groupingView : { 
-                    groupField : ['txtipo', 'txpadre']}
-            }); 
-            jQuery("#tblclasprod").jqGrid('tblclasprod',"#paginacion",{edit:true,add:true,del:true});
-
-            jQuery("#ed1").click( function() {
-                    jQuery("#tblclasprod").jqGrid('editRow',"1");
-                    this.disabled = 'true';
-                    jQuery("#sved1,#cned1").attr("disabled",false);
-            });
-            jQuery("#sved1").click( function() {
-                    jQuery("#tblclasprod").jqGrid('saveRow',"13");
-                    jQuery("#sved1,#cned1").attr("disabled",true);
-                    jQuery("#ed1").attr("disabled",false);
-            });
-            jQuery("#cned1").click( function() {
-                    jQuery("#tblclasprod").jqGrid('restoreRow',"13");
-                    jQuery("#sved1,#cned1").attr("disabled",true);
-                    jQuery("#ed1").attr("disabled",false);
-            });
-    });
+                    groupField : ['intipo', 'inpadre']}
+               }); 
+            jQuery("#tblclasprod").jqGrid('navGrid',"#paginacion",{add: false,edit:false,del:false,search:false});
+            jQuery("#tblclasprod").jqGrid('inlineNav',"#paginacion");
+            //jQuery("#tblclasprod").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: true });
+        });
         
     </script>
 {% endblock %}
@@ -52,13 +40,9 @@
 {% block main %}
 
   {{ parent() }}     
-  {% block body %}
-    <table id="tblclasprod"></table>
-    <input type="BUTTON" id="ed1" value="Edit row 13" />
-    <input type="BUTTON" id="sved1" disabled='true' value="Save row 13" />
-    <input type="BUTTON" id="cned1" disabled='true' value="Cancel Save" />
-    <div id="paginacion"> </div>
-
+  {% block sitecontent %}
+      <div> <table id="tblclasprod"></table>
+    <div id="paginacion"></div> </div> 
   {% endblock %}
 {% endblock %}
    

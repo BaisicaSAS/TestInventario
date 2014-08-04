@@ -29,10 +29,13 @@ class ClasifproductosController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
-        $entities = $connection->prepare("SELECT a.idClasifProductos as id, a.txDescripcion as txdescripcion, IF(a.inTipo=0, 'APLICACION', 'MARCA') as txtipo, "
-                    . "b.txdescripcion as txpadre FROM ClasifProductos a "
-                    . "LEFT JOIN ClasifProductos b ON a.inPadre = b.idClasifProductos "
-                    . "ORDER BY txTipo");
+//        $entities = $connection->prepare("SELECT a.idClasifProductos as id, a.txDescripcion as txdescripcion, IF(a.inTipo=0, 'APLICACION', 'MARCA') as txtipo, "
+//                    . "b.txdescripcion as txpadre FROM ClasifProductos a "
+        $entities = $connection->prepare("SELECT a.idClasifProductos as id, a.txDescripcion as txdescripcion, "
+                    . "a.inTipo as intipo, a.inPadre as inpadre FROM ClasifProductos a "
+//                    . "LEFT JOIN ClasifProductos b ON a.inPadre = b.idClasifProductos "
+//                    . "LEFT JOIN ClasifProductos b ON a.inPadre = b.idClasifProductos "
+                    . "ORDER BY intipo");
         
         $entities->execute();
         
@@ -49,6 +52,36 @@ class ClasifproductosController extends Controller
         
     }
     
+    /**
+     * Guarda cambios desde jqGrid.
+     *
+     */
+    public function guardaGridAction()
+    {
+       $id = $_POST['id'];
+       $em = $this->getDoctrine()->getManager();
+       echo $_POST['inpadre'];
+       echo $_POST['txdescripcion'];
+       echo $_POST['intipo'];
+       if ($_POST['oper']=='add') {
+            //insert
+            $clasiprod = new Clasifproductos;
+            $clasiprod->setInpadre($_POST['inpadre']);
+            $clasiprod->setTxdescripcion($_POST['txdescripcion']);
+            $clasiprod->setIntipo($_POST['intipo']);
+            $em->persist($clasiprod);
+        } elseif ($_POST['oper']=='edit') {
+            $clasiprod = $em->getRepository('InventarioFrontBundle:Clasifproductos')->find($id);
+            $clasiprod->setInpadre($_POST['inpadre']);
+            $clasiprod->setTxdescripcion($_POST['txdescripcion']);
+            $clasiprod->setIntipo($_POST['intipo']);
+        } elseif ($_POST['oper']=='del') {
+            $clasiprod = $em->getRepository('InventarioFrontBundle:Clasifproductos')->find($id);
+            $em->remove($clasiprod);
+        }
+        $em->flush();
+        return $this->render('InventarioFrontBundle:Clasifproductos:index.html.twig');
+    }
     /**
      * Lists all Clasifproductos entities.
      *
