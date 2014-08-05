@@ -10,7 +10,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Default:index.html.twig");
 
         $this->blocks = array(
-            'body' => array($this, 'block_body'),
+            'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
 
@@ -25,25 +25,10 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
     }
 
     // line 3
-    public function block_body($context, array $blocks = array())
+    public function block_sitecontent($context, array $blocks = array())
     {
         // line 5
-        echo "<div id=\"sitecontent\"> 
-        <div id=\"menubar\"> 
-            <ul id=\"menu\">
-              <!-- put class=\"selected\" in the li tag for the selected page - to highlight which page you're on -->
-              <li class=\"selected\"><a href=\"";
-        // line 9
-        echo $this->env->getExtension('routing')->getPath("terceros");
-        echo "\">Lista de terceros</a></li>
-              <li><a href=\"";
-        // line 10
-        echo $this->env->getExtension('routing')->getPath("terceros");
-        echo "\">Crear tercero</a></li>
-            </ul>
-        </div>    
-    </div>    
-    <h1>Masdocumentos list</h1>
+        echo "<h1>Masdocumentos list</h1>
 
     <table class=\"records_list\">
         <thead>
@@ -62,65 +47,65 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         </thead>
         <tbody>
         ";
-        // line 32
+        // line 23
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["entities"]) ? $context["entities"] : $this->getContext($context, "entities")));
         foreach ($context['_seq'] as $context["_key"] => $context["entity"]) {
-            // line 33
+            // line 24
             echo "            <tr>
                 <td><a href=\"";
-            // line 34
+            // line 25
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("masdocumentos_show", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">";
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"), "html", null, true);
             echo "</a></td>
                 <td>";
-            // line 35
+            // line 26
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txnumdoc"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 36
+            // line 27
             if ($this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "fefecha")) {
                 echo twig_escape_filter($this->env, twig_date_format_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "fefecha"), "Y-m-d H:i:s"), "html", null, true);
             }
             echo "</td>
                 <td>";
-            // line 37
+            // line 28
             if ($this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "fevencimiento")) {
                 echo twig_escape_filter($this->env, twig_date_format_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "fevencimiento"), "Y-m-d H:i:s"), "html", null, true);
             }
             echo "</td>
                 <td>";
-            // line 38
+            // line 29
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txobservaciones"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 39
+            // line 30
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txcondpago"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 40
+            // line 31
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "dbvalneto"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 41
+            // line 32
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "dbvaliva"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 42
+            // line 33
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "dbtotal"), "html", null, true);
             echo "</td>
                 <td>
                 <ul>
                     <li>
                         <a href=\"";
-            // line 46
+            // line 37
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("masdocumentos_show", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">show</a>
                     </li>
                     <li>
                         <a href=\"";
-            // line 49
+            // line 40
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("masdocumentos_edit", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">edit</a>
                     </li>
@@ -132,14 +117,14 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['entity'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 55
+        // line 46
         echo "        </tbody>
     </table>
 
         <ul>
         <li>
             <a href=\"";
-        // line 60
+        // line 51
         echo $this->env->getExtension('routing')->getPath("masdocumentos_new");
         echo "\">
                 Create a new entry
@@ -161,6 +146,6 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 
     public function getDebugInfo()
     {
-        return array (  143 => 60,  136 => 55,  124 => 49,  118 => 46,  111 => 42,  107 => 41,  103 => 40,  99 => 39,  95 => 38,  89 => 37,  83 => 36,  79 => 35,  73 => 34,  70 => 33,  66 => 32,  41 => 10,  37 => 9,  31 => 5,  28 => 3,);
+        return array (  128 => 51,  121 => 46,  109 => 40,  103 => 37,  96 => 33,  92 => 32,  88 => 31,  84 => 30,  80 => 29,  74 => 28,  68 => 27,  64 => 26,  58 => 25,  55 => 24,  51 => 23,  31 => 5,  28 => 3,);
     }
 }

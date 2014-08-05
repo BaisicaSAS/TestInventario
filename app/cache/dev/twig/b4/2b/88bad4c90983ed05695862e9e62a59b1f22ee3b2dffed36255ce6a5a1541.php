@@ -10,7 +10,7 @@ class __TwigTemplate_b42b88bad4c90983ed05695862e9e62a59b1f22ee3b2dffed36255ce6a5
         $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Default:index.html.twig");
 
         $this->blocks = array(
-            'body' => array($this, 'block_body'),
+            'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
 
@@ -25,26 +25,10 @@ class __TwigTemplate_b42b88bad4c90983ed05695862e9e62a59b1f22ee3b2dffed36255ce6a5
     }
 
     // line 3
-    public function block_body($context, array $blocks = array())
+    public function block_sitecontent($context, array $blocks = array())
     {
         // line 5
-        echo "<div id=\"sitecontent\"> 
-        <div id=\"menubar\"> 
-            <ul id=\"menu\">
-              <!-- put class=\"selected\" in the li tag for the selected page - to highlight which page you're on -->
-              <li class=\"selected\"><a href=\"";
-        // line 9
-        echo $this->env->getExtension('routing')->getPath("terceros");
-        echo "\">Lista de terceros</a></li>
-              <li><a href=\"";
-        // line 10
-        echo $this->env->getExtension('routing')->getPath("terceros");
-        echo "\">Crear tercero</a></li>
-            </ul>
-        </div>    
-    </div>    
-
-    <h1>Detlistaprecios list</h1>
+        echo "<h1>Detlistaprecios list</h1>
 
     <table class=\"records_list\">
         <thead>
@@ -57,37 +41,37 @@ class __TwigTemplate_b42b88bad4c90983ed05695862e9e62a59b1f22ee3b2dffed36255ce6a5
         </thead>
         <tbody>
         ";
-        // line 27
+        // line 17
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["entities"]) ? $context["entities"] : $this->getContext($context, "entities")));
         foreach ($context['_seq'] as $context["_key"] => $context["entity"]) {
-            // line 28
+            // line 18
             echo "            <tr>
                 <td><a href=\"";
-            // line 29
+            // line 19
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("detlistaprecios_show", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">";
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"), "html", null, true);
             echo "</a></td>
                 <td>";
-            // line 30
+            // line 20
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "dbvalor"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 31
+            // line 21
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "tximagen"), "html", null, true);
             echo "</td>
                 <td>
                 <ul>
                     <li>
                         <a href=\"";
-            // line 35
+            // line 25
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("detlistaprecios_show", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">Ver</a>
                     </li>
                     <li>
                         <a href=\"";
-            // line 38
+            // line 28
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("detlistaprecios_edit", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">Modificar</a>
                     </li>
@@ -99,14 +83,14 @@ class __TwigTemplate_b42b88bad4c90983ed05695862e9e62a59b1f22ee3b2dffed36255ce6a5
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['entity'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 44
+        // line 34
         echo "        </tbody>
     </table>
 
         <ul>
         <li>
             <a href=\"";
-        // line 49
+        // line 39
         echo $this->env->getExtension('routing')->getPath("detlistaprecios_new");
         echo "\">
                 Create a new entry
@@ -128,6 +112,6 @@ class __TwigTemplate_b42b88bad4c90983ed05695862e9e62a59b1f22ee3b2dffed36255ce6a5
 
     public function getDebugInfo()
     {
-        return array (  110 => 49,  103 => 44,  91 => 38,  85 => 35,  78 => 31,  74 => 30,  68 => 29,  65 => 28,  61 => 27,  41 => 10,  37 => 9,  31 => 5,  28 => 3,);
+        return array (  94 => 39,  87 => 34,  75 => 28,  69 => 25,  62 => 21,  58 => 20,  52 => 19,  49 => 18,  45 => 17,  31 => 5,  28 => 3,);
     }
 }

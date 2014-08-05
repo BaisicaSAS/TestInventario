@@ -10,7 +10,7 @@ class __TwigTemplate_11d2df0e00b964001ecbeb2b6aa99ae01cbe2aee455073b3cfc10241afe
         $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Default:index.html.twig");
 
         $this->blocks = array(
-            'body' => array($this, 'block_body'),
+            'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
 
@@ -25,7 +25,7 @@ class __TwigTemplate_11d2df0e00b964001ecbeb2b6aa99ae01cbe2aee455073b3cfc10241afe
     }
 
     // line 3
-    public function block_body($context, array $blocks = array())
+    public function block_sitecontent($context, array $blocks = array())
     {
         // line 5
         echo "<h1>Tipos de documento</h1>

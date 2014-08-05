@@ -10,7 +10,7 @@ class __TwigTemplate_91c3ac2f21eef416dda66b5f5470bfb32f15aaf9502af8e54c936a647d6
         $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Default:index.html.twig");
 
         $this->blocks = array(
-            'body' => array($this, 'block_body'),
+            'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
 
@@ -25,11 +25,10 @@ class __TwigTemplate_91c3ac2f21eef416dda66b5f5470bfb32f15aaf9502af8e54c936a647d6
     }
 
     // line 3
-    public function block_body($context, array $blocks = array())
+    public function block_sitecontent($context, array $blocks = array())
     {
-        // line 4
-        echo "
-   <div id=\"sitecontent\"> 
+        // line 5
+        echo "<div id=\"sitecontent\"> 
         <div id=\"menubar\"> 
             <ul id=\"menu\">
               <li class=\"selected\"><a href=\"";
@@ -114,6 +113,6 @@ class __TwigTemplate_91c3ac2f21eef416dda66b5f5470bfb32f15aaf9502af8e54c936a647d6
 
     public function getDebugInfo()
     {
-        return array (  99 => 42,  87 => 36,  81 => 33,  74 => 29,  70 => 28,  64 => 27,  61 => 26,  57 => 25,  37 => 8,  31 => 4,  28 => 3,);
+        return array (  98 => 42,  86 => 36,  80 => 33,  73 => 29,  69 => 28,  63 => 27,  60 => 26,  56 => 25,  36 => 8,  31 => 5,  28 => 3,);
     }
 }

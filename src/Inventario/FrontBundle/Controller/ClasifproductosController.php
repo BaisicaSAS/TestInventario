@@ -31,11 +31,41 @@ class ClasifproductosController extends Controller
         $connection = $em->getConnection();
 //        $entities = $connection->prepare("SELECT a.idClasifProductos as id, a.txDescripcion as txdescripcion, IF(a.inTipo=0, 'APLICACION', 'MARCA') as txtipo, "
 //                    . "b.txdescripcion as txpadre FROM ClasifProductos a "
-        $entities = $connection->prepare("SELECT a.idClasifProductos as id, a.txDescripcion as txdescripcion, "
-                    . "a.inTipo as intipo, a.inPadre as inpadre FROM ClasifProductos a "
+        $entities = $connection->prepare("SELECT a.idClasifProductos as id, a.txDescripcion as txdescripcion, IF(a.inTipo=0, 'APLICACION', 'MARCA') as txtipo, "
+                      . "b.txdescripcion as txpadre , a.inTipo as intipo, a.inPadre as inpadre FROM ClasifProductos a "
+                      . "LEFT JOIN ClasifProductos b ON a.inPadre = b.idClasifProductos "
 //                    . "LEFT JOIN ClasifProductos b ON a.inPadre = b.idClasifProductos "
-//                    . "LEFT JOIN ClasifProductos b ON a.inPadre = b.idClasifProductos "
-                    . "ORDER BY intipo");
+                    . "ORDER BY intipo, inpadre");
+        
+        $entities->execute();
+        
+        $result = $entities->fetchAll();
+        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+        
+    }
+   
+    
+    public function listPadreAction($intipo, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+//        $entities = $connection->prepare("SELECT a.idClasifProductos as id, a.txDescripcion as txdescripcion, IF(a.inTipo=0, 'APLICACION', 'MARCA') as txtipo, "
+//                    . "b.txdescripcion as txpadre FROM ClasifProductos a "
+        $entities = $connection->prepare("SELECT a.txDescripcion as txdescripcion, a.inTipo as intipo "
+                      . "FROM ClasifProductos a "
+                      . "WHERE a.idClasifProductos <> :id"
+                      . " AND a.inTipo = :intipo"
+                      . " ORDER BY txdescripcion");
+        $entities->bindParam('id', $id);
+        $entities->bindParam('intipo', $intipo);
         
         $entities->execute();
         
@@ -59,20 +89,22 @@ class ClasifproductosController extends Controller
     public function guardaGridAction()
     {
        $id = $_POST['id'];
+       if ($_POST['inpadre'] == '') $inpadre = NULL;
        $em = $this->getDoctrine()->getManager();
-       echo $_POST['inpadre'];
+       echo $inpadre;
        echo $_POST['txdescripcion'];
        echo $_POST['intipo'];
+       echo $_POST['oper'];
+       $clasiprod = new Clasifproductos;
        if ($_POST['oper']=='add') {
             //insert
-            $clasiprod = new Clasifproductos;
-            $clasiprod->setInpadre($_POST['inpadre']);
+            $clasiprod->setInpadre($inpadre);
             $clasiprod->setTxdescripcion($_POST['txdescripcion']);
             $clasiprod->setIntipo($_POST['intipo']);
             $em->persist($clasiprod);
         } elseif ($_POST['oper']=='edit') {
             $clasiprod = $em->getRepository('InventarioFrontBundle:Clasifproductos')->find($id);
-            $clasiprod->setInpadre($_POST['inpadre']);
+            $clasiprod->setInpadre($inpadre);
             $clasiprod->setTxdescripcion($_POST['txdescripcion']);
             $clasiprod->setIntipo($_POST['intipo']);
         } elseif ($_POST['oper']=='del') {

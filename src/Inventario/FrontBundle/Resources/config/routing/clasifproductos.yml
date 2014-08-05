@@ -6,6 +6,10 @@ clasifproductos_listGrid:
     pattern:  /listGrid
     defaults: { _controller: "InventarioFrontBundle:Clasifproductos:listGrid" }
 
+clasifproductos_listPadre:
+    pattern:  /listPadre/{intipo}/{id}
+    defaults: { _controller: "InventarioFrontBundle:Clasifproductos:listPadre" }
+
 clasifproductos_guardaGrid:
     pattern:  /guardaGrid
     defaults: { _controller: "InventarioFrontBundle:Clasifproductos:guardaGrid" }
