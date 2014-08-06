@@ -2,7 +2,13 @@
 
 namespace Inventario\FrontBundle\Controller;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use  Symfony\Component\Serializer\Serializer;
+
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Inventario\FrontBundle\Entity\Listaprecios;
@@ -15,6 +21,106 @@ use Inventario\FrontBundle\Form\ListapreciosType;
 class ListapreciosController extends Controller
 {
 
+    /**
+     * Lista todos los registros de Maestro Listas de Precios en JSON para JQGRID.
+     *
+     */
+    public function listMasLPGridAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT a.idListaPrecios as id, a.txnomlista as txnomlista, IF(a.inActiva=0, 'INACTIVA', 'ACTIVA') as txactiva "
+                      . "FROM ListaPrecios a "
+                    . "ORDER BY id");
+        
+        $entities->execute();
+        
+        $result = $entities->fetchAll();
+        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+    }
+    
+    /**
+     * Lista todos los registros de Detalle Listas de Precios en JSON para JQGRID.
+     *
+     */
+
+    public function listDetLPGridAction($pidlista)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT a.idDetListaPrecioscol as id, a.dbvalor as dbvalor, a.ListaPrecios_idListaPrecios as idlista, "
+                      . "a.Productos_idProducto as idproducto , b.txnomproducto as txnomproducto, b.txRefInterna as txrefinterna FROM Detlistaprecios a "
+                      . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                      . "WHERE a.ListaPrecios_idListaPrecios = :pidlista "
+                      . "ORDER BY idlista, id");
+        
+        $entities->bindParam('pidlista',$pidlista);
+        $entities->execute();
+        
+        $result = $entities->fetchAll();
+        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+        
+    }
+    
+    /**
+     * Guarda cambios desde jqGrid.
+     *
+     */
+    public function guardaMasLPGridAction()
+    {
+                            {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
+                            {name:'txnomlista',index:'txnomlista',search:true,editable:true,editoptions:{size:30}},
+                            {name:'txactiva',index:'txactiva',search:true,sortable:false,editable: true, edittype:'select', formatter:'select', editoptions:{value: "ACTIVA:ACTIVA;ACTIVA:INACTIVA"} }		
+       $id = $_POST['id']; aqui voy
+       if ($_POST['txactiva'] == 'ACTIVA') {$inactiva = 1} else {$inactiva = 0};
+       $txnomlista = $_POST['txactiva'];
+       $em = $this->getDoctrine()->getManager();
+       $listaprecio = new Listaprecios;
+       if ($_POST['oper']=='add') {
+            //insert
+            $clasiprod->setInpadre($inpadre);
+            $clasiprod->setTxdescripcion($_POST['txdescripcion']);
+            $clasiprod->setIntipo($_POST['intipo']);
+            $em->persist($clasiprod);
+        } elseif ($_POST['oper']=='edit') {
+            $clasiprod = $em->getRepository('InventarioFrontBundle:Clasifproductos')->find($id);
+            $clasiprod->setInpadre($inpadre);
+            $clasiprod->setTxdescripcion($_POST['txdescripcion']);
+            $clasiprod->setIntipo($_POST['intipo']);
+        } elseif ($_POST['oper']=='del') {
+            $clasiprod = $em->getRepository('InventarioFrontBundle:Clasifproductos')->find($id);
+            $em->remove($clasiprod);
+        }
+        $em->flush();
+        return $this->render('InventarioFrontBundle:Clasifproductos:index.html.twig');
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * Lists all Listaprecios entities.
      *

@@ -175,7 +175,7 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
         echo "\">Clases productos</a></li>
         <li><a href=\" ";
         // line 40
-        echo $this->env->getExtension('routing')->getPath("detlistaprecios");
+        echo $this->env->getExtension('routing')->getPath("listaprecios");
         echo "\">Listas de precios</a></li>
         <li><a href=\" ";
         // line 41

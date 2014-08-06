@@ -22,7 +22,7 @@ class ClasifproductosController extends Controller
 {
 
     /**
-     * Lists all Clasifproductos entities.
+     * Lista todos los registros de clasificacion de productos en JSON.
      *
      */
     public function listGridAction()

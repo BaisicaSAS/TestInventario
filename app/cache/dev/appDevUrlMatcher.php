@@ -651,6 +651,19 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::indexAction',  '_route' => 'listaprecios',);
             }
 
+            if (0 === strpos($pathinfo, '/listaprecios/list')) {
+                // listaprecios_listMasLPGrid
+                if ($pathinfo === '/listaprecios/listMasLPGrid') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::listMasLPGridAction',  '_route' => 'listaprecios_listMasLPGrid',);
+                }
+
+                // listaprecios_listDetLPGrid
+                if (0 === strpos($pathinfo, '/listaprecios/listDetLPGrid') && preg_match('#^/listaprecios/listDetLPGrid/(?P<pidlista>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'listaprecios_listDetLPGrid')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::listDetLPGridAction',));
+                }
+
+            }
+
             // listaprecios_show
             if (preg_match('#^/listaprecios/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'listaprecios_show')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::showAction',));

@@ -35,7 +35,7 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
         echo "     
     <script type=\"text/javascript\">
         \$(document).ready(function(){
-       jQuery(\"#tblclasprod\").jqGrid({
+        jQuery(\"#tblclasprod\").jqGrid({
                 url:\"";
         // line 8
         echo $this->env->getExtension('routing')->getPath("clasifproductos_listGrid");

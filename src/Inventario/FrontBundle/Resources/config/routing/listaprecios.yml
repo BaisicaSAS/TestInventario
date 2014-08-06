@@ -2,6 +2,18 @@ listaprecios:
     pattern:  /
     defaults: { _controller: "InventarioFrontBundle:Listaprecios:index" }
 
+listaprecios_listMasLPGrid:
+    pattern:  /listMasLPGrid
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:listMasLPGrid" }
+
+listaprecios_listDetLPGrid:
+    pattern:  /listDetLPGrid/{pidlista}
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:listDetLPGrid" }
+
+listaprecios_guardaMasLPGrid:
+    pattern:  /guardaMasLPGrid
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:guardaMasLPGrid" }
+
 listaprecios_show:
     pattern:  /{id}/show
     defaults: { _controller: "InventarioFrontBundle:Listaprecios:show" }

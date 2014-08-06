@@ -1,43 +1,102 @@
-{% extends '::base.html.twig' %}
+{% extends "InventarioFrontBundle:Default:index.html.twig" %}
 
-{% block sitecontent -%}
-    <h1>Listaprecios list</h1>
+{% block head %}
+    {{ parent() }}     
+    <script type="text/javascript">
+        $(document).ready(function(){
+            jQuery("#maslista").jqGrid({        
+                    url:"{{ path('listaprecios_listMasLPGrid') }}",
+                    datatype: "json",
+                    width:'40%',
+                    colNames:['Id','Nombre','Act./Inac.'],
+                    colModel:[
+                            {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
+                            {name:'txnomlista',index:'txnomlista',search:true,editable:true,editoptions:{size:30}},
+                            {name:'txactiva',index:'txactiva',search:true,sortable:false,editable: true, edittype:'select', formatter:'select', editoptions:{value: "ACTIVA:ACTIVA;ACTIVA:INACTIVA"} }		
+                    ],
+                    rowNum:10,
+                    rowList:[10,20,30],
+                    pager: '#paginacion',
+                    sortname: 'id',
+                    viewrecords: true,
+                    sortorder: "asc",
+                    caption:"Listas de precios",
+                    onSelectRow: function(id) {
+                        var vid=id;
+                        var vurl="{{ path('listaprecios_listDetLPGrid', {'pidlista': '1'}) }}";
+                        vurl = vurl.replace('1', vid);
+                        //alert (vurl);
+                        if(vid == null) {
+                            if(jQuery("#detlista").jqGrid('getGridParam','records') >0 )
+                            {
+                                jQuery("#detlista").jqGrid('setGridParam',{url:vurl,page:1});
+                                jQuery("#detlista").jqGrid('setCaption',"Detalle de lista: "+vid)
+                                .trigger('reloadGrid');
+                            } 
+                        } else { 
+                            jQuery("#detlista").jqGrid('setGridParam',{url:vurl,page:1});
+                            jQuery("#detlista").jqGrid('setCaption',"Detalle de lista:  "+vid)
+                            .trigger('reloadGrid');			
+                        }
+                    }
+                //editurl:"someurl.php"
+            });
+            jQuery("#maslista").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
+            jQuery("#maslista").jqGrid('navGrid',"#paginacion",{add: false,edit:false,del:false,search:false});
+            jQuery("#maslista").jqGrid('inlineNav',"#paginacion");
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Txnomlista</th>
-                <th>Inactiva</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('listaprecios_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.txnomlista }}</td>
-                <td>{{ entity.inactiva }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('listaprecios_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('listaprecios_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+            //DETALLE
+            jQuery("#detlista").jqGrid({        
+                    url:"{{ path('listaprecios_listDetLPGrid', {'pidlista': 1}) }}",
+                    datatype: "json",
+                    width:'800px',
+                    colNames:['Lista','Id','Id Producto', 'Ref. Producto','Producto','Precio'],
+                    colModel:[
+                            {name:'idlista',index:'idlista', editable:false,search:true,editoptions:{readonly:true,size:10}},
+                            {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
+                            {name:'txrefinterna',index:'txrefinterna',editable:true,search:true,width:"100px"},
+                            {name:'txnomproducto',index:'txnomproducto',editable:true,search:true,width:"400px"},
+                            {name:'idproducto',index:'idproducto',editable:true,search:true},
+                            {name:'dbvalor',index:'dbvalor',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
+                    ],
+                    rowNum:1000,
+                    rowList:[1000,2000,3000],
+                    pager: '#pagered',
+                    sortname: 'id',
+                    viewrecords: true,
+                    sortorder: "asc",
+                    caption:"Detalle de lista",//,
+                //editurl:"someurl.php"
+            });
+            jQuery("#detlista").hideCol('idlista');
+            jQuery("#detlista").hideCol('id');
+            jQuery("#detlista").hideCol('idproducto');
+            jQuery("#detlista").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
+            $("#bedata").click(function(){
+                    jQuery("#detlista").jqGrid('editGridRow',"new",{width: 800,height:200,reloadAfterSubmit:false});
+            });
+        });
+        
+    </script>
+{% endblock %}
+
+{% block main %}
+
+  {{ parent() }}     
+  {% block sitecontent %}
+        <h1>Listas de precios</h1>
+        <table id="CONTENEDOR" width="100%">
+            <tr id="Fila" width="100%">
+                <td id="C1"width="40%">
+                    <table id="maslista" ></table>
+                    <div id="paginacion" ></div>
+                </td>
+                <td id="C1" width="60%">
+                    <table id="detlista" ></table>
+                    <div id="pagered" ></div>
                 </td>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        </table>    
+  {% endblock %}
+{% endblock %}
 
-        <ul>
-        <li>
-            <a href="{{ path('listaprecios_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}

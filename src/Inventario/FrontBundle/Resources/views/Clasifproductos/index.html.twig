@@ -4,7 +4,7 @@
     {{ parent() }}     
     <script type="text/javascript">
         $(document).ready(function(){
-       jQuery("#tblclasprod").jqGrid({
+        jQuery("#tblclasprod").jqGrid({
                 url:"{{ path('clasifproductos_listGrid') }}",
                 editurl:"{{ path('clasifproductos_guardaGrid') }}",
                 datatype: 'json',
