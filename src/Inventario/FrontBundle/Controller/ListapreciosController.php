@@ -79,47 +79,58 @@ class ListapreciosController extends Controller
     }
     
     /**
+     * Poblar la tabla de detalle de lista de precios luego de insertar el maestro.
+     *
+     */    
+     protected function crearDetLP($pidlista)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("INSERT INTO Detlistaprecios (Productos_idProducto, "
+                . "ListaPrecios_idListaPrecios, dbValor) SELECT idProducto, :pidlista, 0 "
+                . "FROM Productos");
+        
+        $entities->bindParam('pidlista',$pidlista);
+        $entities->execute();
+        
+        $em->flush();
+        //return $this->render('InventarioFrontBundle:Listaprecios:index.html.twig');
+    }
+
+    /**
      * Guarda cambios desde jqGrid.
      *
      */
     public function guardaMasLPGridAction()
     {
-                            {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'txnomlista',index:'txnomlista',search:true,editable:true,editoptions:{size:30}},
-                            {name:'txactiva',index:'txactiva',search:true,sortable:false,editable: true, edittype:'select', formatter:'select', editoptions:{value: "ACTIVA:ACTIVA;ACTIVA:INACTIVA"} }		
-       $id = $_POST['id']; aqui voy
-       if ($_POST['txactiva'] == 'ACTIVA') {$inactiva = 1} else {$inactiva = 0};
-       $txnomlista = $_POST['txactiva'];
+       $id = $_POST['id'];
+       if ($_POST['txactiva'] == 'ACTIVA') $inactiva = 1; else $inactiva = 0;
+       $txnomlista = $_POST['txnomlista'];
        $em = $this->getDoctrine()->getManager();
        $listaprecio = new Listaprecios;
        if ($_POST['oper']=='add') {
             //insert
-            $clasiprod->setInpadre($inpadre);
-            $clasiprod->setTxdescripcion($_POST['txdescripcion']);
-            $clasiprod->setIntipo($_POST['intipo']);
-            $em->persist($clasiprod);
+            $listaprecio->setInactiva($inactiva);
+            $listaprecio->setTxnomlista($txnomlista);
+            $em->persist($listaprecio);
+            $em->flush();
+            $id = $listaprecio->getId();
+            //echo  $id. "  --  " .$inactiva . "  --  " . $txnomlista; 
+            $this->crearDetLP($id);
         } elseif ($_POST['oper']=='edit') {
-            $clasiprod = $em->getRepository('InventarioFrontBundle:Clasifproductos')->find($id);
-            $clasiprod->setInpadre($inpadre);
-            $clasiprod->setTxdescripcion($_POST['txdescripcion']);
-            $clasiprod->setIntipo($_POST['intipo']);
+            $listaprecio = $em->getRepository('InventarioFrontBundle:Listaprecios')->find($id);
+            $listaprecio->setInactiva($inactiva);
+            $listaprecio->setTxnomlista($txnomlista);
+            $em->persist($listaprecio);
+            $em->flush();
         } elseif ($_POST['oper']=='del') {
-            $clasiprod = $em->getRepository('InventarioFrontBundle:Clasifproductos')->find($id);
-            $em->remove($clasiprod);
+            $listaprecio = $em->getRepository('InventarioFrontBundle:Listaprecios')->find($id);
+            $em->remove($listaprecio);
+            $em->flush();
         }
-        $em->flush();
-        return $this->render('InventarioFrontBundle:Clasifproductos:index.html.twig');
+        return $this->render('InventarioFrontBundle:Listaprecios:index.html.twig');
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     /**
      * Lists all Listaprecios entities.

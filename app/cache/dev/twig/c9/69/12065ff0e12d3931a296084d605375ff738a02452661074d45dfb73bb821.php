@@ -46,7 +46,7 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'txnomlista',index:'txnomlista',search:true,editable:true,editoptions:{size:30}},
-                            {name:'txactiva',index:'txactiva',search:true,sortable:false,editable: true, edittype:'select', formatter:'select', editoptions:{value: \"ACTIVA:ACTIVA;ACTIVA:INACTIVA\"} }\t\t
+                            {name:'txactiva',index:'txactiva',search:true,sortable:false,editable: true, edittype:'select', formatter:'select', editoptions:{value: \"ACTIVA:ACTIVA;ACTIVA:INACTIVA\"},}\t\t
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
@@ -55,28 +55,38 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
                     viewrecords: true,
                     sortorder: \"asc\",
                     caption:\"Listas de precios\",
+                    editurl:\"";
+        // line 24
+        echo $this->env->getExtension('routing')->getPath("listaprecios_guardaMasLPGrid");
+        echo "\",
                     onSelectRow: function(id) {
                         var vid=id;
                         var vurl=\"";
-        // line 26
+        // line 27
         echo $this->env->getExtension('routing')->getPath("listaprecios_listDetLPGrid", array("pidlista" => "1"));
         echo "\";
-                        vurl = vurl.replace('1', vid);
-                        alert (vurl);
+                        //alert (vurl);
+                        var rowData = jQuery(this).getRowData(id); 
+                        var val= rowData['txnomlista'];//replace name with you column
+                        //alert (val);
+                        
+                        if (vid != null){
+                            vurl = vurl.replace('1', vid);
+                        }
+                            
                         if(vid == null) {
                             if(jQuery(\"#detlista\").jqGrid('getGridParam','records') >0 )
                             {
                                 jQuery(\"#detlista\").jqGrid('setGridParam',{url:vurl,page:1});
-                                jQuery(\"#detlista\").jqGrid('setCaption',\"Detalle de lista: \"+vid)
+                                jQuery(\"#detlista\").jqGrid('setCaption',\"Detalle de lista: \"+vid+\" - \"+val)
                                 .trigger('reloadGrid');
                             } 
                         } else { 
                             jQuery(\"#detlista\").jqGrid('setGridParam',{url:vurl,page:1});
-                            jQuery(\"#detlista\").jqGrid('setCaption',\"Detalle de lista:  \"+vid)
+                            jQuery(\"#detlista\").jqGrid('setCaption',\"Detalle de lista:  \"+vid+\" - \"+val)
                             .trigger('reloadGrid');\t\t\t
                         }
-                    }
-                //editurl:\"someurl.php\"
+                    },
             });
             jQuery(\"#maslista\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
             jQuery(\"#maslista\").jqGrid('navGrid',\"#paginacion\",{add: false,edit:false,del:false,search:false});
@@ -85,7 +95,7 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
             //DETALLE
             jQuery(\"#detlista\").jqGrid({        
                     url:\"";
-        // line 50
+        // line 57
         echo $this->env->getExtension('routing')->getPath("listaprecios_listDetLPGrid", array("pidlista" => 1));
         echo "\",
                     datatype: \"json\",
@@ -105,15 +115,19 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
                     sortname: 'id',
                     viewrecords: true,
                     sortorder: \"asc\",
-                    caption:\"Detalle de lista\",//,
+                    caption:\"Detalle de lista: 1\",//,
                 //editurl:\"someurl.php\"
             });
             jQuery(\"#detlista\").hideCol('idlista');
             jQuery(\"#detlista\").hideCol('id');
             jQuery(\"#detlista\").hideCol('idproducto');
+
+            jQuery(\"#detlista\").jqGrid('navGrid',\"#pagered\",{add: false,edit:false,del:false,search:false});
+            jQuery(\"#detlista\").jqGrid('inlineNav',\"#pagered\");
+
             jQuery(\"#detlista\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
             \$(\"#bedata\").click(function(){
-                    jQuery(\"#detlista\").jqGrid('editGridRow',\"new\",{width: 800,height:200,reloadAfterSubmit:false});
+                    jQuery(\"#detlista\").jqGrid('editGridRow',\"new\",{width: 800,height:200,reloadAfterSubmit:false}).trigger('reloadGrid');
             });
         });
         
@@ -121,23 +135,23 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
 ";
     }
 
-    // line 83
+    // line 94
     public function block_main($context, array $blocks = array())
     {
-        // line 84
+        // line 95
         echo "
   ";
-        // line 85
+        // line 96
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
   ";
-        // line 86
+        // line 97
         $this->displayBlock('sitecontent', $context, $blocks);
     }
 
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 87
+        // line 98
         echo "        <h1>Listas de precios</h1>
         <table id=\"CONTENEDOR\" width=\"100%\">
             <tr id=\"Fila\" width=\"100%\">
@@ -166,6 +180,6 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
 
     public function getDebugInfo()
     {
-        return array (  141 => 87,  135 => 86,  131 => 85,  128 => 84,  125 => 83,  89 => 50,  62 => 26,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  155 => 98,  149 => 97,  145 => 96,  142 => 95,  139 => 94,  99 => 57,  66 => 27,  60 => 24,  41 => 8,  33 => 4,  30 => 3,);
     }
 }

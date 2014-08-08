@@ -2,7 +2,13 @@
 
 namespace Inventario\FrontBundle\Controller;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use  Symfony\Component\Serializer\Serializer;
+
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Inventario\FrontBundle\Entity\Masdocumentos;
@@ -15,6 +21,191 @@ use Inventario\FrontBundle\Form\MasdocumentosType;
 class MasdocumentosController extends Controller
 {
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idMasDocumento", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="txNumDoc", type="string", length=20, nullable=false)
+     */
+    private $txnumdoc;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="feFecha", type="datetime", nullable=false)
+     */
+    private $fefecha;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="feVencimiento", type="datetime", nullable=false)
+     */
+    private $fevencimiento;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="txObservaciones", type="integer", nullable=true)
+     */
+    private $txobservaciones;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="txCondPago", type="string", length=100, nullable=true)
+     */
+    private $txcondpago;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="dbValNeto", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $dbvalneto = '0';
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="dbValIva", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $dbvaliva = '0';
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="dbTotal", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $dbtotal = '0';
+
+    /**
+     * @var \Tipdoc
+     *
+     * @ORM\ManyToOne(targetEntity="Tipdoc")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="inidTipDoc", referencedColumnName="id")
+     * })
+     */
+    private $inidtipdoc;
+
+    /**
+     * @var \Terceros
+     *
+     * @ORM\ManyToOne(targetEntity="Terceros")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="inidTercero", referencedColumnName="id")
+     * })
+     */
+    private $inidtercero;
+
+    /**
+     * @var \Vendedores
+     *
+     * @ORM\ManyToOne(targetEntity="Vendedores")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Vendedores_idVendedor", referencedColumnName="id")
+     * })
+     */
+    private $vendedoresvendedor;
+
+    /**
+     * Lista todos los registros de Maestro Listas de Precios en JSON para JQGRID.
+     *
+     */
+    public function listMasDocGridAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT a.idListaPrecios as id, a.txnomlista as txnomlista, IF(a.inActiva=0, 'INACTIVA', 'ACTIVA') as txactiva "
+                      . "FROM M a "
+                    . "ORDER BY id");
+        
+        $entities->execute();
+        
+        $result = $entities->fetchAll();
+        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+    }
+    
+    /**
+     * Lista todos los registros de Detalle Documentos en JSON para JQGRID.
+     *
+     */
+
+    public function listDetDocGridAction($pidlista)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT a.idDetListaPrecioscol as id, a.dbvalor as dbvalor, a.ListaPrecios_idListaPrecios as idlista, "
+                      . "a.Productos_idProducto as idproducto , b.txnomproducto as txnomproducto, b.txRefInterna as txrefinterna FROM Detlistaprecios a "
+                      . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                      . "WHERE a.ListaPrecios_idListaPrecios = :pidlista "
+                      . "ORDER BY idlista, id");
+        
+        $entities->bindParam('pidlista',$pidlista);
+        $entities->execute();
+        
+        $result = $entities->fetchAll();
+        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+        
+    }
+
+    /**
+     * Guarda cambios desde jqGrid.
+     *
+     */
+    public function guardaMasDocGridAction()
+    {
+       $id = $_POST['id'];
+       if ($_POST['txactiva'] == 'ACTIVA') $inactiva = 1; else $inactiva = 0;
+       $txnomlista = $_POST['txnomlista'];
+       $em = $this->getDoctrine()->getManager();
+       $listaprecio = new Listaprecios;
+       if ($_POST['oper']=='add') {
+            //insert
+            $listaprecio->setInactiva($inactiva);
+            $listaprecio->setTxnomlista($txnomlista);
+            $em->persist($listaprecio);
+            $em->flush();
+            $id = $listaprecio->getId();
+            //echo  $id. "  --  " .$inactiva . "  --  " . $txnomlista; 
+            $this->crearDetLP($id);
+        } elseif ($_POST['oper']=='edit') {
+            $listaprecio = $em->getRepository('InventarioFrontBundle:Listaprecios')->find($id);
+            $listaprecio->setInactiva($inactiva);
+            $listaprecio->setTxnomlista($txnomlista);
+            $em->persist($listaprecio);
+            $em->flush();
+        } elseif ($_POST['oper']=='del') {
+            $listaprecio = $em->getRepository('InventarioFrontBundle:Listaprecios')->find($id);
+            $em->remove($listaprecio);
+            $em->flush();
+        }
+        return $this->render('InventarioFrontBundle:Listaprecios:index.html.twig');
+    }
     /**
      * Lists all Masdocumentos entities.
      *

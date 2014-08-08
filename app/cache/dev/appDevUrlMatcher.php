@@ -664,6 +664,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
             }
 
+            // listaprecios_guardaMasLPGrid
+            if ($pathinfo === '/listaprecios/guardaMasLPGrid') {
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::guardaMasLPGridAction',  '_route' => 'listaprecios_guardaMasLPGrid',);
+            }
+
             // listaprecios_show
             if (preg_match('#^/listaprecios/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'listaprecios_show')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::showAction',));
