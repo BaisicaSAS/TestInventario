@@ -20,113 +20,24 @@ use Inventario\FrontBundle\Form\MasdocumentosType;
  */
 class MasdocumentosController extends Controller
 {
-
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idMasDocumento", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="txNumDoc", type="string", length=20, nullable=false)
-     */
-    private $txnumdoc;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="feFecha", type="datetime", nullable=false)
-     */
-    private $fefecha;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="feVencimiento", type="datetime", nullable=false)
-     */
-    private $fevencimiento;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="txObservaciones", type="integer", nullable=true)
-     */
-    private $txobservaciones;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="txCondPago", type="string", length=100, nullable=true)
-     */
-    private $txcondpago;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="dbValNeto", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $dbvalneto = '0';
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="dbValIva", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $dbvaliva = '0';
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="dbTotal", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $dbtotal = '0';
-
-    /**
-     * @var \Tipdoc
-     *
-     * @ORM\ManyToOne(targetEntity="Tipdoc")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="inidTipDoc", referencedColumnName="id")
-     * })
-     */
-    private $inidtipdoc;
-
-    /**
-     * @var \Terceros
-     *
-     * @ORM\ManyToOne(targetEntity="Terceros")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="inidTercero", referencedColumnName="id")
-     * })
-     */
-    private $inidtercero;
-
-    /**
-     * @var \Vendedores
-     *
-     * @ORM\ManyToOne(targetEntity="Vendedores")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Vendedores_idVendedor", referencedColumnName="id")
-     * })
-     */
-    private $vendedoresvendedor;
-
-    /**
-     * Lista todos los registros de Maestro Listas de Precios en JSON para JQGRID.
+     * Lista todos los registros de Maestro de Documentos en JSON para JQGRID.
      *
      */
     public function listMasDocGridAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
-        $entities = $connection->prepare("SELECT a.idListaPrecios as id, a.txnomlista as txnomlista, IF(a.inActiva=0, 'INACTIVA', 'ACTIVA') as txactiva "
-                      . "FROM M a "
-                    . "ORDER BY id");
+        $entities = $connection->prepare("SELECT a.idMasDocumento as id, a.txNumDoc as txnumdoc, "
+                . "a.feFecha as fefecha, a.feVencimiento as fevencimiento, a.txObservaciones as txobservaciones, "
+                . "txCondPago as txcondPago, dbValNeto as dbvalneto, a.dbValIva as dbvaliva, a.dbTotal as dbtotal, "
+                . "a.inidTipDoc as inidtipdoc, a.inidTercero as inidtercero,  a.Vendedores_idVendedor as idvendedor, "
+                . "b.txNomTercero as txnomtercero, c.txTipDoc as txtipdoc, d.txNomVendedor as txnomvendedor "
+                . "FROM Masdocumentos a "
+                . "LEFT JOIN Terceros b ON a.inidTercero = b.idTercero "
+                . "LEFT JOIN Tipdoc c ON a.inidTipDoc = c.idTipDoc "
+                . "LEFT JOIN Vendedores d ON a.Vendedores_idVendedor = d.idVendedor "
+                . "ORDER BY txtipdoc, id");
         
         $entities->execute();
         
@@ -146,18 +57,22 @@ class MasdocumentosController extends Controller
      * Lista todos los registros de Detalle Documentos en JSON para JQGRID.
      *
      */
-
-    public function listDetDocGridAction($pidlista)
+    public function listDetDocGridAction($piddoc)
     {
+
+
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
-        $entities = $connection->prepare("SELECT a.idDetListaPrecioscol as id, a.dbvalor as dbvalor, a.ListaPrecios_idListaPrecios as idlista, "
-                      . "a.Productos_idProducto as idproducto , b.txnomproducto as txnomproducto, b.txRefInterna as txrefinterna FROM Detlistaprecios a "
-                      . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                      . "WHERE a.ListaPrecios_idListaPrecios = :pidlista "
-                      . "ORDER BY idlista, id");
+        $entities = $connection->prepare("SELECT a.idDetDocumentos as id, a.inidMasDocumento as inidmasdocumento, "
+                . "a.inCantidad as incantidad, a.dbValUnitario as dbvalunitario, a.dbValtotal as dbvaltotal, "
+                . "a. inidMasDocumento as inidmasdocumento, a.Productos_idProducto as idproducto, "
+                . "b.txRefInterna as txrefinterna, b.txNomProducto as txnomproducto "
+                . "FROM Detdocumentos a "
+                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                . "WHERE a.inidMasDocumento = :piddoc "
+                . "ORDER BY id");
         
-        $entities->bindParam('pidlista',$pidlista);
+        $entities->bindParam('piddoc',$piddoc);
         $entities->execute();
         
         $result = $entities->fetchAll();

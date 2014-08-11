@@ -15,6 +15,29 @@ use Inventario\FrontBundle\Form\TipdocType;
 class TipdocController extends Controller
 {
 
+    public function listTipDocGridAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT a.idTipDoc, a.txTipdoc, a. txNomDoc, a.inAfecta"
+                . "a.inTipTer, a.txObservPlantilla "
+                . "FROM Tipdoc a ");
+        
+        $entities->bindParam('piddoc',$piddoc);
+        $entities->execute();
+        
+        $result = $entities->fetchAll();
+        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+        
+    }
     /**
      * Lists all Tipdoc entities.
      *

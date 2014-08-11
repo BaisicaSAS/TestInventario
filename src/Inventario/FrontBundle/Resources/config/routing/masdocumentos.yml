@@ -7,11 +7,11 @@ masdocumentos_listMasDocGrid:
     defaults: { _controller: "InventarioFrontBundle:Masdocumentos:listMasDocGrid" }
 
 masdocumentos_listDetDocGrid:
-    pattern:  /listDetLPGrid/{pidlista}
+    pattern:  /listDetDocGrid/{piddoc}
     defaults: { _controller: "InventarioFrontBundle:Masdocumentos:listDetDocGrid" }
 
 masdocumentos_guardaMasDocGrid:
-    pattern:  /guardaMasLPGrid
+    pattern:  /guardaMasDocGrid
     defaults: { _controller: "InventarioFrontBundle:Masdocumentos:guardaMasDocGrid" }
 
 masdocumentos_show:

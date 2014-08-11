@@ -591,6 +591,24 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::indexAction',  '_route' => 'masdocumentos',);
             }
 
+            if (0 === strpos($pathinfo, '/masdocumentos/list')) {
+                // masdocumentos_listMasDocGrid
+                if ($pathinfo === '/masdocumentos/listMasDocGrid') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::listMasDocGridAction',  '_route' => 'masdocumentos_listMasDocGrid',);
+                }
+
+                // masdocumentos_listDetDocGrid
+                if (0 === strpos($pathinfo, '/masdocumentos/listDetDocGrid') && preg_match('#^/masdocumentos/listDetDocGrid/(?P<piddoc>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'masdocumentos_listDetDocGrid')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::listDetDocGridAction',));
+                }
+
+            }
+
+            // masdocumentos_guardaMasDocGrid
+            if ($pathinfo === '/masdocumentos/guardaMasDocGrid') {
+                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::guardaMasDocGridAction',  '_route' => 'masdocumentos_guardaMasDocGrid',);
+            }
+
             // masdocumentos_show
             if (preg_match('#^/masdocumentos/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'masdocumentos_show')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::showAction',));

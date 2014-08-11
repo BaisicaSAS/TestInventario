@@ -7,12 +7,24 @@
             jQuery("#masdoc").jqGrid({        
                     url:"{{ path('masdocumentos_listMasDocGrid') }}",
                     datatype: "json",
-                    width:'40%',
-                    colNames:['Id','Nombre','Act./Inac.'],
+                    width:'400px',
+                    colNames:['Id','Id. TD', 'Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Onservaciones', 'Vendedor', 'Id. Vendedor', 'Id. Tercero', ],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'txnomlista',index:'txnomlista',search:true,editable:true,editoptions:{size:30}},
-                            {name:'txactiva',index:'txactiva',search:true,sortable:false,editable: true, edittype:'select', formatter:'select', editoptions:{value: "ACTIVA:ACTIVA;ACTIVA:INACTIVA"},}		
+                            {name:'inidtipdoc',index:'inidtipdoc',search:true,editable:true,editoptions:{size:10}},
+                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:true,editoptions:{size:10}},
+                            {name:'txnumdoc',index:'txnumdoc',search:true,editable:true,editoptions:{size:10}},		
+                            {name:'txnomtercero',index:'txnomtercero',search:true,editable:true,editoptions:{size:10}},		
+                            {name:'dbvalneto',index:'dbvalneto',search:true,editable:true,editoptions:{size:10}},		
+                            {name:'dbvaliva',index:'dbvaliva',search:true,editable:true,editoptions:{size:10}},		
+                            {name:'dbtotal',index:'dbvaliva',search:true,editable:true,editoptions:{size:10}},		
+                            {name:'txcondPago',index:'txcondPago',search:true,editable:true,editoptions:{size:10}},		
+                            {name:'fefecha',index:'fefecha',search:true,editable:true,editoptions:{size:10}},
+                            {name:'fevencimiento',index:'fevencimiento',search:true,editable:true,editoptions:{size:10}},
+                            {name:'txobservaciones',index:'txobservaciones',search:true,editable:true,editoptions:{size:10}},
+                            {name:'txnomvendedor',index:'txnomvendedor',search:true,editable:true,editoptions:{size:10}},
+                            {name:'idvendedor',index:'idvendedor',search:true,editable:true,editoptions:{size:10}},
+                            {name:'inidtercero',index:'inidtercero',search:true,editable:true,editoptions:{size:10}},
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
@@ -24,10 +36,10 @@
                     editurl:"{{ path('masdocumentos_guardaMasDocGrid') }}",
                     onSelectRow: function(id) {
                         var vid=id;
-                        var vurl="{{ path('masdocumentos_listDetDocGrid', {'ptipdoc': '1','piddoc': '1'}) }}";
+                        var vurl="{{ path('masdocumentos_listDetDocGrid', {'piddoc': '1'}) }}";
                         //alert (vurl);
                         var rowData = jQuery(this).getRowData(id); 
-                        var val= rowData['txnomlista'];//replace name with you column
+                        var val= rowData['txtipdoc']+" - "+rowData['txnumdoc'];//replace name with you column
                         //alert (val);
                         
                         if (vid != null){
@@ -48,24 +60,30 @@
                         }
                     },
             });
+            jQuery("#masdoc").hideCol('id');
+            jQuery("#masdoc").hideCol('inidtipdoc');
+            jQuery("#masdoc").hideCol('idvendedor');
+            jQuery("#masdoc").hideCol('inidtercero');
+
             jQuery("#masdoc").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
             jQuery("#masdoc").jqGrid('navGrid',"#paginacion",{add: false,edit:false,del:false,search:false});
             jQuery("#masdoc").jqGrid('inlineNav',"#paginacion");
 
             //DETALLE
             jQuery("#detdoc").jqGrid({        
-                        var vurl="{{ path('masdocumentos_listDetDocGrid', {'ptipdoc': '1','piddoc': '1'}) }}";
-                    url:"{{ path('masdocumentos_listDetDocGrid', {'ptipdoc': '1','piddoc': '1'}) }}",
+                    url:"{{ path('masdocumentos_listDetDocGrid', {'piddoc': '1'}) }}",
                     datatype: "json",
-                    width:'800px',
-                    colNames:['Lista','Id','Id Producto', 'Ref. Producto','Producto','Precio'],
+                    width:'50%',
+                    colNames:['Id','Id Doc.','Ref.', 'Producto','Id. Producto','Cantidad','Val. Unitario','Val. Total'],
                     colModel:[
-                            {name:'idlista',index:'idlista', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
+                            {name:'inidmasdocumento',index:'inidmasdocumento', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'txrefinterna',index:'txrefinterna',editable:true,search:true,width:"100px"},
                             {name:'txnomproducto',index:'txnomproducto',editable:true,search:true,width:"400px"},
                             {name:'idproducto',index:'idproducto',editable:true,search:true},
-                            {name:'dbvalor',index:'dbvalor',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
+                            {name:'incantidad',index:'incantidad',editable:true,search:true},
+                            {name:'dbvalunitario',index:'dbvalunitario',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
+                            {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
@@ -76,7 +94,7 @@
                     caption:"Detalle de documento: 1",//,
                 //editurl:"someurl.php"
             });
-            jQuery("#detdoc").hideCol('iddoc');
+            jQuery("#detdoc").hideCol('inidmasdocumento');
             jQuery("#detdoc").hideCol('id');
             jQuery("#detdoc").hideCol('idproducto');
 
@@ -103,6 +121,8 @@
                     <table id="masdoc" ></table>
                     <div id="paginacion" ></div>
                 </td>
+            </tr>
+            <tr id="Fila2" width="100%">
                 <td id="C1" width="60%">
                     <table id="detdoc" ></table>
                     <div id="pagered" ></div>

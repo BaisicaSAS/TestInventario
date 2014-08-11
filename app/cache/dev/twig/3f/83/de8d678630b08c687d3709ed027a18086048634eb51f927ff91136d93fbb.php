@@ -41,12 +41,24 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         echo $this->env->getExtension('routing')->getPath("masdocumentos_listMasDocGrid");
         echo "\",
                     datatype: \"json\",
-                    width:'40%',
-                    colNames:['Id','Nombre','Act./Inac.'],
+                    width:'400px',
+                    colNames:['Id','Id. TD', 'Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Onservaciones', 'Vendedor', 'Id. Vendedor', 'Id. Tercero', ],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'txnomlista',index:'txnomlista',search:true,editable:true,editoptions:{size:30}},
-                            {name:'txactiva',index:'txactiva',search:true,sortable:false,editable: true, edittype:'select', formatter:'select', editoptions:{value: \"ACTIVA:ACTIVA;ACTIVA:INACTIVA\"},}\t\t
+                            {name:'inidtipdoc',index:'inidtipdoc',search:true,editable:true,editoptions:{size:10}},
+                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:true,editoptions:{size:10}},
+                            {name:'txnumdoc',index:'txnumdoc',search:true,editable:true,editoptions:{size:10}},\t\t
+                            {name:'txnomtercero',index:'txnomtercero',search:true,editable:true,editoptions:{size:10}},\t\t
+                            {name:'dbvalneto',index:'dbvalneto',search:true,editable:true,editoptions:{size:10}},\t\t
+                            {name:'dbvaliva',index:'dbvaliva',search:true,editable:true,editoptions:{size:10}},\t\t
+                            {name:'dbtotal',index:'dbvaliva',search:true,editable:true,editoptions:{size:10}},\t\t
+                            {name:'txcondPago',index:'txcondPago',search:true,editable:true,editoptions:{size:10}},\t\t
+                            {name:'fefecha',index:'fefecha',search:true,editable:true,editoptions:{size:10}},
+                            {name:'fevencimiento',index:'fevencimiento',search:true,editable:true,editoptions:{size:10}},
+                            {name:'txobservaciones',index:'txobservaciones',search:true,editable:true,editoptions:{size:10}},
+                            {name:'txnomvendedor',index:'txnomvendedor',search:true,editable:true,editoptions:{size:10}},
+                            {name:'idvendedor',index:'idvendedor',search:true,editable:true,editoptions:{size:10}},
+                            {name:'inidtercero',index:'inidtercero',search:true,editable:true,editoptions:{size:10}},
                     ],
                     rowNum:10,
                     rowList:[10,20,30],
@@ -56,18 +68,18 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     sortorder: \"asc\",
                     caption:\"Documentos\",
                     editurl:\"";
-        // line 24
+        // line 36
         echo $this->env->getExtension('routing')->getPath("masdocumentos_guardaMasDocGrid");
         echo "\",
                     onSelectRow: function(id) {
                         var vid=id;
                         var vurl=\"";
-        // line 27
-        echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("ptipdoc" => "1", "piddoc" => "1")), "html", null, true);
+        // line 39
+        echo $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("piddoc" => "1"));
         echo "\";
                         //alert (vurl);
                         var rowData = jQuery(this).getRowData(id); 
-                        var val= rowData['txnomlista'];//replace name with you column
+                        var val= rowData['txtipdoc']+\" - \"+rowData['txnumdoc'];//replace name with you column
                         //alert (val);
                         
                         if (vid != null){
@@ -88,30 +100,33 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                         }
                     },
             });
+            jQuery(\"#masdoc\").hideCol('id');
+            jQuery(\"#masdoc\").hideCol('inidtipdoc');
+            jQuery(\"#masdoc\").hideCol('idvendedor');
+            jQuery(\"#masdoc\").hideCol('inidtercero');
+
             jQuery(\"#masdoc\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
             jQuery(\"#masdoc\").jqGrid('navGrid',\"#paginacion\",{add: false,edit:false,del:false,search:false});
             jQuery(\"#masdoc\").jqGrid('inlineNav',\"#paginacion\");
 
             //DETALLE
             jQuery(\"#detdoc\").jqGrid({        
-                        var vurl=\"";
-        // line 57
-        echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("ptipdoc" => "1", "piddoc" => "1")), "html", null, true);
-        echo "\";
                     url:\"";
-        // line 58
-        echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("ptipdoc" => "1", "piddoc" => "1")), "html", null, true);
+        // line 74
+        echo $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("piddoc" => "1"));
         echo "\",
                     datatype: \"json\",
-                    width:'800px',
-                    colNames:['Lista','Id','Id Producto', 'Ref. Producto','Producto','Precio'],
+                    width:'50%',
+                    colNames:['Id','Id Doc.','Ref.', 'Producto','Id. Producto','Cantidad','Val. Unitario','Val. Total'],
                     colModel:[
-                            {name:'idlista',index:'idlista', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
+                            {name:'inidmasdocumento',index:'inidmasdocumento', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'txrefinterna',index:'txrefinterna',editable:true,search:true,width:\"100px\"},
                             {name:'txnomproducto',index:'txnomproducto',editable:true,search:true,width:\"400px\"},
                             {name:'idproducto',index:'idproducto',editable:true,search:true},
-                            {name:'dbvalor',index:'dbvalor',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
+                            {name:'incantidad',index:'incantidad',editable:true,search:true},
+                            {name:'dbvalunitario',index:'dbvalunitario',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
+                            {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
@@ -122,7 +137,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     caption:\"Detalle de documento: 1\",//,
                 //editurl:\"someurl.php\"
             });
-            jQuery(\"#detdoc\").hideCol('iddoc');
+            jQuery(\"#detdoc\").hideCol('inidmasdocumento');
             jQuery(\"#detdoc\").hideCol('id');
             jQuery(\"#detdoc\").hideCol('idproducto');
 
@@ -139,23 +154,23 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 ";
     }
 
-    // line 95
+    // line 113
     public function block_main($context, array $blocks = array())
     {
-        // line 96
+        // line 114
         echo "
   ";
-        // line 97
+        // line 115
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
   ";
-        // line 98
+        // line 116
         $this->displayBlock('sitecontent', $context, $blocks);
     }
 
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 99
+        // line 117
         echo "        <h1>Documentos</h1>
         <table id=\"CONTENEDOR\" width=\"100%\">
             <tr id=\"Fila\" width=\"100%\">
@@ -163,6 +178,8 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     <table id=\"masdoc\" ></table>
                     <div id=\"paginacion\" ></div>
                 </td>
+            </tr>
+            <tr id=\"Fila2\" width=\"100%\">
                 <td id=\"C1\" width=\"60%\">
                     <table id=\"detdoc\" ></table>
                     <div id=\"pagered\" ></div>
@@ -184,6 +201,6 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 
     public function getDebugInfo()
     {
-        return array (  159 => 99,  153 => 98,  149 => 97,  146 => 96,  143 => 95,  103 => 58,  99 => 57,  66 => 27,  60 => 24,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  174 => 117,  168 => 116,  164 => 115,  161 => 114,  158 => 113,  116 => 74,  78 => 39,  72 => 36,  41 => 8,  33 => 4,  30 => 3,);
     }
 }
