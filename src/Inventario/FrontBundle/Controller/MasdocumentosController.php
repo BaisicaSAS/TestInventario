@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Inventario\FrontBundle\Entity\Masdocumentos;
+use Inventario\FrontBundle\Entity\Tipdoc;
+use Inventario\FrontBundle\Entity\Terceros;
+use Inventario\FrontBundle\Entity\Vendedores;
 use Inventario\FrontBundle\Form\MasdocumentosType;
 
 /**
@@ -94,32 +97,58 @@ class MasdocumentosController extends Controller
      */
     public function guardaMasDocGridAction()
     {
-       $id = $_POST['id'];
-       if ($_POST['txactiva'] == 'ACTIVA') $inactiva = 1; else $inactiva = 0;
-       $txnomlista = $_POST['txnomlista'];
+       $idmd = $_POST['id'];
+       $tipd = $_POST['txtipdoc'];
+       $numd = $_POST['txnumdoc'];
+       $idte = $_POST['txnomtercero'];
+       $valn = $_POST['dbvalneto'];
+       $vali = $_POST['dbvaliva'];
+       $valt = $_POST['dbtotal'];
+       $conp = $_POST['txcondPago'];
+       $fech = strtotime($_POST['fefecha']);
+       $fecv = strtotime($_POST['fevencimiento']);
+       $obse = $_POST['txobservaciones'];
+       $vend = $_POST['txnomvendedor'];
+       
        $em = $this->getDoctrine()->getManager();
-       $listaprecio = new Listaprecios;
+       echo $idmd." - ".$tipd." - ".$numd." - ".$idte." - ".$valn." - ".$vali." - ".$valt." - "
+              .$conp." - ".$fech." - ".$fecv." - ".$obse." - ".$vend;
+       $tipDoc = new Tipdoc;
+       $tipDoc = $em->getRepository('InventarioFrontBundle:Tipdoc')->find($tipd);
+       $tercero = new Terceros;
+       $tercero = $em->getRepository('InventarioFrontBundle:Terceros')->find($idte);
+       $vendedor = new Vendedores;
+       $vendedor = $em->getRepository('InventarioFrontBundle:Vendedores')->find($vend);
+       
+       $masDoc = new Masdocumentos;
        if ($_POST['oper']=='add') {
             //insert
-            $listaprecio->setInactiva($inactiva);
-            $listaprecio->setTxnomlista($txnomlista);
-            $em->persist($listaprecio);
+            $masDoc->setInidtipdoc($tipDoc);
+            $masDoc->setTxnumdoc($numd);
+            $masDoc->setInidtercero($tercero);
+            $masDoc->setDbvalneto($valn);
+            $masDoc->setDbvaliva($vali);
+            $masDoc->setDbtotal($valt);
+            $masDoc->setTxcondpago($conp);
+            $masDoc->setFefecha($fech);
+            $masDoc->setFevencimiento($fecv);
+            $masDoc->setTxobservaciones($obse);
+            $masDoc->setVendedoresvendedor($vendedor);
+            
+            $em->persist($masDoc);
             $em->flush();
-            $id = $listaprecio->getId();
-            //echo  $id. "  --  " .$inactiva . "  --  " . $txnomlista; 
-            $this->crearDetLP($id);
         } elseif ($_POST['oper']=='edit') {
-            $listaprecio = $em->getRepository('InventarioFrontBundle:Listaprecios')->find($id);
+            $listaprecio = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
             $listaprecio->setInactiva($inactiva);
             $listaprecio->setTxnomlista($txnomlista);
             $em->persist($listaprecio);
             $em->flush();
         } elseif ($_POST['oper']=='del') {
-            $listaprecio = $em->getRepository('InventarioFrontBundle:Listaprecios')->find($id);
-            $em->remove($listaprecio);
-            $em->flush();
+            //$masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
+            //$em->remove($masDoc);
+            //$em->flush();
         }
-        return $this->render('InventarioFrontBundle:Listaprecios:index.html.twig');
+        return $this->render('InventarioFrontBundle:Masdocumentos:index.html.twig');
     }
     /**
      * Lists all Masdocumentos entities.

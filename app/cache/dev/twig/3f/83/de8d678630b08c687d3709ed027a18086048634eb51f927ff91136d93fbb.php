@@ -42,21 +42,30 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         echo "\",
                     datatype: \"json\",
                     width:'400px',
-                    colNames:['Id','Id. TD', 'Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Onservaciones', 'Vendedor', 'Id. Vendedor', 'Id. Tercero', ],
+                    colNames:['Id','Id. TD', 'Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor', 'Id. Vendedor', 'Id. Tercero', ],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'inidtipdoc',index:'inidtipdoc',search:true,editable:true,editoptions:{size:10}},
-                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:true,editoptions:{size:10}},
-                            {name:'txnumdoc',index:'txnumdoc',search:true,editable:true,editoptions:{size:10}},\t\t
-                            {name:'txnomtercero',index:'txnomtercero',search:true,editable:true,editoptions:{size:10}},\t\t
-                            {name:'dbvalneto',index:'dbvalneto',search:true,editable:true,editoptions:{size:10}},\t\t
-                            {name:'dbvaliva',index:'dbvaliva',search:true,editable:true,editoptions:{size:10}},\t\t
-                            {name:'dbtotal',index:'dbvaliva',search:true,editable:true,editoptions:{size:10}},\t\t
-                            {name:'txcondPago',index:'txcondPago',search:true,editable:true,editoptions:{size:10}},\t\t
-                            {name:'fefecha',index:'fefecha',search:true,editable:true,editoptions:{size:10}},
-                            {name:'fevencimiento',index:'fevencimiento',search:true,editable:true,editoptions:{size:10}},
-                            {name:'txobservaciones',index:'txobservaciones',search:true,editable:true,editoptions:{size:10}},
-                            {name:'txnomvendedor',index:'txnomvendedor',search:true,editable:true,editoptions:{size:10}},
+                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:true,edittype:\"select\",formatter:\"select\",editoptions:{dataUrl:\"";
+        // line 15
+        echo $this->env->getExtension('routing')->getPath("tipdoc_listTipDocGrid");
+        echo "\", weight:'100px', align:'center' }},
+                            {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:true,editable:true,editoptions:{weight:'30px', align:'center'}},\t\t
+                            {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:\"select\",formatter:\"select\",editoptions:{dataUrl:\"";
+        // line 17
+        echo $this->env->getExtension('routing')->getPath("terceros_listTerGrid", array("tipo" => "0"));
+        echo "\" }},
+                            {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},\t\t
+                            {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},\t\t
+                            {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},\t\t
+                            {name:'txcondPago',index:'txcondPago',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},\t\t
+                            {name:'fefecha',index:'fefecha',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
+                            {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
+                            {name:'txobservaciones',index:'txobservaciones',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
+                            {name:'txnomvendedor',index:'txnomvendedor',weight:'50px',search:true,editable:true,edittype:\"select\",formatter:\"select\",editoptions:{dataUrl:\"";
+        // line 25
+        echo $this->env->getExtension('routing')->getPath("vendedores_listVenGrid");
+        echo "\", align:'center'}},
                             {name:'idvendedor',index:'idvendedor',search:true,editable:true,editoptions:{size:10}},
                             {name:'inidtercero',index:'inidtercero',search:true,editable:true,editoptions:{size:10}},
                     ],
@@ -179,7 +188,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     <div id=\"paginacion\" ></div>
                 </td>
             </tr>
-            <tr id=\"Fila2\" width=\"100%\">
+            <tr id=\"Fila2\" width=\"100%\" >
                 <td id=\"C1\" width=\"60%\">
                     <table id=\"detdoc\" ></table>
                     <div id=\"pagered\" ></div>
@@ -201,6 +210,6 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 
     public function getDebugInfo()
     {
-        return array (  174 => 117,  168 => 116,  164 => 115,  161 => 114,  158 => 113,  116 => 74,  78 => 39,  72 => 36,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  183 => 117,  177 => 116,  173 => 115,  170 => 114,  167 => 113,  125 => 74,  87 => 39,  81 => 36,  67 => 25,  56 => 17,  51 => 15,  41 => 8,  33 => 4,  30 => 3,);
     }
 }

@@ -2,8 +2,15 @@
 
 namespace Inventario\FrontBundle\Controller;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use  Symfony\Component\Serializer\Serializer;
+
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 
 use Inventario\FrontBundle\Entity\Terceros;
 use Inventario\FrontBundle\Form\TercerosType;
@@ -15,6 +22,28 @@ use Inventario\FrontBundle\Form\TercerosType;
 class TercerosController extends Controller
 {
 
+    /**
+     * Lists all Terceros entities, para que sirva de lista seleccionable en la creacon de documentos.
+     *
+     */
+    public function listTerGridAction($tipo)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT a.idTercero, a.txNomTercero "
+                . "FROM Terceros a WHERE a.inTipoTer IN (:tipo,2) AND a.InActivo=1");
+        
+        $entities->bindParam('tipo',$tipo);
+
+        $entities->execute();
+        $result = $entities->fetchAll();
+        $response = '<select>';
+        foreach($result as $td) {
+              $response .= '<option value="'.$td['idTercero'].'">'.$td['txNomTercero']."</option>";
+         }            
+        $response.='</select>';
+        return $resp = new Response($response);        
+    }
     /**
      * Lists all Terceros entities.
      *

@@ -2,6 +2,10 @@ terceros:
     pattern:  /
     defaults: { _controller: "InventarioFrontBundle:Terceros:index" }
 
+terceros_listTerGrid:
+    pattern:  /listTerGrid/{tipo}
+    defaults: { _controller: "InventarioFrontBundle:Terceros:listTerGrid" }
+
 terceros_show:
     pattern:  /{id}/show
     defaults: { _controller: "InventarioFrontBundle:Terceros:show" }

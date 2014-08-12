@@ -1,7 +1,11 @@
 vendedores:
     pattern:  /
     defaults: { _controller: "InventarioFrontBundle:Vendedores:index" }
-
+    
+vendedores_listVenGrid:
+    pattern:  /listVenGrid
+    defaults: { _controller: "InventarioFrontBundle:Vendedores:listVenGrid" }
+    
 vendedores_show:
     pattern:  /{id}/show
     defaults: { _controller: "InventarioFrontBundle:Vendedores:show" }

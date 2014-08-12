@@ -2,7 +2,13 @@
 
 namespace Inventario\FrontBundle\Controller;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use  Symfony\Component\Serializer\Serializer;
+
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Inventario\FrontBundle\Entity\Tipdoc;
@@ -15,28 +21,26 @@ use Inventario\FrontBundle\Form\TipdocType;
 class TipdocController extends Controller
 {
 
+    /**
+     * Lists all Tipdoc entities, para que sirva de lista seleccionable en la creacon de documentos.
+     *
+     */
     public function listTipDocGridAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
-        $entities = $connection->prepare("SELECT a.idTipDoc, a.txTipdoc, a. txNomDoc, a.inAfecta"
+        $entities = $connection->prepare("SELECT a.idTipDoc, a.txTipdoc, a.txNomDoc, a.inAfecta, "
                 . "a.inTipTer, a.txObservPlantilla "
                 . "FROM Tipdoc a ");
         
-        $entities->bindParam('piddoc',$piddoc);
         $entities->execute();
-        
         $result = $entities->fetchAll();
-        
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new GetSetMethodNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-
-        
-        $response = new Response($serializer->serialize($result, 'json')); 
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;        
-        
+        $response = '<select>';
+        foreach($result as $td) {
+              $response .= '<option value="'.$td['idTipDoc'].'">'.$td['txTipdoc'].'-'.$td['txNomDoc']."</option>";
+         }            
+        $response.='</select>';
+        return $resp = new Response($response);        
     }
     /**
      * Lists all Tipdoc entities.

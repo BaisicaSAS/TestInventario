@@ -82,7 +82,7 @@ class Masdocumentos
      *
      * @ORM\ManyToOne(targetEntity="Tipdoc")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="inidTipDoc", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="inidTipDoc", referencedColumnName="idTipDoc")
      * })
      */
     private $inidtipdoc;
@@ -92,7 +92,7 @@ class Masdocumentos
      *
      * @ORM\ManyToOne(targetEntity="Terceros")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="inidTercero", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="inidTercero", referencedColumnName="idTercero")
      * })
      */
     private $inidtercero;
@@ -102,7 +102,7 @@ class Masdocumentos
      *
      * @ORM\ManyToOne(targetEntity="Vendedores")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Vendedores_idVendedor", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="Vendedores_idVendedor", referencedColumnName="idVendedor")
      * })
      */
     private $vendedoresvendedor;

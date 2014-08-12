@@ -2,7 +2,7 @@ tipdoc:
     pattern:  /
     defaults: { _controller: "InventarioFrontBundle:Tipdoc:index" }
 
-tipdoc_listTipDocGridAction:
+tipdoc_listTipDocGrid:
     pattern:  /listTipDocGrid
     defaults: { _controller: "InventarioFrontBundle:Tipdoc:listTipDocGrid" }
 

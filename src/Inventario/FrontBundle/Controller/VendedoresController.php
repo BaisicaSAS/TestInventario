@@ -2,7 +2,13 @@
 
 namespace Inventario\FrontBundle\Controller;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use  Symfony\Component\Serializer\Serializer;
+
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Inventario\FrontBundle\Entity\Vendedores;
@@ -15,6 +21,28 @@ use Inventario\FrontBundle\Form\VendedoresType;
 class VendedoresController extends Controller
 {
 
+    /**
+     * Lists all Vendedores entities, para que sirva de lista seleccionable en la creacion de documentos.
+     *
+     */
+    public function listVenGridAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT a.idVendedor, a.txNomVendedor "
+                . "FROM Vendedores a");
+        
+        $entities->bindParam('tipo',$tipo);
+
+        $entities->execute();
+        $result = $entities->fetchAll();
+        $response = '<select>';
+        foreach($result as $td) {
+              $response .= '<option value="'.$td['idVendedor'].'">'.$td['txNomVendedor']."</option>";
+         }            
+        $response.='</select>';
+        return $resp = new Response($response);        
+    }
     /**
      * Lists all Vendedores entities.
      *
