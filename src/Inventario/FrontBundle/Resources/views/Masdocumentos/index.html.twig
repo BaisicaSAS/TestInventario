@@ -12,12 +12,12 @@
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'inidtipdoc',index:'inidtipdoc',search:true,editable:true,editoptions:{size:10}},
-                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{dataUrl:"{{path('tipdoc_listTipDocGrid')}}", weight:'100px', align:'center' }},
+                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{value:"{{path('tipdoc_listTipDocGrid')}}", weight:'100px', align:'center' }},
                             {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:true,editable:true,editoptions:{weight:'30px', align:'center'}},		
                             {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{dataUrl:"{{path('terceros_listTerGrid', {'tipo': '0'})}}" }},
-                            {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},		
-                            {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},		
-                            {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},		
+                            {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},		
+                            {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},		
+                            {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},		
                             {name:'txcondPago',index:'txcondPago',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},		
                             {name:'fefecha',index:'fefecha',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
                             {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
@@ -64,6 +64,9 @@
             jQuery("#masdoc").hideCol('inidtipdoc');
             jQuery("#masdoc").hideCol('idvendedor');
             jQuery("#masdoc").hideCol('inidtercero');
+            jQuery("#masdoc").hideCol('dbvalneto');
+            jQuery("#masdoc").hideCol('dbvaliva');
+            jQuery("#masdoc").hideCol('dbtotal');
 
             jQuery("#masdoc").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
             jQuery("#masdoc").jqGrid('navGrid',"#paginacion",{add: false,edit:false,del:false,search:false});

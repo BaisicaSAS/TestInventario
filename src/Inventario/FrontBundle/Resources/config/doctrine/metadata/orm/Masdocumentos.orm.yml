@@ -40,7 +40,8 @@ Masdocumentos:
             comment: 'Vencimiento de la factura ??'
             column: feVencimiento
         txobservaciones:
-            type: integer
+            type: string
+            length: 200
             nullable: true
             unsigned: false
             comment: 'Heredada del tipo de documento'

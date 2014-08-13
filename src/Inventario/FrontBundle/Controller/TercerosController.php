@@ -39,7 +39,7 @@ class TercerosController extends Controller
         $result = $entities->fetchAll();
         $response = '<select>';
         foreach($result as $td) {
-              $response .= '<option value="'.$td['idTercero'].'">'.$td['txNomTercero']."</option>";
+              $response .= '<option value='.$td['idTercero'].'>'.$td['txNomTercero']."</option>";
          }            
         $response.='</select>';
         return $resp = new Response($response);        

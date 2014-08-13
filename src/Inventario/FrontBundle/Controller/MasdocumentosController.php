@@ -35,11 +35,12 @@ class MasdocumentosController extends Controller
                 . "a.feFecha as fefecha, a.feVencimiento as fevencimiento, a.txObservaciones as txobservaciones, "
                 . "txCondPago as txcondPago, dbValNeto as dbvalneto, a.dbValIva as dbvaliva, a.dbTotal as dbtotal, "
                 . "a.inidTipDoc as inidtipdoc, a.inidTercero as inidtercero,  a.Vendedores_idVendedor as idvendedor, "
-                . "b.txNomTercero as txnomtercero, c.txTipDoc as txtipdoc, d.txNomVendedor as txnomvendedor "
+                . "c.txTipdoc as txtipdoc, a.inidTercero as txnomtercero,  a.Vendedores_idVendedor as txnomvendedor "
+                //. "b.txNomTercero as txnomtercero, c.txTipDoc as txtipdoc, d.txNomVendedor as txnomvendedor "
                 . "FROM Masdocumentos a "
-                . "LEFT JOIN Terceros b ON a.inidTercero = b.idTercero "
+                //. "LEFT JOIN Terceros b ON a.inidTercero = b.idTercero "
                 . "LEFT JOIN Tipdoc c ON a.inidTipDoc = c.idTipDoc "
-                . "LEFT JOIN Vendedores d ON a.Vendedores_idVendedor = d.idVendedor "
+                //. "LEFT JOIN Vendedores d ON a.Vendedores_idVendedor = d.idVendedor "
                 . "ORDER BY txtipdoc, id");
         
         $entities->execute();
@@ -105,14 +106,20 @@ class MasdocumentosController extends Controller
        $vali = $_POST['dbvaliva'];
        $valt = $_POST['dbtotal'];
        $conp = $_POST['txcondPago'];
-       $fech = strtotime($_POST['fefecha']);
-       $fecv = strtotime($_POST['fevencimiento']);
+       
+       //$ftem = new DateTime($_POST['fefecha']);
+       $fech = new \DateTime($_POST['fefecha']);
+       //$fech = date('Y-m-d',$ftem);
+       //$ftem = new DateTime($_POST['fevencimiento']);
+       $fecv = new \DateTime($_POST['fevencimiento']);
+       //$fecv = date('Y-m-d',$ftem);
+
        $obse = $_POST['txobservaciones'];
        $vend = $_POST['txnomvendedor'];
        
        $em = $this->getDoctrine()->getManager();
        echo $idmd." - ".$tipd." - ".$numd." - ".$idte." - ".$valn." - ".$vali." - ".$valt." - "
-              .$conp." - ".$fech." - ".$fecv." - ".$obse." - ".$vend;
+              .$conp." - ".$fech->format('d/m/y')." - ".$fecv->format('d/m/y')." - ".$obse." - ".$vend;
        $tipDoc = new Tipdoc;
        $tipDoc = $em->getRepository('InventarioFrontBundle:Tipdoc')->find($tipd);
        $tercero = new Terceros;
@@ -138,10 +145,18 @@ class MasdocumentosController extends Controller
             $em->persist($masDoc);
             $em->flush();
         } elseif ($_POST['oper']=='edit') {
-            $listaprecio = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
-            $listaprecio->setInactiva($inactiva);
-            $listaprecio->setTxnomlista($txnomlista);
-            $em->persist($listaprecio);
+            $masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
+            $masDoc->setInidtercero($tercero);
+            $masDoc->setDbvalneto($valn);
+            $masDoc->setDbvaliva($vali);
+            $masDoc->setDbtotal($valt);
+            $masDoc->setTxcondpago($conp);
+            $masDoc->setFefecha($fech);
+            $masDoc->setFevencimiento($fecv);
+            $masDoc->setTxobservaciones($obse);
+            $masDoc->setVendedoresvendedor($vendedor);
+            
+            $em->persist($masDoc);
             $em->flush();
         } elseif ($_POST['oper']=='del') {
             //$masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);

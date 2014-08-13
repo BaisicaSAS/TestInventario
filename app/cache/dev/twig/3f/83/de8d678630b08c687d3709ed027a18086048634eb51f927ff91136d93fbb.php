@@ -46,7 +46,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'inidtipdoc',index:'inidtipdoc',search:true,editable:true,editoptions:{size:10}},
-                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:true,edittype:\"select\",formatter:\"select\",editoptions:{dataUrl:\"";
+                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:true,edittype:\"select\",formatter:\"select\",editoptions:{value:\"";
         // line 15
         echo $this->env->getExtension('routing')->getPath("tipdoc_listTipDocGrid");
         echo "\", weight:'100px', align:'center' }},
@@ -55,9 +55,9 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         // line 17
         echo $this->env->getExtension('routing')->getPath("terceros_listTerGrid", array("tipo" => "0"));
         echo "\" }},
-                            {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},\t\t
-                            {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},\t\t
-                            {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},\t\t
+                            {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},\t\t
+                            {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},\t\t
+                            {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},\t\t
                             {name:'txcondPago',index:'txcondPago',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},\t\t
                             {name:'fefecha',index:'fefecha',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
                             {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
@@ -113,6 +113,9 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
             jQuery(\"#masdoc\").hideCol('inidtipdoc');
             jQuery(\"#masdoc\").hideCol('idvendedor');
             jQuery(\"#masdoc\").hideCol('inidtercero');
+            jQuery(\"#masdoc\").hideCol('dbvalneto');
+            jQuery(\"#masdoc\").hideCol('dbvaliva');
+            jQuery(\"#masdoc\").hideCol('dbtotal');
 
             jQuery(\"#masdoc\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
             jQuery(\"#masdoc\").jqGrid('navGrid',\"#paginacion\",{add: false,edit:false,del:false,search:false});
@@ -121,7 +124,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
             //DETALLE
             jQuery(\"#detdoc\").jqGrid({        
                     url:\"";
-        // line 74
+        // line 77
         echo $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("piddoc" => "1"));
         echo "\",
                     datatype: \"json\",
@@ -163,23 +166,23 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 ";
     }
 
-    // line 113
+    // line 116
     public function block_main($context, array $blocks = array())
     {
-        // line 114
+        // line 117
         echo "
   ";
-        // line 115
+        // line 118
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
   ";
-        // line 116
+        // line 119
         $this->displayBlock('sitecontent', $context, $blocks);
     }
 
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 117
+        // line 120
         echo "        <h1>Documentos</h1>
         <table id=\"CONTENEDOR\" width=\"100%\">
             <tr id=\"Fila\" width=\"100%\">
@@ -210,6 +213,6 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 
     public function getDebugInfo()
     {
-        return array (  183 => 117,  177 => 116,  173 => 115,  170 => 114,  167 => 113,  125 => 74,  87 => 39,  81 => 36,  67 => 25,  56 => 17,  51 => 15,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  186 => 120,  180 => 119,  176 => 118,  173 => 117,  170 => 116,  128 => 77,  87 => 39,  81 => 36,  67 => 25,  56 => 17,  51 => 15,  41 => 8,  33 => 4,  30 => 3,);
     }
 }

@@ -45,7 +45,7 @@ class Masdocumentos
     /**
      * @var integer
      *
-     * @ORM\Column(name="txObservaciones", type="integer", nullable=true)
+     * @ORM\Column(name="txObservaciones", type="string", length=200, nullable=true)
      */
     private $txobservaciones;
 

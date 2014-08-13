@@ -296,6 +296,10 @@ ALTER TABLE `Productos` ADD COLUMN `inActivo` INT NOT NULL DEFAULT 1 COMMENT '1:
 ALTER TABLE `Terceros` ADD COLUMN `inActivo` INT NOT NULL DEFAULT 1 COMMENT '1: activo - 0: inactivo'  AFTER `txDivipola` , ADD COLUMN `inTipoDesc` INT NOT NULL DEFAULT 0 COMMENT '0: normal - 1: incluido - 2: pie factura'  AFTER `inActivo` ;
 
 ALTER TABLE `vendedores` CHANGE COLUMN `idVendedor` `idVendedor` INT(11) NOT NULL AUTO_INCREMENT  ;
+
+ALTER TABLE `masdocumentos` CHANGE COLUMN `txObservaciones` `txObservaciones` VARCHAR(200) NULL COMMENT ''  ;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

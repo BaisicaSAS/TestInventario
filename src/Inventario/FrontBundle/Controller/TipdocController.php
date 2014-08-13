@@ -35,11 +35,17 @@ class TipdocController extends Controller
         
         $entities->execute();
         $result = $entities->fetchAll();
-        $response = '<select>';
+        //$response = '<select>';
+        //foreach($result as $td) {
+              //$response .= '<option value="'.$td['idTipDoc'].'">'.$td['txTipdoc'].'-'.$td['txNomDoc']."</option>";
+        //      $response .= '<option value='.$td['txTipdoc'].'>'.$td['txTipdoc']."</option>";
+        // }            
+        //return $resp = new Response($response);        
+        $response='"';
         foreach($result as $td) {
-              $response .= '<option value="'.$td['idTipDoc'].'">'.$td['txTipdoc'].'-'.$td['txNomDoc']."</option>";
-         }            
-        $response.='</select>';
+              $response .= $td['txTipdoc'].':'.$td['txTipdoc'].";";
+        }            
+        $response = substr($response, 0, strlen($response)-1 ).'"';
         return $resp = new Response($response);        
     }
     /**
