@@ -3,6 +3,8 @@
 {% block head %}
     {{ parent() }}     
     <script type="text/javascript">
+
+        var tipdocs = $.ajax({url: $("{{path('tipdoc_listTipDocGrid')}}").val(), async: false, success: function(data, result) {if (!result) alert('Failure to retrieve the Countries.');}}).responseText;
         $(document).ready(function(){
             jQuery("#masdoc").jqGrid({        
                     url:"{{ path('masdocumentos_listMasDocGrid') }}",
@@ -11,8 +13,8 @@
                     colNames:['Id','Id. TD', 'Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor', 'Id. Vendedor', 'Id. Tercero', ],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'inidtipdoc',index:'inidtipdoc',search:true,editable:true,editoptions:{size:10}},
-                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{value:"{{path('tipdoc_listTipDocGrid')}}", weight:'100px', align:'center' }},
+                            {name:'inidtipdoc',index:'inidtipdoc',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{dataUrl:"{{path('tipdoc_listTipDocGrid')}}"}},
+                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:false},
                             {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:true,editable:true,editoptions:{weight:'30px', align:'center'}},		
                             {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{dataUrl:"{{path('terceros_listTerGrid', {'tipo': '0'})}}" }},
                             {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},		
@@ -34,12 +36,15 @@
                     sortorder: "asc",
                     caption:"Documentos",
                     editurl:"{{ path('masdocumentos_guardaMasDocGrid') }}",
+                    loadComplete: function() {
+                        $(#masdoc).setColProp('inidtipdoc', { editoptions: { value: tipdocs} });
+                    },                    
                     onSelectRow: function(id) {
                         var vid=id;
                         var vurl="{{ path('masdocumentos_listDetDocGrid', {'piddoc': '1'}) }}";
                         //alert (vurl);
                         var rowData = jQuery(this).getRowData(id); 
-                        var val= rowData['txtipdoc']+" - "+rowData['txnumdoc'];//replace name with you column
+                        var val= rowData['inidtipdoc']+" - "+rowData['txnumdoc'];//replace name with you column
                         //alert (val);
                         
                         if (vid != null){
@@ -61,7 +66,7 @@
                     },
             });
             jQuery("#masdoc").hideCol('id');
-            jQuery("#masdoc").hideCol('inidtipdoc');
+            jQuery("#masdoc").hideCol('txtipdoc');
             jQuery("#masdoc").hideCol('idvendedor');
             jQuery("#masdoc").hideCol('inidtercero');
             jQuery("#masdoc").hideCol('dbvalneto');

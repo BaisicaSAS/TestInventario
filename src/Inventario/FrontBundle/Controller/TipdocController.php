@@ -35,18 +35,32 @@ class TipdocController extends Controller
         
         $entities->execute();
         $result = $entities->fetchAll();
-        //$response = '<select>';
-        //foreach($result as $td) {
-              //$response .= '<option value="'.$td['idTipDoc'].'">'.$td['txTipdoc'].'-'.$td['txNomDoc']."</option>";
-        //      $response .= '<option value='.$td['txTipdoc'].'>'.$td['txTipdoc']."</option>";
-        // }            
-        //return $resp = new Response($response);        
+
+        /*
+         * DEVOLVER JSON
+         */        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+        
+        /*
+         * Devolver combo
+         * $response = '<select>';
+        foreach($result as $td) {
+              $response .= '<option value="'.$td['idTipDoc'].'">'.$td['txTipdoc'].'-'.$td['txNomDoc']."</option>";
+        }            
+        return $resp = new Response($response);        */
+        
+        /*
+         * Devolver text
         $response='"';
         foreach($result as $td) {
               $response .= $td['txTipdoc'].':'.$td['txTipdoc'].";";
         }            
-        $response = substr($response, 0, strlen($response)-1 ).'"';
-        return $resp = new Response($response);        
+        $response = substr($response, 0, strlen($response)-1 ).'"';*/
     }
     /**
      * Lists all Tipdoc entities.
