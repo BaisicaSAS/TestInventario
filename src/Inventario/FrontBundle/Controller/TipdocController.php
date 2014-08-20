@@ -48,7 +48,8 @@ class TipdocController extends Controller
         
         /*
          * Devolver combo
-         * $response = '<select>';
+         */
+        /*$response = '<select>';
         foreach($result as $td) {
               $response .= '<option value="'.$td['idTipDoc'].'">'.$td['txTipdoc'].'-'.$td['txNomDoc']."</option>";
         }            

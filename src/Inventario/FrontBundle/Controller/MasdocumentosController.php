@@ -35,7 +35,7 @@ class MasdocumentosController extends Controller
                 . "a.feFecha as fefecha, a.feVencimiento as fevencimiento, a.txObservaciones as txobservaciones, "
                 . "txCondPago as txcondPago, dbValNeto as dbvalneto, a.dbValIva as dbvaliva, a.dbTotal as dbtotal, "
                 . "a.inidTipDoc as inidtipdoc, a.inidTercero as inidtercero,  a.Vendedores_idVendedor as idvendedor, "
-                . "c.txTipdoc as txtipdoc, a.inidTercero as txnomtercero,  a.Vendedores_idVendedor as txnomvendedor "
+                . "c.txTipdoc as txtipdoc, c.txNomdoc as txnomdoc, a.inidTercero as txnomtercero,  a.Vendedores_idVendedor as txnomvendedor "
                 //. "b.txNomTercero as txnomtercero, c.txTipDoc as txtipdoc, d.txNomVendedor as txnomvendedor "
                 . "FROM Masdocumentos a "
                 //. "LEFT JOIN Terceros b ON a.inidTercero = b.idTercero "
@@ -99,7 +99,7 @@ class MasdocumentosController extends Controller
     public function guardaMasDocGridAction()
     {
        $idmd = $_POST['id'];
-       $tipd = $_POST['txtipdoc'];
+       $tipd = $_POST['txnomdoc'];
        $numd = $_POST['txnumdoc'];
        $idte = $_POST['txnomtercero'];
        $valn = $_POST['dbvalneto'];
@@ -121,7 +121,7 @@ class MasdocumentosController extends Controller
        echo $idmd." - ".$tipd." - ".$numd." - ".$idte." - ".$valn." - ".$vali." - ".$valt." - "
               .$conp." - ".$fech->format('d/m/y')." - ".$fecv->format('d/m/y')." - ".$obse." - ".$vend;
        $tipDoc = new Tipdoc;
-       $tipDoc = $em->getRepository('InventarioFrontBundle:Tipdoc')->find($tipd);
+       $tipDoc = $em->getRepository('InventarioFrontBundle:Tipdoc')->findBy(array('txNomDoc' => $tipd));
        $tercero = new Terceros;
        $tercero = $em->getRepository('InventarioFrontBundle:Terceros')->find($idte);
        $vendedor = new Vendedores;
