@@ -9,7 +9,7 @@
                     url:"{{ path('masdocumentos_listMasDocGrid') }}",
                     datatype: "json",
                     width:'400px',
-                    colNames:['Id','Tipo Doc.','Id. TD','Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor', 'Id. Vendedor', 'Id. Tercero', ],
+                    colNames:['Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'txnomdoc',index:'txnomdoc',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{dataUrl:"{{path('tipdoc_listTipDocGrid')}}",
@@ -26,8 +26,6 @@
                                         }, async:false,                            
                                     }
                             },
-                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:false},
-                            {name:'inidtipdoc',index:'inidtipdoc',search:true,editable:false},
                             {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:true,editable:true,editoptions:{weight:'30px', align:'center'}},		
                             {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{dataUrl:"{{path('terceros_listTerGrid', {'tipo': '0'})}}" }},
                             {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},		
@@ -38,8 +36,6 @@
                             {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
                             {name:'txobservaciones',index:'txobservaciones',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
                             {name:'txnomvendedor',index:'txnomvendedor',weight:'50px',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{dataUrl:"{{path('vendedores_listVenGrid')}}", align:'center'}},
-                            {name:'idvendedor',index:'idvendedor',search:true,editable:true,editoptions:{size:10}},
-                            {name:'inidtercero',index:'inidtercero',search:true,editable:true,editoptions:{size:10}},
                     ],
                     rowNum:100,
                     rowList:[100,200,300],
@@ -51,10 +47,6 @@
                     editurl:"{{ path('masdocumentos_guardaMasDocGrid') }}",
             });
             jQuery("#masdoc").hideCol('id');
-            jQuery("#masdoc").hideCol('txtipdoc');
-            jQuery("#masdoc").hideCol('inidtipdoc');
-            jQuery("#masdoc").hideCol('idvendedor');
-            jQuery("#masdoc").hideCol('inidtercero');
             jQuery("#masdoc").hideCol('dbvalneto');
             jQuery("#masdoc").hideCol('dbvaliva');
             jQuery("#masdoc").hideCol('dbtotal');

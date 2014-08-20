@@ -34,14 +34,13 @@ class MasdocumentosController extends Controller
         $entities = $connection->prepare("SELECT a.idMasDocumento as id, a.txNumDoc as txnumdoc, "
                 . "a.feFecha as fefecha, a.feVencimiento as fevencimiento, a.txObservaciones as txobservaciones, "
                 . "txCondPago as txcondPago, dbValNeto as dbvalneto, a.dbValIva as dbvaliva, a.dbTotal as dbtotal, "
-                . "a.inidTipDoc as inidtipdoc, a.inidTercero as inidtercero,  a.Vendedores_idVendedor as idvendedor, "
-                . "c.txTipdoc as txtipdoc, c.txNomdoc as txnomdoc, a.inidTercero as txnomtercero,  a.Vendedores_idVendedor as txnomvendedor "
+                . "c.txNomdoc as txnomdoc, b.txNomTercero as txnomtercero, d.txNomVendedor as txnomvendedor "
                 //. "b.txNomTercero as txnomtercero, c.txTipDoc as txtipdoc, d.txNomVendedor as txnomvendedor "
                 . "FROM Masdocumentos a "
-                //. "LEFT JOIN Terceros b ON a.inidTercero = b.idTercero "
+                . "LEFT JOIN Terceros b ON a.inidTercero = b.idTercero "
                 . "LEFT JOIN Tipdoc c ON a.inidTipDoc = c.idTipDoc "
-                //. "LEFT JOIN Vendedores d ON a.Vendedores_idVendedor = d.idVendedor "
-                . "ORDER BY txtipdoc, id");
+                . "LEFT JOIN Vendedores d ON a.Vendedores_idVendedor = d.idVendedor "
+                . "ORDER BY txnomdoc, id");
         
         $entities->execute();
         

@@ -43,7 +43,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         echo "\",
                     datatype: \"json\",
                     width:'400px',
-                    colNames:['Id','Tipo Doc.','Id. TD','Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor', 'Id. Vendedor', 'Id. Tercero', ],
+                    colNames:['Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'txnomdoc',index:'txnomdoc',search:true,editable:true,edittype:\"select\",formatter:\"select\",editoptions:{dataUrl:\"";
@@ -63,11 +63,9 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                         }, async:false,                            
                                     }
                             },
-                            {name:'txtipdoc',index:'txtipdoc',search:true,editable:false},
-                            {name:'inidtipdoc',index:'inidtipdoc',search:true,editable:false},
                             {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:true,editable:true,editoptions:{weight:'30px', align:'center'}},\t\t
                             {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:\"select\",formatter:\"select\",editoptions:{dataUrl:\"";
-        // line 32
+        // line 30
         echo $this->env->getExtension('routing')->getPath("terceros_listTerGrid", array("tipo" => "0"));
         echo "\" }},
                             {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},\t\t
@@ -78,11 +76,9 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                             {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
                             {name:'txobservaciones',index:'txobservaciones',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
                             {name:'txnomvendedor',index:'txnomvendedor',weight:'50px',search:true,editable:true,edittype:\"select\",formatter:\"select\",editoptions:{dataUrl:\"";
-        // line 40
+        // line 38
         echo $this->env->getExtension('routing')->getPath("vendedores_listVenGrid");
         echo "\", align:'center'}},
-                            {name:'idvendedor',index:'idvendedor',search:true,editable:true,editoptions:{size:10}},
-                            {name:'inidtercero',index:'inidtercero',search:true,editable:true,editoptions:{size:10}},
                     ],
                     rowNum:100,
                     rowList:[100,200,300],
@@ -92,15 +88,11 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     sortorder: \"asc\",
                     caption:\"Documentos\",
                     editurl:\"";
-        // line 51
+        // line 47
         echo $this->env->getExtension('routing')->getPath("masdocumentos_guardaMasDocGrid");
         echo "\",
             });
             jQuery(\"#masdoc\").hideCol('id');
-            jQuery(\"#masdoc\").hideCol('txtipdoc');
-            jQuery(\"#masdoc\").hideCol('inidtipdoc');
-            jQuery(\"#masdoc\").hideCol('idvendedor');
-            jQuery(\"#masdoc\").hideCol('inidtercero');
             jQuery(\"#masdoc\").hideCol('dbvalneto');
             jQuery(\"#masdoc\").hideCol('dbvaliva');
             jQuery(\"#masdoc\").hideCol('dbtotal');
@@ -115,7 +107,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
             //DETALLE
             jQuery(\"#detdoc\").jqGrid({        
                     url:\"";
-        // line 71
+        // line 63
         echo $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("piddoc" => "1"));
         echo "\",
                     datatype: \"json\",
@@ -154,23 +146,23 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 ";
     }
 
-    // line 107
+    // line 99
     public function block_main($context, array $blocks = array())
     {
-        // line 108
+        // line 100
         echo "
   ";
-        // line 109
+        // line 101
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
   ";
-        // line 110
+        // line 102
         $this->displayBlock('sitecontent', $context, $blocks);
     }
 
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 111
+        // line 103
         echo "        <h1>Documentos</h1>
         <table id=\"CONTENEDOR\" width=\"100%\">
             <tr id=\"Fila\" width=\"100%\">
@@ -201,6 +193,6 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 
     public function getDebugInfo()
     {
-        return array (  174 => 111,  168 => 110,  164 => 109,  161 => 108,  158 => 107,  119 => 71,  96 => 51,  82 => 40,  71 => 32,  51 => 15,  42 => 9,  33 => 4,  30 => 3,);
+        return array (  166 => 103,  160 => 102,  156 => 101,  153 => 100,  150 => 99,  111 => 63,  92 => 47,  80 => 38,  69 => 30,  51 => 15,  42 => 9,  33 => 4,  30 => 3,);
     }
 }
