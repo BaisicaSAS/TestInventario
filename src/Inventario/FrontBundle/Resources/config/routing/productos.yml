@@ -2,6 +2,10 @@ productos:
     pattern:  /
     defaults: { _controller: "InventarioFrontBundle:Productos:index" }
 
+productos_listProGrid:
+    pattern:  /listProGrid/{pidter}
+    defaults: { _controller: "InventarioFrontBundle:Productos:listProGrid" }
+
 productos_show:
     pattern:  /{id}/show
     defaults: { _controller: "InventarioFrontBundle:Productos:show" }

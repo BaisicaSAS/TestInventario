@@ -12,7 +12,7 @@
                     colNames:['Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'txnomdoc',index:'txnomdoc',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{dataUrl:"{{path('tipdoc_listTipDocGrid')}}",
+                            {name:'txnomdoc',index:'txnomdoc',search:true,editable:true,edittype:"select",editoptions:{dataUrl:"{{path('tipdoc_listTipDocGrid')}}",
                                 buildSelect: function (data) {
                                             var response = jQuery.parseJSON(data);
                                             //alert(response);
@@ -27,15 +27,41 @@
                                     }
                             },
                             {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:true,editable:true,editoptions:{weight:'30px', align:'center'}},		
-                            {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{dataUrl:"{{path('terceros_listTerGrid', {'tipo': '0'})}}" }},
-                            {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},		
-                            {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},		
-                            {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:true,editoptions:{align:'center', defaultValue:'0'}},		
+                            {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:"select",editoptions:{dataUrl:"{{path('terceros_listTerGrid', {'tipo': '0'})}}",
+                                buildSelect: function (data) {
+                                            var response = jQuery.parseJSON(data);
+                                            //alert(response);
+                                            var s = '<select>';
+                                            for (var i in response) {
+                                                    //alert(response[i].inidtipdoc);
+                                                    s += '<option value="' + response[i].txNomTercero + '">' + response[i].txNomTercero + '</option>';
+                                            }
+                                            //alert(s + "</select>");
+                                            return s + "</select>";
+                                        }, async:false,                            
+                                    }
+                            },
+                            {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},		
+                            {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
+                            {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
                             {name:'txcondPago',index:'txcondPago',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},		
                             {name:'fefecha',index:'fefecha',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
                             {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
                             {name:'txobservaciones',index:'txobservaciones',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
-                            {name:'txnomvendedor',index:'txnomvendedor',weight:'50px',search:true,editable:true,edittype:"select",formatter:"select",editoptions:{dataUrl:"{{path('vendedores_listVenGrid')}}", align:'center'}},
+                            {name:'txnomvendedor',index:'txnomvendedor',weight:'50px',search:true,editable:true,edittype:"select",editoptions:{dataUrl:"{{path('vendedores_listVenGrid')}}", align:'center',
+                                buildSelect: function (data) {
+                                            var response = jQuery.parseJSON(data);
+                                            //alert(response);
+                                            var s = '<select>';
+                                            for (var i in response) {
+                                                    //alert(response[i].inidtipdoc);
+                                                    s += '<option value="' + response[i].txNomVendedor + '">' + response[i].txNomVendedor + '</option>';
+                                            }
+                                            //alert(s + "</select>");
+                                            return s + "</select>";
+                                        }, async:false,                            
+                                    }
+                            },
                     ],
                     rowNum:100,
                     rowList:[100,200,300],
@@ -45,6 +71,37 @@
                     sortorder: "asc",
                     caption:"Documentos",
                     editurl:"{{ path('masdocumentos_guardaMasDocGrid') }}",
+                    onSelectRow: function (ids) {
+
+        
+                        var vurl="{{ path('masdocumentos_listDetDocGrid', {'piddoc': '1'}) }}";
+                        var veurl="{{ path('masdocumentos_guardaDetDocGrid', {'piddoc': '1'}) }}";
+                        //alert (vurl);
+                        if (ids != null){
+                            vurl = vurl.replace('1', ids);
+                            veurl = vurl.replace('1', ids);
+                        }
+                            
+        
+                         var TDoc = jQuery("#masdoc").jqGrid('getCell', ids, 'txnomdoc');
+                         var NDoc = jQuery("#masdoc").jqGrid('getCell', ids, 'txnumdoc');
+                         if (ids == null) {
+                             ids = 0;
+                             if (jQuery("#detdoc").jqGrid('getGridParam', 'records') > 0) {
+                                 //alert(ids);
+
+                                 jQuery("#detdoc").jqGrid('setGridParam', { editurl: veurl, url: vurl, page: 1 });
+                                 jQuery("#detdoc").jqGrid('setCaption', "Detalle documento--: "  + TDoc + " - " + NDoc )
+                                    .trigger('reloadGrid');
+                             }
+                         } else {
+
+                             //alert("si"+ids);
+                             jQuery("#detdoc").jqGrid('setGridParam', { editurl: veurl, url: vurl, page: 1 });
+                             jQuery("#detdoc").jqGrid('setCaption',"Detalle documento: " + TDoc + " - " + NDoc )
+                                .trigger('reloadGrid');
+                         }
+                     }                    
             });
             jQuery("#masdoc").hideCol('id');
             jQuery("#masdoc").hideCol('dbvalneto');
@@ -63,13 +120,32 @@
                     url:"{{ path('masdocumentos_listDetDocGrid', {'piddoc': '1'}) }}",
                     datatype: "json",
                     width:'50%',
-                    colNames:['Id','Id Doc.','Ref.', 'Producto','Id. Producto','Cantidad','Val. Unitario','Val. Total'],
+                    colNames:['Id','Id Doc.','Ref.', 'Producto', 'Cantidad','Val. Unitario','Val. Total'],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'inidmasdocumento',index:'inidmasdocumento', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'txrefinterna',index:'txrefinterna',editable:true,search:true,width:"100px"},
-                            {name:'txnomproducto',index:'txnomproducto',editable:true,search:true,width:"400px"},
-                            {name:'idproducto',index:'idproducto',editable:true,search:true},
+                            {name:'txrefinterna',index:'txrefinterna',editable:true,edittype:"select",editoptions:{dataUrl:"{{path('productos_listProGrid', {'pidter': '1'})}}", align:'center',
+                                buildSelect: function (data) {
+                                            var response = jQuery.parseJSON(data);
+                                            //alert(response);
+                                            var s = '<select>';
+                                            for (var i in response) {
+                                                    //alert(response[i].inidtipdoc);
+                                                    s += '<option value="' + response[i].txnomproducto + '">' + response[i].txrefinterna + '</option>';
+                                            }
+                                            //alert(s + "</select>");
+                                            return s + "</select>";
+                                        }, 
+                                                            
+                                dataEvents: [{ type:'change',
+                                                fn: function(e) {
+                                                      $('txnomproducto').val(this.value);
+                                                      alert($('txnomproducto').val(this.value));
+                                                }}
+                                    ]
+                                },
+                            },
+                            {name:'txnomproducto',index:'txnomproducto',editable:true,edittype:"text",editoptions:{readonly: 'readonly'}},
                             {name:'incantidad',index:'incantidad',editable:true,search:true},
                             {name:'dbvalunitario',index:'dbvalunitario',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
                             {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
@@ -80,8 +156,8 @@
                     sortname: 'id',
                     viewrecords: true,
                     sortorder: "asc",
-                    caption:"Detalle de documento: 1",//,
-                //editurl:"someurl.php"
+                    caption:"Detalle de documento: XX",
+                    editurl:"{{ path('masdocumentos_guardaDetDocGrid', {'piddoc': '1'}) }}"
             });
             jQuery("#detdoc").hideCol('inidmasdocumento');
             jQuery("#detdoc").hideCol('id');

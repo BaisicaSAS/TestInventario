@@ -2,7 +2,13 @@
 
 namespace Inventario\FrontBundle\Controller;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Inventario\FrontBundle\Entity\Productos;
@@ -15,6 +21,49 @@ use Inventario\FrontBundle\Form\ProductosType;
 class ProductosController extends Controller
 {
 
+    public function listProGridAction($pidter)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT a.txRefInterna as txrefinterna, a.txNomProducto as txnomproducto,  "
+                . "b.dbvalor as dbvalor "
+                . "FROM Productos a "
+                . "LEFT JOIN Detlistaprecios b ON a.idProducto = b.Productos_idProducto "
+                . "LEFT JOIN Terceros c ON b.ListaPrecios_idListaPrecios = c.idListaPrecios "
+                . "WHERE c.idTercero = :pidter ");
+        
+        $entities->bindParam('pidter',$pidter);
+        $entities->execute();
+        
+        $result = $entities->fetchAll();
+        
+        /*
+         * DEVOLVER JSON
+         */        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+        
+        /*
+         * Devolver combo
+         */
+        /*$response = '<select>';
+        foreach($result as $td) {
+              $response .= '<option value="'.$td['idTipDoc'].'">'.$td['txTipdoc'].'-'.$td['txNomDoc']."</option>";
+        }            
+        return $resp = new Response($response);        */
+        
+        /*
+         * Devolver text
+        $response='"';
+        foreach($result as $td) {
+              $response .= $td['txTipdoc'].':'.$td['txTipdoc'].";";
+        }            
+        $response = substr($response, 0, strlen($response)-1 ).'"';*/
+    }
     /**
      * Lists all Productos entities.
      *

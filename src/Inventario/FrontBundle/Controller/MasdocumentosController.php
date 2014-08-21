@@ -16,7 +16,7 @@ use Inventario\FrontBundle\Entity\Tipdoc;
 use Inventario\FrontBundle\Entity\Terceros;
 use Inventario\FrontBundle\Entity\Vendedores;
 use Inventario\FrontBundle\Form\MasdocumentosType;
-
+use Inventario\FrontBundle\Entity\Productos;
 /**
  * Masdocumentos controller.
  *
@@ -62,14 +62,11 @@ class MasdocumentosController extends Controller
      */
     public function listDetDocGridAction($piddoc)
     {
-
-
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
         $entities = $connection->prepare("SELECT a.idDetDocumentos as id, a.inidMasDocumento as inidmasdocumento, "
                 . "a.inCantidad as incantidad, a.dbValUnitario as dbvalunitario, a.dbValtotal as dbvaltotal, "
-                . "a. inidMasDocumento as inidmasdocumento, a.Productos_idProducto as idproducto, "
-                . "b.txRefInterna as txrefinterna, b.txNomProducto as txnomproducto "
+                . "a.txrefinterna as idproducto, b.txNomProducto as txnomproducto "
                 . "FROM Detdocumentos a "
                 . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
                 . "WHERE a.inidMasDocumento = :piddoc "
@@ -92,7 +89,7 @@ class MasdocumentosController extends Controller
     }
 
     /**
-     * Guarda cambios desde jqGrid.
+     * Guarda cambios Maestro Doc desde jqGrid.
      *
      */
     public function guardaMasDocGridAction()
@@ -120,11 +117,86 @@ class MasdocumentosController extends Controller
        echo $idmd." - ".$tipd." - ".$numd." - ".$idte." - ".$valn." - ".$vali." - ".$valt." - "
               .$conp." - ".$fech->format('d/m/y')." - ".$fecv->format('d/m/y')." - ".$obse." - ".$vend;
        $tipDoc = new Tipdoc;
-       $tipDoc = $em->getRepository('InventarioFrontBundle:Tipdoc')->findBy(array('txNomDoc' => $tipd));
+       $tipDoc = $em->getRepository('InventarioFrontBundle:Tipdoc')->findOneBy(array('txnomdoc' => $tipd));
        $tercero = new Terceros;
-       $tercero = $em->getRepository('InventarioFrontBundle:Terceros')->find($idte);
+       $tercero = $em->getRepository('InventarioFrontBundle:Terceros')->findOneBy(array('txnomtercero' => $idte));
        $vendedor = new Vendedores;
-       $vendedor = $em->getRepository('InventarioFrontBundle:Vendedores')->find($vend);
+       $vendedor = $em->getRepository('InventarioFrontBundle:Vendedores')->findOneBy(array('txnomvendedor' => $vend));
+       
+       
+       $masDoc = new Masdocumentos;
+       if ($_POST['oper']=='add') {
+            //insert
+            $masDoc->setInidtipdoc($tipDoc);
+            $masDoc->setTxnumdoc($numd);
+            $masDoc->setInidtercero($tercero);
+            $masDoc->setDbvalneto($valn);
+            $masDoc->setDbvaliva($vali);
+            $masDoc->setDbtotal($valt);
+            $masDoc->setTxcondpago($conp);
+            $masDoc->setFefecha($fech);
+            $masDoc->setFevencimiento($fecv);
+            $masDoc->setTxobservaciones($obse);
+            $masDoc->setVendedoresvendedor($vendedor);
+            
+            $em->persist($masDoc);
+            $em->flush();
+        } elseif ($_POST['oper']=='edit') {
+            $masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
+            $masDoc->setInidtercero($tercero);
+            $masDoc->setDbvalneto($valn);
+            $masDoc->setDbvaliva($vali);
+            $masDoc->setDbtotal($valt);
+            $masDoc->setTxcondpago($conp);
+            $masDoc->setFefecha($fech);
+            $masDoc->setFevencimiento($fecv);
+            $masDoc->setTxobservaciones($obse);
+            $masDoc->setVendedoresvendedor($vendedor);
+            
+            $em->persist($masDoc);
+            $em->flush();
+        } elseif ($_POST['oper']=='del') {
+            //$masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
+            //$em->remove($masDoc);
+            //$em->flush();
+        }
+        return $this->render('InventarioFrontBundle:Masdocumentos:index.html.twig');
+    }
+    /**
+     * Guarda cambios Detalle Dc. desde jqGrid.
+     *
+     */
+    public function guardaDetDocGridAction()
+    {
+       $idmd = $_POST['id'];
+       $tipd = $_POST['txnomdoc'];
+       $numd = $_POST['txnumdoc'];
+       $idte = $_POST['txnomtercero'];
+       $valn = $_POST['dbvalneto'];
+       $vali = $_POST['dbvaliva'];
+       $valt = $_POST['dbtotal'];
+       $conp = $_POST['txcondPago'];
+       
+       //$ftem = new DateTime($_POST['fefecha']);
+       $fech = new \DateTime($_POST['fefecha']);
+       //$fech = date('Y-m-d',$ftem);
+       //$ftem = new DateTime($_POST['fevencimiento']);
+       $fecv = new \DateTime($_POST['fevencimiento']);
+       //$fecv = date('Y-m-d',$ftem);
+
+       $obse = $_POST['txobservaciones'];
+       $vend = $_POST['txnomvendedor'];
+       
+       $em = $this->getDoctrine()->getManager();
+       echo $idmd." - ".$tipd." - ".$numd." - ".$idte." - ".$valn." - ".$vali." - ".$valt." - "
+              .$conp." - ".$fech->format('d/m/y')." - ".$fecv->format('d/m/y')." - ".$obse." - ".$vend;
+       $tipDoc = new Tipdoc;
+       $tipDoc = $em->getRepository('InventarioFrontBundle:Tipdoc')->findOneBy(array('txnomdoc' => $tipd));
+       $tercero = new Terceros;
+       $tercero = $em->getRepository('InventarioFrontBundle:Terceros')->findOneBy(array('txnomtercero' => $idte));
+       $vendedor = new Vendedores;
+       $vendedor = $em->getRepository('InventarioFrontBundle:Vendedores')->findOneBy(array('txnomvendedor' => $vend));
+       
        
        $masDoc = new Masdocumentos;
        if ($_POST['oper']=='add') {

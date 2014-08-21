@@ -34,15 +34,29 @@ class TercerosController extends Controller
                 . "FROM Terceros a WHERE a.inTipoTer IN (:tipo,2) AND a.InActivo=1");
         
         $entities->bindParam('tipo',$tipo);
-
+            
         $entities->execute();
         $result = $entities->fetchAll();
-        $response = '<select>';
+        
+        /*
+         * DEVOLVER JSON
+         */        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+        
+        /*
+         * Devolver combo
+         */
+        /*$response = '<select>';
         foreach($result as $td) {
               $response .= '<option value='.$td['idTercero'].'>'.$td['txNomTercero']."</option>";
          }            
         $response.='</select>';
-        return $resp = new Response($response);        
+        return $resp = new Response($response);        */
     }
     /**
      * Lists all Terceros entities.

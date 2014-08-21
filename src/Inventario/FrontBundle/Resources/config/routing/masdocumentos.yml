@@ -14,6 +14,10 @@ masdocumentos_guardaMasDocGrid:
     pattern:  /guardaMasDocGrid
     defaults: { _controller: "InventarioFrontBundle:Masdocumentos:guardaMasDocGrid" }
 
+masdocumentos_guardaDetDocGrid:
+    pattern:  /guardaDetDocGrid/{piddoc}
+    defaults: { _controller: "InventarioFrontBundle:Masdocumentos:guardaDetDocGrid" }
+
 masdocumentos_show:
     pattern:  /{id}/show
     defaults: { _controller: "InventarioFrontBundle:Masdocumentos:show" }

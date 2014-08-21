@@ -228,6 +228,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ProductosController::indexAction',  '_route' => 'productos',);
             }
 
+            // productos_listProGrid
+            if (0 === strpos($pathinfo, '/productos/listProGrid') && preg_match('#^/productos/listProGrid/(?P<pidter>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'productos_listProGrid')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ProductosController::listProGridAction',));
+            }
+
             // productos_show
             if (preg_match('#^/productos/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'productos_show')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ProductosController::showAction',));
@@ -619,9 +624,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
             }
 
-            // masdocumentos_guardaMasDocGrid
-            if ($pathinfo === '/masdocumentos/guardaMasDocGrid') {
-                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::guardaMasDocGridAction',  '_route' => 'masdocumentos_guardaMasDocGrid',);
+            if (0 === strpos($pathinfo, '/masdocumentos/guarda')) {
+                // masdocumentos_guardaMasDocGrid
+                if ($pathinfo === '/masdocumentos/guardaMasDocGrid') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::guardaMasDocGridAction',  '_route' => 'masdocumentos_guardaMasDocGrid',);
+                }
+
+                // masdocumentos_guardaDetDocGrid
+                if (0 === strpos($pathinfo, '/masdocumentos/guardaDetDocGrid') && preg_match('#^/masdocumentos/guardaDetDocGrid/(?P<piddoc>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'masdocumentos_guardaDetDocGrid')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::guardaDetDocGridAction',));
+                }
+
             }
 
             // masdocumentos_show
