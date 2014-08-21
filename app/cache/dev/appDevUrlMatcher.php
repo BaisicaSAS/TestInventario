@@ -631,8 +631,8 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 }
 
                 // masdocumentos_guardaDetDocGrid
-                if (0 === strpos($pathinfo, '/masdocumentos/guardaDetDocGrid') && preg_match('#^/masdocumentos/guardaDetDocGrid/(?P<piddoc>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'masdocumentos_guardaDetDocGrid')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::guardaDetDocGridAction',));
+                if ($pathinfo === '/masdocumentos/guardaDetDocGrid') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::guardaDetDocGridAction',  '_route' => 'masdocumentos_guardaDetDocGrid',);
                 }
 
             }

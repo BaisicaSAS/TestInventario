@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Inventario\FrontBundle\Entity\Masdocumentos;
+use Inventario\FrontBundle\Entity\Detdocumentos;
 use Inventario\FrontBundle\Entity\Tipdoc;
 use Inventario\FrontBundle\Entity\Terceros;
 use Inventario\FrontBundle\Entity\Vendedores;
@@ -66,7 +67,7 @@ class MasdocumentosController extends Controller
         $connection = $em->getConnection();
         $entities = $connection->prepare("SELECT a.idDetDocumentos as id, a.inidMasDocumento as inidmasdocumento, "
                 . "a.inCantidad as incantidad, a.dbValUnitario as dbvalunitario, a.dbValtotal as dbvaltotal, "
-                . "a.txrefinterna as idproducto, b.txNomProducto as txnomproducto "
+                . "b.txrefinterna as idproducto, b.txNomProducto as txnomproducto "
                 . "FROM Detdocumentos a "
                 . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
                 . "WHERE a.inidMasDocumento = :piddoc "
@@ -98,9 +99,12 @@ class MasdocumentosController extends Controller
        $tipd = $_POST['txnomdoc'];
        $numd = $_POST['txnumdoc'];
        $idte = $_POST['txnomtercero'];
-       $valn = $_POST['dbvalneto'];
-       $vali = $_POST['dbvaliva'];
-       $valt = $_POST['dbtotal'];
+       //$vali = $_POST['dbvaliva'];
+       //$valt = $_POST['dbtotal'];
+       //$valn = $_POST['dbvalneto'];
+       $vali = 0;
+       $valt = 0;
+       $valn = 0;
        $conp = $_POST['txcondPago'];
        
        //$ftem = new DateTime($_POST['fefecha']);
@@ -144,9 +148,9 @@ class MasdocumentosController extends Controller
         } elseif ($_POST['oper']=='edit') {
             $masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
             $masDoc->setInidtercero($tercero);
-            $masDoc->setDbvalneto($valn);
-            $masDoc->setDbvaliva($vali);
-            $masDoc->setDbtotal($valt);
+            //$masDoc->setDbvalneto($valn);
+            //$masDoc->setDbvaliva($vali);
+            //$masDoc->setDbtotal($valt);
             $masDoc->setTxcondpago($conp);
             $masDoc->setFefecha($fech);
             $masDoc->setFevencimiento($fecv);
@@ -168,66 +172,46 @@ class MasdocumentosController extends Controller
      */
     public function guardaDetDocGridAction()
     {
-       $idmd = $_POST['id'];
-       $tipd = $_POST['txnomdoc'];
-       $numd = $_POST['txnumdoc'];
-       $idte = $_POST['txnomtercero'];
-       $valn = $_POST['dbvalneto'];
-       $vali = $_POST['dbvaliva'];
-       $valt = $_POST['dbtotal'];
-       $conp = $_POST['txcondPago'];
+       $iddd = $_POST['id'];
+       $refi = $_POST['txrefinterna'];
+       echo $refi;
+       $refa = split($refi,'|');
+       $reft = $refa[0];
+       echo $reft;
+       $cant = $_POST['incantidad'];
+       $valu = $_POST['dbvalunitario'];
+       $valt = $_POST['dbvaltotal'];
        
-       //$ftem = new DateTime($_POST['fefecha']);
-       $fech = new \DateTime($_POST['fefecha']);
-       //$fech = date('Y-m-d',$ftem);
-       //$ftem = new DateTime($_POST['fevencimiento']);
-       $fecv = new \DateTime($_POST['fevencimiento']);
-       //$fecv = date('Y-m-d',$ftem);
-
-       $obse = $_POST['txobservaciones'];
-       $vend = $_POST['txnomvendedor'];
-       
+       echo $iddd." - ".$iddd." - ".$reft." - ".$cant." - ".$valu." - ".$valt;
+       $idmd = $_POST['inidmasdocumento'];
        $em = $this->getDoctrine()->getManager();
-       echo $idmd." - ".$tipd." - ".$numd." - ".$idte." - ".$valn." - ".$vali." - ".$valt." - "
-              .$conp." - ".$fech->format('d/m/y')." - ".$fecv->format('d/m/y')." - ".$obse." - ".$vend;
-       $tipDoc = new Tipdoc;
-       $tipDoc = $em->getRepository('InventarioFrontBundle:Tipdoc')->findOneBy(array('txnomdoc' => $tipd));
-       $tercero = new Terceros;
-       $tercero = $em->getRepository('InventarioFrontBundle:Terceros')->findOneBy(array('txnomtercero' => $idte));
-       $vendedor = new Vendedores;
-       $vendedor = $em->getRepository('InventarioFrontBundle:Vendedores')->findOneBy(array('txnomvendedor' => $vend));
+       echo $iddd." - ".$idmd." - ".$reft." - ".$cant." - ".$valu." - ".$valt;
        
+       $produc = new Productos();
+       $produc = $em->getRepository('InventarioFrontBundle:Productos')->findOneBy(array('txrefinterna' => $reft));
+       $masDoc = new Masdocumentos();
+       $masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
        
-       $masDoc = new Masdocumentos;
+       $detDoc = new Detdocumentos;
        if ($_POST['oper']=='add') {
             //insert
-            $masDoc->setInidtipdoc($tipDoc);
-            $masDoc->setTxnumdoc($numd);
-            $masDoc->setInidtercero($tercero);
-            $masDoc->setDbvalneto($valn);
-            $masDoc->setDbvaliva($vali);
-            $masDoc->setDbtotal($valt);
-            $masDoc->setTxcondpago($conp);
-            $masDoc->setFefecha($fech);
-            $masDoc->setFevencimiento($fecv);
-            $masDoc->setTxobservaciones($obse);
-            $masDoc->setVendedoresvendedor($vendedor);
+            $detDoc->setIncantidad($cant);
+            $detDoc->setDbvalunitario($valu);
+            $detDoc->setDbvaltotal($valt);
+            $detDoc->setInidmasdocumento($masDoc);
+            $detDoc->setProductosproducto($produc);
             
-            $em->persist($masDoc);
+            $em->persist($detDoc);
             $em->flush();
         } elseif ($_POST['oper']=='edit') {
-            $masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
-            $masDoc->setInidtercero($tercero);
-            $masDoc->setDbvalneto($valn);
-            $masDoc->setDbvaliva($vali);
-            $masDoc->setDbtotal($valt);
-            $masDoc->setTxcondpago($conp);
-            $masDoc->setFefecha($fech);
-            $masDoc->setFevencimiento($fecv);
-            $masDoc->setTxobservaciones($obse);
-            $masDoc->setVendedoresvendedor($vendedor);
+            $masDoc = $em->getRepository('InventarioFrontBundle:Detdocumentos')->find($iddd);
+            $detDoc->setIncantidad($cant);
+            $detDoc->setDbvalunitario($valu);
+            $detDoc->setDbvaltotal($valt);
+            $detDoc->setInidmasdocumento($masDoc);
+            $detDoc->setProductosproducto($produc);
             
-            $em->persist($masDoc);
+            $em->persist($detDoc);
             $em->flush();
         } elseif ($_POST['oper']=='del') {
             //$masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
