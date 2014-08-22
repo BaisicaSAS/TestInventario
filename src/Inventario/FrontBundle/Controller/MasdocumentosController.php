@@ -37,9 +37,9 @@ class MasdocumentosController extends Controller
                 . "txCondPago as txcondPago, dbValNeto as dbvalneto, a.dbValIva as dbvaliva, a.dbTotal as dbtotal, "
                 . "c.txNomdoc as txnomdoc, b.txNomTercero as txnomtercero, d.txNomVendedor as txnomvendedor "
                 //. "b.txNomTercero as txnomtercero, c.txTipDoc as txtipdoc, d.txNomVendedor as txnomvendedor "
-                . "FROM Masdocumentos a "
+                . "FROM MasDocumentos a "
                 . "LEFT JOIN Terceros b ON a.inidTercero = b.idTercero "
-                . "LEFT JOIN Tipdoc c ON a.inidTipDoc = c.idTipDoc "
+                . "LEFT JOIN TipDoc c ON a.inidTipDoc = c.idTipDoc "
                 . "LEFT JOIN Vendedores d ON a.Vendedores_idVendedor = d.idVendedor "
                 . "ORDER BY txnomdoc, id");
         
@@ -68,7 +68,7 @@ class MasdocumentosController extends Controller
         $entities = $connection->prepare("SELECT a.idDetDocumentos as id, a.inidMasDocumento as inidmasdocumento, "
                 . "a.inCantidad as incantidad, a.dbValUnitario as dbvalunitario, a.dbValtotal as dbvaltotal, "
                 . "b.txrefinterna as idproducto, b.txNomProducto as txnomproducto "
-                . "FROM Detdocumentos a "
+                . "FROM DetDocumentos a "
                 . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
                 . "WHERE a.inidMasDocumento = :piddoc "
                 . "ORDER BY id");

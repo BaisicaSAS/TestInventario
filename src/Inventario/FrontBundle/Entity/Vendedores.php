@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Vendedores
  *
- * @ORM\Table(name="vendedores")
+ * @ORM\Table(name="Vendedores")
  * @ORM\Entity
  */
 class Vendedores

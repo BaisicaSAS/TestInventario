@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tipdoc
  *
- * @ORM\Table(name="tipdoc", uniqueConstraints={@ORM\UniqueConstraint(name="txTipDoc_UNIQUE", columns={"txTipDoc"})})
+ * @ORM\Table(name="TipDoc", uniqueConstraints={@ORM\UniqueConstraint(name="txTipDoc_UNIQUE", columns={"txTipDoc"})})
  * @ORM\Entity
  */
 class Tipdoc

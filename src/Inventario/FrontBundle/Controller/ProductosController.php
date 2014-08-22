@@ -28,7 +28,7 @@ class ProductosController extends Controller
         $entities = $connection->prepare("SELECT a.txRefInterna as txrefinterna, a.txNomProducto as txnomproducto,  "
                 . "b.dbvalor as dbvalor "
                 . "FROM Productos a "
-                . "LEFT JOIN Detlistaprecios b ON a.idProducto = b.Productos_idProducto "
+                . "LEFT JOIN DetListaPrecios b ON a.idProducto = b.Productos_idProducto "
                 . "LEFT JOIN Terceros c ON b.ListaPrecios_idListaPrecios = c.idListaPrecios "
                 . "WHERE c.idTercero = :pidter ");
         

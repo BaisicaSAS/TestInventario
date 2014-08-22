@@ -31,7 +31,7 @@ class TipdocController extends Controller
         $connection = $em->getConnection();
         $entities = $connection->prepare("SELECT a.idTipDoc, a.txTipdoc, a.txNomDoc, a.inAfecta, "
                 . "a.inTipTer, a.txObservPlantilla "
-                . "FROM Tipdoc a ");
+                . "FROM TipDoc a ");
         
         $entities->execute();
         $result = $entities->fetchAll();
