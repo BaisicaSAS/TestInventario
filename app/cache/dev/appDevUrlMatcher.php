@@ -710,9 +710,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
             }
 
-            // listaprecios_guardaMasLPGrid
-            if ($pathinfo === '/listaprecios/guardaMasLPGrid') {
-                return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::guardaMasLPGridAction',  '_route' => 'listaprecios_guardaMasLPGrid',);
+            if (0 === strpos($pathinfo, '/listaprecios/guarda')) {
+                // listaprecios_guardaMasLPGrid
+                if ($pathinfo === '/listaprecios/guardaMasLPGrid') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::guardaMasLPGridAction',  '_route' => 'listaprecios_guardaMasLPGrid',);
+                }
+
+                // listaprecios_guardaDetLPGrid
+                if ($pathinfo === '/listaprecios/guardaDetLPGrid') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\ListapreciosController::guardaDetLPGridAction',  '_route' => 'listaprecios_guardaDetLPGrid',);
+                }
+
             }
 
             // listaprecios_show

@@ -37,12 +37,12 @@
                         if(vid == null) {
                             if(jQuery("#detlista").jqGrid('getGridParam','records') >0 )
                             {
-                                jQuery("#detlista").jqGrid('setGridParam',{url:vurl,page:1});
+                                jQuery("#detlista").jqGrid('setGridParam',{url:vurl, page: 1 });
                                 jQuery("#detlista").jqGrid('setCaption',"Detalle de lista: "+vid+" - "+val)
                                 .trigger('reloadGrid');
                             } 
                         } else { 
-                            jQuery("#detlista").jqGrid('setGridParam',{url:vurl,page:1});
+                            jQuery("#detlista").jqGrid('setGridParam',{url:vurl, page: 1 });
                             jQuery("#detlista").jqGrid('setCaption',"Detalle de lista:  "+vid+" - "+val)
                             .trigger('reloadGrid');			
                         }
@@ -61,9 +61,9 @@
                     colModel:[
                             {name:'idlista',index:'idlista', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'txrefinterna',index:'txrefinterna',editable:true,search:true,width:"100px"},
-                            {name:'txnomproducto',index:'txnomproducto',editable:true,search:true,width:"400px"},
-                            {name:'idproducto',index:'idproducto',editable:true,search:true},
+                            {name:'txrefinterna',index:'txrefinterna',editable:false,search:true,width:"100px"},
+                            {name:'txnomproducto',index:'txnomproducto',editable:false,search:true,width:"400px"},
+                            {name:'idproducto',index:'idproducto',editable:false,search:true},
                             {name:'dbvalor',index:'dbvalor',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
                     ],
                     rowNum:1000,
@@ -73,6 +73,7 @@
                     viewrecords: true,
                     sortorder: "asc",
                     caption:"Detalle de lista: 1",//,
+                    editurl:"{{ path('listaprecios_guardaDetLPGrid') }}",
                 //editurl:"someurl.php"
             });
             jQuery("#detlista").hideCol('idlista');

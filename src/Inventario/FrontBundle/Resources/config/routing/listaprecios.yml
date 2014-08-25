@@ -14,6 +14,10 @@ listaprecios_guardaMasLPGrid:
     pattern:  /guardaMasLPGrid
     defaults: { _controller: "InventarioFrontBundle:Listaprecios:guardaMasLPGrid" }
 
+listaprecios_guardaDetLPGrid:
+    pattern:  /guardaDetLPGrid
+    defaults: { _controller: "InventarioFrontBundle:Listaprecios:guardaDetLPGrid" }
+
 listaprecios_show:
     pattern:  /{id}/show
     defaults: { _controller: "InventarioFrontBundle:Listaprecios:show" }

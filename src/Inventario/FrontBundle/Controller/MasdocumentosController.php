@@ -121,7 +121,7 @@ class MasdocumentosController extends Controller
        echo $idmd." - ".$tipd." - ".$numd." - ".$idte." - ".$valn." - ".$vali." - ".$valt." - "
               .$conp." - ".$fech->format('d/m/y')." - ".$fecv->format('d/m/y')." - ".$obse." - ".$vend;
        $tipDoc = new Tipdoc;
-       $tipDoc = $em->getRepository('InventarioFrontBundle:Tipdoc')->findOneBy(array('txnomdoc' => $tipd));
+       $tipDoc = $em->getRepository('InventarioFrontBundle:TipDoc')->findOneBy(array('txnomdoc' => $tipd));
        $tercero = new Terceros;
        $tercero = $em->getRepository('InventarioFrontBundle:Terceros')->findOneBy(array('txnomtercero' => $idte));
        $vendedor = new Vendedores;
@@ -179,18 +179,19 @@ class MasdocumentosController extends Controller
        $reft = $refa[0];
        echo $reft;
        $cant = $_POST['incantidad'];
+       //$valu = $refa[2];
+       $idmd = $_POST['inidmasdocumento'];
        $valu = $_POST['dbvalunitario'];
-       $valt = $_POST['dbvaltotal'];
+       //$valt = $_POST['dbvaltotal'];
        
        echo $iddd." - ".$iddd." - ".$reft." - ".$cant." - ".$valu." - ".$valt;
-       $idmd = $_POST['inidmasdocumento'];
        $em = $this->getDoctrine()->getManager();
        echo $iddd." - ".$idmd." - ".$reft." - ".$cant." - ".$valu." - ".$valt;
        
        $produc = new Productos();
        $produc = $em->getRepository('InventarioFrontBundle:Productos')->findOneBy(array('txrefinterna' => $reft));
        $masDoc = new Masdocumentos();
-       $masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
+       $masDoc = $em->getRepository('InventarioFrontBundle:MasDocumentos')->find($idmd);
        
        $detDoc = new Detdocumentos;
        if ($_POST['oper']=='add') {
@@ -204,7 +205,7 @@ class MasdocumentosController extends Controller
             $em->persist($detDoc);
             $em->flush();
         } elseif ($_POST['oper']=='edit') {
-            $masDoc = $em->getRepository('InventarioFrontBundle:Detdocumentos')->find($iddd);
+            $masDoc = $em->getRepository('InventarioFrontBundle:DetDocumentos')->find($iddd);
             $detDoc->setIncantidad($cant);
             $detDoc->setDbvalunitario($valu);
             $detDoc->setDbvaltotal($valt);
@@ -228,7 +229,7 @@ class MasdocumentosController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InventarioFrontBundle:Masdocumentos')->findAll();
+        $entities = $em->getRepository('InventarioFrontBundle:MasDocumentos')->findAll();
 
         return $this->render('InventarioFrontBundle:Masdocumentos:index.html.twig', array(
             'entities' => $entities,

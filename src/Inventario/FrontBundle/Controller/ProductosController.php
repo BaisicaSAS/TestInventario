@@ -30,7 +30,7 @@ class ProductosController extends Controller
                 . "FROM Productos a "
                 . "LEFT JOIN DetListaPrecios b ON a.idProducto = b.Productos_idProducto "
                 . "LEFT JOIN Terceros c ON b.ListaPrecios_idListaPrecios = c.idListaPrecios "
-                . "WHERE c.idTercero = :pidter ");
+                . "WHERE c.txNomTercero = :pidter ");
         
         $entities->bindParam('pidter',$pidter);
         $entities->execute();

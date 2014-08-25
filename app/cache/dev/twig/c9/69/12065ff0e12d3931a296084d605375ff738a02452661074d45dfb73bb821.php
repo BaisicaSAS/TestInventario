@@ -77,12 +77,12 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
                         if(vid == null) {
                             if(jQuery(\"#detlista\").jqGrid('getGridParam','records') >0 )
                             {
-                                jQuery(\"#detlista\").jqGrid('setGridParam',{url:vurl,page:1});
+                                jQuery(\"#detlista\").jqGrid('setGridParam',{url:vurl, page: 1 });
                                 jQuery(\"#detlista\").jqGrid('setCaption',\"Detalle de lista: \"+vid+\" - \"+val)
                                 .trigger('reloadGrid');
                             } 
                         } else { 
-                            jQuery(\"#detlista\").jqGrid('setGridParam',{url:vurl,page:1});
+                            jQuery(\"#detlista\").jqGrid('setGridParam',{url:vurl, page: 1 });
                             jQuery(\"#detlista\").jqGrid('setCaption',\"Detalle de lista:  \"+vid+\" - \"+val)
                             .trigger('reloadGrid');\t\t\t
                         }
@@ -104,9 +104,9 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
                     colModel:[
                             {name:'idlista',index:'idlista', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'txrefinterna',index:'txrefinterna',editable:true,search:true,width:\"100px\"},
-                            {name:'txnomproducto',index:'txnomproducto',editable:true,search:true,width:\"400px\"},
-                            {name:'idproducto',index:'idproducto',editable:true,search:true},
+                            {name:'txrefinterna',index:'txrefinterna',editable:false,search:true,width:\"100px\"},
+                            {name:'txnomproducto',index:'txnomproducto',editable:false,search:true,width:\"400px\"},
+                            {name:'idproducto',index:'idproducto',editable:false,search:true},
                             {name:'dbvalor',index:'dbvalor',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
                     ],
                     rowNum:1000,
@@ -116,6 +116,10 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
                     viewrecords: true,
                     sortorder: \"asc\",
                     caption:\"Detalle de lista: 1\",//,
+                    editurl:\"";
+        // line 76
+        echo $this->env->getExtension('routing')->getPath("listaprecios_guardaDetLPGrid");
+        echo "\",
                 //editurl:\"someurl.php\"
             });
             jQuery(\"#detlista\").hideCol('idlista');
@@ -135,23 +139,23 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
 ";
     }
 
-    // line 94
+    // line 95
     public function block_main($context, array $blocks = array())
     {
-        // line 95
+        // line 96
         echo "
   ";
-        // line 96
+        // line 97
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
   ";
-        // line 97
+        // line 98
         $this->displayBlock('sitecontent', $context, $blocks);
     }
 
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 98
+        // line 99
         echo "        <h1>Listas de precios</h1>
         <table id=\"CONTENEDOR\" width=\"100%\">
             <tr id=\"Fila\" width=\"100%\">
@@ -180,6 +184,6 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
 
     public function getDebugInfo()
     {
-        return array (  155 => 98,  23 => 1,  53 => 20,  104 => 53,  206 => 50,  192 => 43,  188 => 42,  184 => 41,  180 => 40,  172 => 38,  160 => 34,  152 => 46,  150 => 33,  137 => 27,  129 => 49,  113 => 22,  84 => 12,  76 => 10,  70 => 29,  65 => 23,  58 => 20,  34 => 24,  480 => 162,  474 => 161,  469 => 158,  461 => 155,  457 => 153,  453 => 151,  444 => 149,  440 => 148,  437 => 147,  435 => 146,  430 => 144,  427 => 143,  423 => 142,  413 => 134,  409 => 132,  407 => 131,  402 => 130,  398 => 129,  393 => 126,  387 => 122,  384 => 121,  381 => 120,  379 => 119,  374 => 116,  368 => 112,  365 => 111,  362 => 110,  360 => 109,  355 => 106,  341 => 105,  337 => 103,  322 => 101,  314 => 99,  312 => 98,  309 => 97,  305 => 95,  298 => 91,  294 => 90,  285 => 89,  283 => 88,  278 => 86,  268 => 85,  264 => 84,  258 => 81,  252 => 80,  247 => 78,  241 => 77,  229 => 73,  220 => 70,  214 => 69,  177 => 65,  169 => 60,  140 => 28,  132 => 51,  128 => 49,  107 => 36,  61 => 13,  273 => 96,  269 => 94,  254 => 92,  243 => 88,  240 => 86,  238 => 85,  235 => 74,  230 => 82,  227 => 81,  224 => 71,  221 => 77,  219 => 76,  217 => 75,  208 => 68,  204 => 72,  179 => 69,  159 => 61,  143 => 56,  135 => 53,  119 => 26,  102 => 32,  71 => 32,  67 => 22,  63 => 27,  59 => 20,  38 => 26,  94 => 39,  89 => 20,  85 => 38,  75 => 28,  68 => 14,  56 => 9,  87 => 34,  21 => 2,  26 => 6,  93 => 28,  88 => 49,  78 => 36,  46 => 16,  27 => 1,  44 => 11,  31 => 4,  28 => 3,  201 => 92,  196 => 44,  183 => 82,  171 => 61,  166 => 71,  163 => 62,  158 => 67,  156 => 66,  151 => 63,  142 => 95,  138 => 54,  136 => 56,  121 => 46,  117 => 44,  105 => 20,  91 => 50,  62 => 21,  49 => 14,  24 => 4,  25 => 3,  19 => 1,  79 => 11,  72 => 16,  69 => 25,  47 => 12,  40 => 54,  37 => 10,  22 => 2,  246 => 90,  157 => 33,  145 => 96,  139 => 94,  131 => 52,  123 => 47,  120 => 40,  115 => 43,  111 => 37,  108 => 36,  101 => 19,  98 => 52,  96 => 31,  83 => 25,  74 => 26,  66 => 27,  55 => 15,  52 => 19,  50 => 18,  43 => 11,  41 => 8,  35 => 6,  32 => 4,  29 => 5,  209 => 82,  203 => 49,  199 => 67,  193 => 73,  189 => 71,  187 => 84,  182 => 66,  176 => 39,  173 => 65,  168 => 37,  164 => 36,  162 => 57,  154 => 58,  149 => 97,  147 => 58,  144 => 30,  141 => 48,  133 => 55,  130 => 41,  125 => 47,  122 => 27,  116 => 41,  112 => 42,  109 => 21,  106 => 36,  103 => 32,  99 => 57,  95 => 28,  92 => 35,  86 => 28,  82 => 22,  80 => 29,  73 => 19,  64 => 10,  60 => 24,  57 => 11,  54 => 10,  51 => 14,  48 => 13,  45 => 17,  42 => 10,  39 => 12,  36 => 7,  33 => 4,  30 => 3,);
+        return array (  159 => 99,  153 => 98,  149 => 97,  146 => 96,  143 => 95,  121 => 76,  99 => 57,  66 => 27,  60 => 24,  41 => 8,  33 => 4,  30 => 3,);
     }
 }
