@@ -182,11 +182,11 @@ class MasdocumentosController extends Controller
        //$valu = $refa[2];
        $idmd = $_POST['inidmasdocumento'];
        $valu = $_POST['dbvalunitario'];
-       //$valt = $_POST['dbvaltotal'];
+       $valt = $valu*$cant;
        
        echo $iddd." - ".$iddd." - ".$reft." - ".$cant." - ".$valu." - ".$valt;
        $em = $this->getDoctrine()->getManager();
-       echo $iddd." - ".$idmd." - ".$reft." - ".$cant." - ".$valu." - ".$valt;
+       echo $iddd." - ".$idmd." - ".$reft." - ".$cant." - ".$valu;
        
        $produc = new Productos();
        $produc = $em->getRepository('InventarioFrontBundle:Productos')->findOneBy(array('txrefinterna' => $reft));

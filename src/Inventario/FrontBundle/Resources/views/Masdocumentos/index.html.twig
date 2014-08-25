@@ -131,7 +131,7 @@
                     colNames:['Id','Id Doc.','Ref.', 'Producto', 'Cantidad','Val. Unitario','Val. Total'],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'inidmasdocumento',index:'inidmasdocumento',editable:false,search:true,editoptions:{readonly:true,defaultValue:idMasDocumento}, editrules: {edithidden : true}},
+                            {name:'inidmasdocumento',index:'inidmasdocumento',editable:true,search:true,editoptions:{readonly:true,defaultValue:idMasDocumento}, editrules: {edithidden : true}},
                             {name:'txrefinterna',index:'txrefinterna',editable:true,edittype:"select",editoptions:{dataUrl:"{{path('productos_listProGrid', {'pidter': '1'})}}", 
                                 buildSelect: function (data) {
                                             
@@ -150,22 +150,16 @@
                                                 fn: function(e) {
                                                     var row = $(e.target).val();
                                                     var arr = row.split('|');
-                                                    //var masid = 0;
-                                                    //alert(arr[0]);
-                                                    //alert(arr[1]);
-                                                    //var masrowid = jQuery("#masdoc").jqGrid('getGridParam','selrow');
                                                     var rowid = jQuery("#detdoc").jqGrid('getGridParam','selrow');
-                                                    //jQuery("#detdoc").jqGrid('setCell', rowid, 'txnomproducto', row);
-                                                    //masid = jQuery("#masdoc").jqGrid('getCell', masrowid, 'id');
                                                     
-                                                    //alert(masrowid);
-                                                    jQuery("#detdoc").jqGrid('setCell', rowid, 'inidmasdocumento', idMasDocumento);
                                                     jQuery("#detdoc").jqGrid('setCell', rowid, 'txnomproducto', arr[0]);
-                                                    jQuery("#detdoc").jqGrid('setCell', rowid, 'dbvalunitario', arr[1]);
+                                                    
+                                                    var fila = '#'+rowid+'_dbvalunitario';    
+                                                    $(fila).val(arr[1]);
+                                                    fila = '#'+rowid+'_inidmasdocumento';    
+                                                    $(fila).val(idMasDocumento);
+                                                    
                                                     jQuery("#detdoc").jqGrid('setCell', rowid, 'dbvaltotal', arr[1]);
-                                                    jQuery("#detdoc").jqGrid('setColProp', 'dbvalunitario',{editoptions: {defaultValue: arr[1]}});
-                                                    jQuery("#detdoc").jqGrid('setColProp', 'dbvalunitario',{editable: true});
-                                                    gvaluni = arr[1];
                                                 }}
                                     ]
                                 },
@@ -173,7 +167,7 @@
                             },
                             {name:'txnomproducto',index:'txnomproducto',editable:true,edittype:"text", editoptions:{readonly:true}},
                             {name:'incantidad',index:'incantidad',editable:true,search:true,editoptions:{defaultValue:1,
-                                dataEvents: [{ type:'blur',
+                                dataEvents: [{ type:'change',
                                                 fn: function(e) {
                                                     var rowid = jQuery("#detdoc").jqGrid('getGridParam','selrow');
                                                     var dbvaltot = 0;
@@ -185,7 +179,19 @@
                                     ]
                                     
                             }},
-                            {name:'dbvalunitario',index:'dbvalunitario',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
+                            {name:'dbvalunitario',index:'dbvalunitario',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "},
+                    
+                                dataEvents: [{ type:'change',
+                                                fn: function(e) {
+                                                    var rowid = jQuery("#detdoc").jqGrid('getGridParam','selrow');
+                                                    var dbvaltot = 0;
+                                                    var incant = jQuery("#detdoc").jqGrid('getCell', rowid, 'incantidad');
+                                                    var dbvaluni = $(e.target).val();
+                                                    dbvaltot = incant * dbvaluni;
+                                                    jQuery("#detdoc").jqGrid('setCell', rowid, 'dbvaltotal', dbvaltot);
+                                                }}
+                                    ]
+                            },
                             {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
                     ],
                     rowNum:1000,
