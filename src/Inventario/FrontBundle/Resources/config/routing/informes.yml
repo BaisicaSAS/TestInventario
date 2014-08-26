@@ -1,0 +1,23 @@
+informes:
+    pattern:  /
+    defaults: { _controller: "InventarioFrontBundle:Informes:index" }
+
+informes_kardex:
+    pattern:  /kardex
+    defaults: { _controller: "InventarioFrontBundle:Informes:kardex" }
+
+informes_mvtoterceros:
+    pattern:  /mvtoterceros
+    defaults: { _controller: "InventarioFrontBundle:Informes:mvtoterceros" }
+
+informes_mvtomeses:
+    pattern:  /mvtomeses
+    defaults: { _controller: "InventarioFrontBundle:Informes:mvtomeses" }
+
+informes_mvtoproductos:
+    pattern:  /mvtoproductos
+    defaults: { _controller: "InventarioFrontBundle:Informes:mvtoproductos" }
+
+informes_rotacion:
+    pattern:  /rotacion
+    defaults: { _controller: "InventarioFrontBundle:Informes:rotacion" }

@@ -1,0 +1,14 @@
+{% extends "InventarioFrontBundle:Default:index.html.twig" %}
+
+{% block sitecontent %}
+        <div id="menubar"> 
+            <ul id="menu">
+                <li><a href=" {{ path ('informes_kardex') }} ">Kardex</a></li>
+                <li><a href=" {{ path('informes_mvtoterceros') }}">Mov. Terceros</a></li>
+                <li><a href=" {{ path('informes_mvtomeses') }} ">Mov. Meses</a></li>
+                <li><a href=" {{ path('informes_mvtoproductos') }} ">Mov. Productos</a></li>
+                <li><a href=" {{ path('informes_rotacion') }} ">Rotación</a></li>
+            </ul>
+        </div>    
+{% endblock %}
+

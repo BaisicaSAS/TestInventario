@@ -19,7 +19,7 @@ use Inventario\FrontBundle\Entity\Vendedores;
 use Inventario\FrontBundle\Form\MasdocumentosType;
 use Inventario\FrontBundle\Entity\Productos;
 /**
- * Masdocumentos controller.
+ * Masdocumentos controller.....
  *
  */
 class MasdocumentosController extends Controller
@@ -67,7 +67,7 @@ class MasdocumentosController extends Controller
         $connection = $em->getConnection();
         $entities = $connection->prepare("SELECT a.idDetDocumentos as id, a.inidMasDocumento as inidmasdocumento, "
                 . "a.inCantidad as incantidad, a.dbValUnitario as dbvalunitario, a.dbValtotal as dbvaltotal, "
-                . "b.txrefinterna as idproducto, b.txNomProducto as txnomproducto "
+                . "b.txrefinterna as txrefinterna, b.txNomProducto as txnomproducto "
                 . "FROM DetDocumentos a "
                 . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
                 . "WHERE a.inidMasDocumento = :piddoc "
@@ -146,7 +146,7 @@ class MasdocumentosController extends Controller
             $em->persist($masDoc);
             $em->flush();
         } elseif ($_POST['oper']=='edit') {
-            $masDoc = $em->getRepository('InventarioFrontBundle:Masdocumentos')->find($idmd);
+            $masDoc = $em->getRepository('InventarioFrontBundle:MasDocumentos')->find($idmd);
             $masDoc->setInidtercero($tercero);
             //$masDoc->setDbvalneto($valn);
             //$masDoc->setDbvaliva($vali);
@@ -175,7 +175,7 @@ class MasdocumentosController extends Controller
        $iddd = $_POST['id'];
        $refi = $_POST['txrefinterna'];
        echo $refi;
-       $refa = split($refi,'|');
+       $refa = explode('|',$refi);
        $reft = $refa[0];
        echo $reft;
        $cant = $_POST['incantidad'];
@@ -184,12 +184,11 @@ class MasdocumentosController extends Controller
        $valu = $_POST['dbvalunitario'];
        $valt = $valu*$cant;
        
-       echo $iddd." - ".$iddd." - ".$reft." - ".$cant." - ".$valu." - ".$valt;
+       echo " detdt - ".$iddd." masd - ".$idmd." - ref ".$reft." - cant ".$cant." - val u ".$valu." - val t ".$valt;
        $em = $this->getDoctrine()->getManager();
-       echo $iddd." - ".$idmd." - ".$reft." - ".$cant." - ".$valu;
        
        $produc = new Productos();
-       $produc = $em->getRepository('InventarioFrontBundle:Productos')->findOneBy(array('txrefinterna' => $reft));
+       $produc = $em->getRepository('InventarioFrontBundle:Productos')->findOneBy(array('txnomproducto' => $reft));
        $masDoc = new Masdocumentos();
        $masDoc = $em->getRepository('InventarioFrontBundle:MasDocumentos')->find($idmd);
        
@@ -205,11 +204,10 @@ class MasdocumentosController extends Controller
             $em->persist($detDoc);
             $em->flush();
         } elseif ($_POST['oper']=='edit') {
-            $masDoc = $em->getRepository('InventarioFrontBundle:DetDocumentos')->find($iddd);
+            $detDoc = $em->getRepository('InventarioFrontBundle:DetDocumentos')->find($iddd);
             $detDoc->setIncantidad($cant);
             $detDoc->setDbvalunitario($valu);
             $detDoc->setDbvaltotal($valt);
-            $detDoc->setInidmasdocumento($masDoc);
             $detDoc->setProductosproducto($produc);
             
             $em->persist($detDoc);

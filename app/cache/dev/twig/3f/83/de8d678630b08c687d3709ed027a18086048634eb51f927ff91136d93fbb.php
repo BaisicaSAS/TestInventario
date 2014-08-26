@@ -119,47 +119,41 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         echo "\",
                     onSelectRow: function (ids) {
 
-                        idmasd = jQuery(\"#masdoc\").jqGrid('getCell', ids, 'id');
+                        var rowid = jQuery(\"#masdoc\").jqGrid('getGridParam','selrow');
+                        //idmasd = jQuery(\"#masdoc\").jqGrid('getCell', ids, 'id');
                         nomter = jQuery(\"#masdoc\").jqGrid('getCell', ids, 'txnomtercero');
                         var vurl=\"";
-        // line 78
+        // line 79
         echo $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("piddoc" => "1"));
         echo "\";
                         var vturl=\"";
-        // line 79
+        // line 80
         echo $this->env->getExtension('routing')->getPath("productos_listProGrid", array("pidter" => "1"));
         echo "\";
-                        vturl = vturl.replace('1', nomter);
-
-                        jQuery(\"#detdoc\").jqGrid('setColProp', 'txrefinterna',{editoptions: {dataUrl: vturl}}).trigger('reloadGrid');
-
-                        idMasDocumento = idmasd;
-                        //alert(veurl+\"----\"+vurl+\"---\"+idmasd);       
-                        //alert (idMasDocumento);
+                        vturl = vturl.replace('1',  nomter);
+                        idMasDocumento = rowid;
                         if (ids != null){
-                            vurl = vurl.replace('1', idmasd);
-                            //veurl = veurl.replace('1', idmasd);
+                            vurl = vurl.replace('1', rowid);
                         }
-                            
-                         //alert(veurl+\"----\"+vurl);       
-                         var TDoc = jQuery(\"#masdoc\").jqGrid('getCell', ids, 'txnomdoc');
-                         var NDoc = jQuery(\"#masdoc\").jqGrid('getCell', ids, 'txnumdoc');
+                        var TDoc = jQuery(\"#masdoc\").jqGrid('getCell', rowid, 'txnomdoc');
+                         var NDoc = jQuery(\"#masdoc\").jqGrid('getCell', rowid, 'txnumdoc');
                          if (ids == null) {
                              ids = 0;
                              if (jQuery(\"#detdoc\").jqGrid('getGridParam', 'records') > 0) {
-                                 //alert(ids);
 
                                  jQuery(\"#detdoc\").jqGrid('setGridParam', {url: vurl, page: 1 });
+                                 //alert(\"Null \"+vurl);
                                  jQuery(\"#detdoc\").jqGrid('setCaption', \"Detalle documento--:      [ \"  + TDoc + \" - \" + NDoc + \" ]\")
                                     .trigger('reloadGrid');
                              }
                          } else {
 
-                             //alert(\"si\"+ids);
-                             jQuery(\"#detdoc\").jqGrid('setGridParam', { url: vurl, page: 1 });
-                             jQuery(\"#detdoc\").jqGrid('setCaption',\"Detalle documento:      [ \" + TDoc + \" - \" + NDoc + \" ]\")
+                             jQuery(\"#detdoc\").jqGrid('setGridParam', { url: vurl, page: 1 }).trigger('reloadGrid');
+                             //alert(\".\"+vurl);
+                             jQuery(\"#detdoc\").jqGrid('setCaption',\".Detalle documento:      [ \" + TDoc + \" - \" + NDoc + \" ]\")
                                 .trigger('reloadGrid');
                          }
+                        jQuery(\"#detdoc\").jqGrid('setColProp', 'txrefinterna',{editoptions: {dataUrl: vturl}}).trigger('reloadGrid');
                      }                    
             });
             jQuery(\"#masdoc\").hideCol('id');
@@ -170,36 +164,32 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
             jQuery(\"#masdoc\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
             jQuery(\"#masdoc\").jqGrid('navGrid',\"#paginacion\",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
             jQuery(\"#masdoc\").jqGrid('inlineNav',\"#paginacion\");
-            jQuery(\"#masdoc\").click(function(){
-                    //jQuery(\"#masdoc\").trigger('reloadGrid');
-                    jQuery(\"#detdoc\").trigger('reloadGrid');
-            });
 
             //DETALLE
             jQuery(\"#detdoc\").jqGrid({        
                     url:\"";
-        // line 128
-        echo $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("piddoc" => "1"));
+        // line 118
+        echo $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("piddoc" => "0"));
         echo "\",
                     datatype: \"json\",
                     width:'100%',
                     colNames:['Id','Id Doc.','Ref.', 'Producto', 'Cantidad','Val. Unitario','Val. Total'],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'inidmasdocumento',index:'inidmasdocumento',editable:true,search:true,editoptions:{readonly:true,defaultValue:idMasDocumento}, editrules: {edithidden : true}},
+                            {name:'inidmasdocumento',index:'inidmasdocumento',editable:true,search:true,editoptions:{readonly:true}, editrules: {edithidden : true}},
                             {name:'txrefinterna',index:'txrefinterna',editable:true,edittype:\"select\",editoptions:{dataUrl:\"";
-        // line 135
-        echo $this->env->getExtension('routing')->getPath("productos_listProGrid", array("pidter" => "1"));
+        // line 125
+        echo $this->env->getExtension('routing')->getPath("productos_listProGrid", array("pidter" => "0"));
         echo "\", 
                                 buildSelect: function (data) {
                                             
                                             var response = jQuery.parseJSON(data);
                                             //alert(response);
                                             var s = '<select>';
-                                            s += '<option value=\"0|0\">Seleccione producto</option>'
+                                            s += '<option value=\"0\">Seleccione producto</option>'
                                             for (var i in response) {
                                                     //alert(response[i].inidtipdoc);
-                                                    s += '<option value=\"' + response[i].txnomproducto +\"|\"+ response[i].dbvalor + '\">' + response[i].txrefinterna+\"-\"+response[i].txnomproducto + '</option>';
+                                                    s += '<option value=\"' + response[i].txnomproducto+'|'+ response[i].dbvalor +'\">' + response[i].txrefinterna+\"-\"+response[i].txnomproducto + '</option>';
                                             }
                                             //alert(s + \"</select>\");
                                             return s + \"</select>\";
@@ -230,26 +220,34 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                                     var rowid = jQuery(\"#detdoc\").jqGrid('getGridParam','selrow');
                                                     var dbvaltot = 0;
                                                     var incant = \$(e.target).val();
-                                                    var dbvaluni = jQuery(\"#detdoc\").jqGrid('getCell', rowid, 'dbvalunitario');
+                                                    //var dbvaluni = jQuery(\"#detdoc\").jqGrid('getCell', rowid, 'dbvalunitario');
+                                                    var fila = '#'+rowid+'_dbvalunitario';    
+                                                    var dbvaluni = \$(fila).val();
                                                     dbvaltot = incant * dbvaluni;
                                                     jQuery(\"#detdoc\").jqGrid('setCell', rowid, 'dbvaltotal', dbvaltot);
+                                                    //jQuery(\"#detdoc\").jqGrid('setCell', rowid, {dbvaltotal:dbvaltot});
+                                                    //jQuery(\"#detdoc\").jqGrid('getLocalRow', rowid).dbvaltotal = dbvaltot;
+                                                    
                                                 }}
                                     ]
                                     
                             }},
                             {name:'dbvalunitario',index:'dbvalunitario',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"},
+                                editoptions:{defaultValue:1,
                     
                                 dataEvents: [{ type:'change',
                                                 fn: function(e) {
                                                     var rowid = jQuery(\"#detdoc\").jqGrid('getGridParam','selrow');
                                                     var dbvaltot = 0;
-                                                    var incant = jQuery(\"#detdoc\").jqGrid('getCell', rowid, 'incantidad');
-                                                    var dbvaluni = \$(e.target).val();
+                                                    //var incant = jQuery(\"#detdoc\").jqGrid('getCell', rowid, 'incantidad');
+                                                    var dbvaluni = \$(e.target).val(); 
+                                                    var fila = '#'+rowid+'_incantidad';    
+                                                    var incant = \$(fila).val(); 
                                                     dbvaltot = incant * dbvaluni;
                                                     jQuery(\"#detdoc\").jqGrid('setCell', rowid, 'dbvaltotal', dbvaltot);
                                                 }}
                                     ]
-                            },
+                                }},
                             {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
                     ],
                     rowNum:1000,
@@ -260,12 +258,10 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     sortorder: \"asc\",
                     caption:\"Detalle de documento: XX\",
                     editurl:\"";
-        // line 204
+        // line 202
         echo $this->env->getExtension('routing')->getPath("masdocumentos_guardaDetDocGrid");
         echo "\",
-                    beforeSubmit: function(postdata, formid){
-                        postdata.txrefinterna=postdata.txrefinterna+'|'+gvaluni;
-                    },  
+
             });
             jQuery(\"#detdoc\").hideCol('inidmasdocumento');
             jQuery(\"#detdoc\").hideCol('id');
@@ -275,32 +271,32 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
             jQuery(\"#detdoc\").jqGrid('inlineNav',\"#pagered\");
 
             jQuery(\"#detdoc\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
-            jQuery(\"#detdoc\").click(function(){
+            //jQuery(\"#detdoc\").click(function(){
                     //jQuery(\"#masdoc\").trigger('reloadGrid');
                     //jQuery(\"#detdoc\").trigger('reloadGrid');
-            });
+            //});
         });
         
     </script>
 ";
     }
 
-    // line 226
+    // line 222
     public function block_main($context, array $blocks = array())
     {
-        // line 227
+        // line 223
         echo "  ";
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
 
   ";
-        // line 229
+        // line 225
         $this->displayBlock('sitecontent', $context, $blocks);
     }
 
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 230
+        // line 226
         echo "    <div>
         <table id=\"masdoc\" ></table>
         <div id=\"paginacion\" ></div>
@@ -324,6 +320,6 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 
     public function getDebugInfo()
     {
-        return array (  304 => 230,  298 => 229,  292 => 227,  289 => 226,  264 => 204,  192 => 135,  182 => 128,  130 => 79,  126 => 78,  118 => 73,  93 => 51,  69 => 30,  51 => 15,  42 => 9,  33 => 4,  30 => 3,);
+        return array (  300 => 226,  294 => 225,  288 => 223,  285 => 222,  262 => 202,  182 => 125,  172 => 118,  131 => 80,  127 => 79,  118 => 73,  93 => 51,  69 => 30,  51 => 15,  42 => 9,  33 => 4,  30 => 3,);
     }
 }

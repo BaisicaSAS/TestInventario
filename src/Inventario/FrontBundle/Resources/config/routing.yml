@@ -2,6 +2,9 @@ inventario_front_homepage:
     pattern:  /inventario
     defaults: { _controller: InventarioFrontBundle:Default:index }
 
+InventarioFrontBundle_informes:
+    resource: "@InventarioFrontBundle/Resources/config/routing/informes.yml"
+    prefix:   /informes
 
 InventarioFrontBundle_clasifproductos:
     resource: "@InventarioFrontBundle/Resources/config/routing/clasifproductos.yml"
