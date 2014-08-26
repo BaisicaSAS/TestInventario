@@ -23,17 +23,55 @@ class InformesController extends Controller
 {
 
     /**
-     * Genera informe de kardex.
+     * Genera datos del informe de kardex.
      *
      */
-    public function kardexAction()
+    public function kardexDataAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
-        $entities = $connection->prepare("SELECT a.idTercero, a.txNomTercero "
-                . "FROM Terceros a WHERE a.inTipoTer IN (:tipo,2) AND a.InActivo=1");
+        $entities = $connection->prepare("SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
+                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida "
+                . "FROM DetDocumentos a " 
+                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
+                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
+                . "WHERE d.inAfecta = 0 "  //SUMA
+                //. "GROUP BY txNomProducto "
+                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC "
+                . "UNION "
+                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
+                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad AS inSalida "
+                . "FROM DetDocumentos a " 
+                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
+                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
+                . "WHERE d.inAfecta = 1 " //RESTA
+                //. "GROUP BY txNomProducto "
+                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC ");
+                . "UNION "
+                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
+                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad AS inSalida "
+                . "FROM DetDocumentos a " 
+                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
+                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
+                . "WHERE d.inAfecta = 4 AND a.inCantidad < 0 " //SIGNO -
+                //. "GROUP BY txNomProducto "
+                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC ");
+                . "UNION "
+                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
+                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida "
+                . "FROM DetDocumentos a " 
+                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
+                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
+                . "WHERE d.inAfecta = 4 AND a.inCantidad > 0 " //SIGNO +
+                //. "GROUP BY txNomProducto "
+                . "ORDER BY txNomProducto, txRefInterna, feFecha DESC, idDetDocumentos DESC "
+                . "");
         
-        $entities->bindParam('tipo',$tipo);
+        //$entities->bindParam('tipo',$tipo);
             
         $entities->execute();
         $result = $entities->fetchAll();
@@ -46,21 +84,89 @@ class InformesController extends Controller
         $serializer = new Serializer($normalizers, $encoders);
         $response = new Response($serializer->serialize($result, 'json')); 
         $response->headers->set('Content-Type', 'application/json');
-        //return $response;        
+        return $response;        
+
+    }
+    
+   /**
+     * Genera datos del informe de kardex.
+     *
+     */
+    public function kardexResumenAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT Productos_idProducto, txNomProducto, txRefInterna, "
+                . "SUM(inEntrada) as sumEntrada, SUM(inSalida) as sumSalida, (SUM(inEntrada))-(SUM(inSalida)) as inExistencia "
+                . "FROM ("
+                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
+                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida "
+                . "FROM DetDocumentos a " 
+                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
+                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
+                . "WHERE d.inAfecta = 0 "  //SUMA
+                //. "GROUP BY txNomProducto "
+                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC "
+                . "UNION "
+                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
+                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad AS inSalida "
+                . "FROM DetDocumentos a " 
+                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
+                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
+                . "WHERE d.inAfecta = 1 " //RESTA
+                //. "GROUP BY txNomProducto "
+                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC ");
+                . "UNION "
+                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
+                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad*-1 AS inSalida "
+                . "FROM DetDocumentos a " 
+                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
+                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
+                . "WHERE d.inAfecta = 4 AND a.inCantidad < 0 " //SIGNO -
+                //. "GROUP BY txNomProducto "
+                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC ");
+                . "UNION "
+                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
+                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida "
+                . "FROM DetDocumentos a " 
+                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
+                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
+                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
+                . "WHERE d.inAfecta = 4 AND a.inCantidad > 0 " //SIGNO +
+                //. "GROUP BY txNomProducto "
+                //. "ORDER BY txNomProducto, txRefInterna, feFecha DESC, idDetDocumentos DESC "
+                . ") Detalle "
+                . "GROUP BY txNomProducto ORDER BY txNomProducto "
+                . "");
         
-        return $this->render('InventarioFrontBundle:Informes:kardex.html.twig');
+        //$entities->bindParam('tipo',$tipo);
+            
+        $entities->execute();
+        $result = $entities->fetchAll();
+        
         /*
-         * Devolver combo
-         */
-        /*$response = '<select>';
-        foreach($result as $td) {
-              $response .= '<option value='.$td['idTercero'].'>'.$td['txNomTercero']."</option>";
-         }            
-        $response.='</select>';
-        return $resp = new Response($response);        */
+         * DEVOLVER JSON
+         */        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+    }    
+    /**
+     * 
+     *
+     */
+    public function kardexAction()
+    {
+        return $this->render('InventarioFrontBundle:Informes:kardex.html.twig');
     }
     /**
-     * Lists all Terceros entities.
+     * 
      *
      */
     public function indexAction()

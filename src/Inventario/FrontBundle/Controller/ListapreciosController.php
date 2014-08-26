@@ -118,13 +118,13 @@ class ListapreciosController extends Controller
             //echo  $id. "  --  " .$inactiva . "  --  " . $txnomlista; 
             $this->crearDetLP($id);
         } elseif ($_POST['oper']=='edit') {
-            $listaprecio = $em->getRepository('InventarioFrontBundle:ListaPrecios')->find($id);
+            $listaprecio = $em->getRepository('InventarioFrontBundle:Listaprecios')->find($id);
             $listaprecio->setInactiva($inactiva);
             $listaprecio->setTxnomlista($txnomlista);
             $em->persist($listaprecio);
             $em->flush();
         } elseif ($_POST['oper']=='del') {
-            $listaprecio = $em->getRepository('InventarioFrontBundle:ListaPrecios')->find($id);
+            $listaprecio = $em->getRepository('InventarioFrontBundle:Listaprecios')->find($id);
             $em->remove($listaprecio);
             $em->flush();
         }
@@ -152,12 +152,12 @@ class ListapreciosController extends Controller
             //echo  $id. "  --  " .$inactiva . "  --  " . $txnomlista; 
             $this->crearDetLP($id);
         } elseif ($_POST['oper']=='edit') {
-            $detlistaprecio = $em->getRepository('InventarioFrontBundle:DetListaPrecios')->find($id);
+            $detlistaprecio = $em->getRepository('InventarioFrontBundle:Detlistaprecios')->find($id);
             $detlistaprecio->setDbvalor($dbvalor);
             $em->persist($detlistaprecio);
             $em->flush();
         } elseif ($_POST['oper']=='del') {
-            $detlistaprecio = $em->getRepository('InventarioFrontBundle:DetListaPrecios')->find($id);
+            $detlistaprecio = $em->getRepository('InventarioFrontBundle:Detlistaprecios')->find($id);
             $em->remove($detlistaprecio);
             $em->flush();
         }
@@ -173,7 +173,7 @@ class ListapreciosController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InventarioFrontBundle:ListaPrecios')->findAll();
+        $entities = $em->getRepository('InventarioFrontBundle:Listaprecios')->findAll();
 
         return $this->render('InventarioFrontBundle:Listaprecios:index.html.twig', array(
             'entities' => $entities,

@@ -6,6 +6,14 @@ informes_kardex:
     pattern:  /kardex
     defaults: { _controller: "InventarioFrontBundle:Informes:kardex" }
 
+informes_kardexData:
+    pattern:  /kardexData
+    defaults: { _controller: "InventarioFrontBundle:Informes:kardexData" }
+
+informes_kardexResumen:
+    pattern:  /kardexResumen
+    defaults: { _controller: "InventarioFrontBundle:Informes:kardexResumen" }
+
 informes_mvtoterceros:
     pattern:  /mvtoterceros
     defaults: { _controller: "InventarioFrontBundle:Informes:mvtoterceros" }

@@ -10,6 +10,7 @@ class __TwigTemplate_fd0bb52f4da074896cc02eee2835c478434fe0e27757835e18e309739fc
         $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Default:index.html.twig");
 
         $this->blocks = array(
+            'head' => array($this, 'block_head'),
             'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
@@ -25,29 +26,39 @@ class __TwigTemplate_fd0bb52f4da074896cc02eee2835c478434fe0e27757835e18e309739fc
     }
 
     // line 3
-    public function block_sitecontent($context, array $blocks = array())
+    public function block_head($context, array $blocks = array())
     {
         // line 4
+        echo "    ";
+        $this->displayParentBlock("head", $context, $blocks);
+        echo " 
+";
+    }
+
+    // line 7
+    public function block_sitecontent($context, array $blocks = array())
+    {
+        // line 8
         echo "        <div id=\"menubar\"> 
             <ul id=\"menu\">
                 <li><a href=\" ";
-        // line 6
+        // line 10
         echo $this->env->getExtension('routing')->getPath("informes_kardex");
         echo " \">Kardex</a></li>
                 <li><a href=\" ";
-        // line 7
+        // line 11
         echo $this->env->getExtension('routing')->getPath("informes_mvtoterceros");
         echo "\">Mov. Terceros</a></li>
                 <li><a href=\" ";
-        // line 8
+        // line 12
         echo $this->env->getExtension('routing')->getPath("informes_mvtomeses");
         echo " \">Mov. Meses</a></li>
                 <li><a href=\" ";
-        // line 9
+        // line 13
         echo $this->env->getExtension('routing')->getPath("informes_mvtoproductos");
         echo " \">Mov. Productos</a></li>
                 <li><a href=\" ";
-        // line 10
+        // line 14
         echo $this->env->getExtension('routing')->getPath("informes_rotacion");
         echo " \">Rotación</a></li>
             </ul>
@@ -67,6 +78,6 @@ class __TwigTemplate_fd0bb52f4da074896cc02eee2835c478434fe0e27757835e18e309739fc
 
     public function getDebugInfo()
     {
-        return array (  51 => 10,  47 => 9,  43 => 8,  39 => 7,  35 => 6,  31 => 4,  28 => 3,);
+        return array (  62 => 14,  58 => 13,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  32 => 4,  29 => 3,);
     }
 }

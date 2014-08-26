@@ -151,9 +151,22 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::indexAction',  '_route' => 'informes',);
                 }
 
-                // informes_kardex
-                if ($pathinfo === '/informes/kardex') {
-                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexAction',  '_route' => 'informes_kardex',);
+                if (0 === strpos($pathinfo, '/informes/kardex')) {
+                    // informes_kardex
+                    if ($pathinfo === '/informes/kardex') {
+                        return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexAction',  '_route' => 'informes_kardex',);
+                    }
+
+                    // informes_kardexData
+                    if ($pathinfo === '/informes/kardexData') {
+                        return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexDataAction',  '_route' => 'informes_kardexData',);
+                    }
+
+                    // informes_kardexResumen
+                    if ($pathinfo === '/informes/kardexResumen') {
+                        return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexResumenAction',  '_route' => 'informes_kardexResumen',);
+                    }
+
                 }
 
                 if (0 === strpos($pathinfo, '/informes/mvto')) {

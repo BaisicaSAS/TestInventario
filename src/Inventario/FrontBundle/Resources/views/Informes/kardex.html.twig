@@ -1,221 +1,84 @@
-{% extends "InventarioFrontBundle:Default:index.html.twig" %}
+{% extends "InventarioFrontBundle:informes:index.html.twig" %}
 
 {% block head %}
     {{ parent() }}     
     <script type="text/javascript">
-        var idMasDocumento, txnomter, gvaluni;
         $(document).ready(function(){
-            jQuery("#masdoc").jqGrid({        
-                    url:"{{ path('masdocumentos_listMasDocGrid') }}",
+            jQuery("#kardex").jqGrid({        
+                    url:"{{ path('informes_kardexData') }}",
                     datatype: "json",
                     width:'100%',
-                    colNames:['Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
+                    heigth:'500',
+                    colNames:['IDProducto','Ref.','Producto','Tip. Dc.','Num. Doc.','Fecha','Entrada','Salida','IdDet','IdMasD'],
                     colModel:[
-                            {name:'id',index:'id', editable:false,search:false,editoptions:{readonly:true}},
-                            {name:'txnomdoc',index:'txnomdoc',search:true,editable:true,edittype:"select",editoptions:{weight:'50px',dataUrl:"{{path('tipdoc_listTipDocGrid')}}",
-                                buildSelect: function (data) {
-                                            var response = jQuery.parseJSON(data);
-                                            //alert(response);
-                                            var s = '<select>';
-                                            for (var i in response) {
-                                                    //alert(response[i].inidtipdoc);
-                                                    s += '<option value="' + response[i].txNomDoc + '">' + response[i].txNomDoc + '</option>';
-                                            }
-                                            //alert(s + "</select>");
-                                            return s + "</select>";
-                                        }, async:false,                            
-                                    }
-                            },
-                            {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:true,editable:true,editoptions:{weight:'30px', align:'center'}},		
-                            {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:"select",editoptions:{weight:'50px',dataUrl:"{{path('terceros_listTerGrid', {'tipo': '0'})}}",
-                                buildSelect: function (data) {
-                                            var response = jQuery.parseJSON(data);
-                                            //alert(response);
-                                            var s = '<select>';
-                                            for (var i in response) {
-                                                    //alert(response[i].inidtipdoc);
-                                                    s += '<option value="' + response[i].txNomTercero + '">' + response[i].txNomTercero + '</option>';
-                                            }
-                                            //alert(s + "</select>");
-                                            return s + "</select>";
-                                        }, async:false,                            
-                                    }
-                            },
-                            {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{defaultValue:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},		
-                            {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{default:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
-                            {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{default:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
-                            {name:'txcondPago',index:'txcondPago',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},		
-                            {name:'fefecha',index:'fefecha',weight:'50px',search:true,editable:true,formatter:'date', edittype:'text', editoptions: { dataInit:function(el){ $(el).datepicker({dateFormat:'dd-mm-yy'});}}},
-                            {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:true,editable:true,formatter:'date',edittype:'text', editoptions:{ dataInit:function(el){ $(el).datepicker({dateFormat:'dd-mm-yy'});}}},
-                            {name:'txobservaciones',index:'txobservaciones',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
-                            {name:'txnomvendedor',index:'txnomvendedor',weight:'50px',search:true,editable:true,edittype:"select",editoptions:{dataUrl:"{{path('vendedores_listVenGrid')}}", align:'center',
-                                buildSelect: function (data) {
-                                            var response = jQuery.parseJSON(data);
-                                            //alert(response);
-                                            var s = '<select>';
-                                            for (var i in response) {
-                                                    //alert(response[i].inidtipdoc);
-                                                    s += '<option value="' + response[i].txNomVendedor + '">' + response[i].txNomVendedor + '</option>';
-                                            }
-                                            //alert(s + "</select>");
-                                            return s + "</select>";
-                                        }, async:false,                            
-                                    }
-                            },
-                    ],
-                    rowNum:100,
-                    rowList:[100,200,300],
-                    pager: '#paginacion',
-                    sortname: 'id',
-                    viewrecords: true,
-                    sortorder: "asc",
-                    caption:"Documentos",
-                    editurl:"{{ path('masdocumentos_guardaMasDocGrid') }}",
-                    onSelectRow: function (ids) {
-
-                        var rowid = jQuery("#masdoc").jqGrid('getGridParam','selrow');
-                        //idmasd = jQuery("#masdoc").jqGrid('getCell', ids, 'id');
-                        nomter = jQuery("#masdoc").jqGrid('getCell', ids, 'txnomtercero');
-                        var vurl="{{ path('masdocumentos_listDetDocGrid', {'piddoc': '1'}) }}";
-                        var vturl="{{path('productos_listProGrid', {'pidter': '1'})}}";
-                        vturl = vturl.replace('1',  nomter);
-                        idMasDocumento = rowid;
-                        if (ids != null){
-                            vurl = vurl.replace('1', rowid);
-                        }
-                        var TDoc = jQuery("#masdoc").jqGrid('getCell', rowid, 'txnomdoc');
-                         var NDoc = jQuery("#masdoc").jqGrid('getCell', rowid, 'txnumdoc');
-                         if (ids == null) {
-                             ids = 0;
-                             if (jQuery("#detdoc").jqGrid('getGridParam', 'records') > 0) {
-
-                                 jQuery("#detdoc").jqGrid('setGridParam', {url: vurl, page: 1 });
-                                 //alert("Null "+vurl);
-                                 jQuery("#detdoc").jqGrid('setCaption', "Detalle documento--:      [ "  + TDoc + " - " + NDoc + " ]")
-                                    .trigger('reloadGrid');
-                             }
-                         } else {
-
-                             jQuery("#detdoc").jqGrid('setGridParam', { url: vurl, page: 1 }).trigger('reloadGrid');
-                             //alert("."+vurl);
-                             jQuery("#detdoc").jqGrid('setCaption',".Detalle documento:      [ " + TDoc + " - " + NDoc + " ]")
-                                .trigger('reloadGrid');
-                         }
-                        jQuery("#detdoc").jqGrid('setColProp', 'txrefinterna',{editoptions: {dataUrl: vturl}}).trigger('reloadGrid');
-                     }                    
-            });
-            jQuery("#masdoc").hideCol('id');
-            jQuery("#masdoc").hideCol('dbvalneto');
-            jQuery("#masdoc").hideCol('dbvaliva');
-            jQuery("#masdoc").hideCol('dbtotal');
-
-            jQuery("#masdoc").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
-            jQuery("#masdoc").jqGrid('navGrid',"#paginacion",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
-            jQuery("#masdoc").jqGrid('inlineNav',"#paginacion");
-
-            //DETALLE
-            jQuery("#detdoc").jqGrid({        
-                    url:"{{ path('masdocumentos_listDetDocGrid', {'piddoc': '0'}) }}",
-                    datatype: "json",
-                    width:'100%',
-                    colNames:['Id','Id Doc.','Ref.', 'Producto', 'Cantidad','Val. Unitario','Val. Total'],
-                    colModel:[
-                            {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'inidmasdocumento',index:'inidmasdocumento',editable:true,search:true,editoptions:{readonly:true}, editrules: {edithidden : true}},
-                            {name:'txrefinterna',index:'txrefinterna',editable:true,edittype:"select",editoptions:{dataUrl:"{{path('productos_listProGrid', {'pidter': '0'})}}", 
-                                buildSelect: function (data) {
-                                            
-                                            var response = jQuery.parseJSON(data);
-                                            //alert(response);
-                                            var s = '<select>';
-                                            s += '<option value="0">Seleccione producto</option>'
-                                            for (var i in response) {
-                                                    //alert(response[i].inidtipdoc);
-                                                    s += '<option value="' + response[i].txnomproducto+'|'+ response[i].dbvalor +'">' + response[i].txrefinterna+"-"+response[i].txnomproducto + '</option>';
-                                            }
-                                            //alert(s + "</select>");
-                                            return s + "</select>";
-                                        }, 
-                                dataEvents: [{ type:'change',
-                                                fn: function(e) {
-                                                    var row = $(e.target).val();
-                                                    var arr = row.split('|');
-                                                    var rowid = jQuery("#detdoc").jqGrid('getGridParam','selrow');
-                                                    
-                                                    jQuery("#detdoc").jqGrid('setCell', rowid, 'txnomproducto', arr[0]);
-                                                    
-                                                    var fila = '#'+rowid+'_dbvalunitario';    
-                                                    $(fila).val(arr[1]);
-                                                    fila = '#'+rowid+'_inidmasdocumento';    
-                                                    $(fila).val(idMasDocumento);
-                                                    
-                                                    jQuery("#detdoc").jqGrid('setCell', rowid, 'dbvaltotal', arr[1]);
-                                                }}
-                                    ]
-                                },
-                                
-                            },
-                            {name:'txnomproducto',index:'txnomproducto',editable:true,edittype:"text", editoptions:{readonly:true}},
-                            {name:'incantidad',index:'incantidad',editable:true,search:true,editoptions:{defaultValue:1,
-                                dataEvents: [{ type:'change',
-                                                fn: function(e) {
-                                                    var rowid = jQuery("#detdoc").jqGrid('getGridParam','selrow');
-                                                    var dbvaltot = 0;
-                                                    var incant = $(e.target).val();
-                                                    //var dbvaluni = jQuery("#detdoc").jqGrid('getCell', rowid, 'dbvalunitario');
-                                                    var fila = '#'+rowid+'_dbvalunitario';    
-                                                    var dbvaluni = $(fila).val();
-                                                    dbvaltot = incant * dbvaluni;
-                                                    jQuery("#detdoc").jqGrid('setCell', rowid, 'dbvaltotal', dbvaltot);
-                                                    //jQuery("#detdoc").jqGrid('setCell', rowid, {dbvaltotal:dbvaltot});
-                                                    //jQuery("#detdoc").jqGrid('getLocalRow', rowid).dbvaltotal = dbvaltot;
-                                                    
-                                                }}
-                                    ]
-                                    
-                            }},
-                            {name:'dbvalunitario',index:'dbvalunitario',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "},
-                                editoptions:{defaultValue:1,
-                    
-                                dataEvents: [{ type:'change',
-                                                fn: function(e) {
-                                                    var rowid = jQuery("#detdoc").jqGrid('getGridParam','selrow');
-                                                    var dbvaltot = 0;
-                                                    //var incant = jQuery("#detdoc").jqGrid('getCell', rowid, 'incantidad');
-                                                    var dbvaluni = $(e.target).val(); 
-                                                    var fila = '#'+rowid+'_incantidad';    
-                                                    var incant = $(fila).val(); 
-                                                    dbvaltot = incant * dbvaluni;
-                                                    jQuery("#detdoc").jqGrid('setCell', rowid, 'dbvaltotal', dbvaltot);
-                                                }}
-                                    ]
-                                }},
-                            {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
+                            {name:'Productos_idProducto',index:'Productos_idProducto',editable:false},
+                            {name:'txRefInterna',index:'txRefInterna',editable:false},
+                            {name:'txNomProducto',index:'txNomProducto',editable:false},
+                            {name:'txTipDoc',index:'txTipDoc',editable:false,search: false},
+                            {name:'txNumDoc',index:'txNumDoc',editable:false,search: false},
+                            {name:'feFecha',index:'feFecha',editable:false,formatter:'date',search: false},
+                            {name:'inEntrada',index:'inEntrada', formatter: 'integer',
+                                align: 'right', editable: true, editoptions: {readonly: true},
+                                summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false},
+                            {name:'inSalida',index:'inSalida', formatter: 'integer',
+                                align: 'right', editable: true, editoptions: {readonly: true},
+                                summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false},
+                            {name:'idDetDocumentos',index:'idDetDocumentos', editable:false,search: false},
+                            {name:'inidMasDocumento',index:'inidMasDocumento',editable:false,search: false},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
-                    pager: '#pagered',
-                    sortname: 'id',
+                    pager: '#paginacion',
+                    sortname: 'txNomProducto',
+                    sortorder: 'asc',
                     viewrecords: true,
-                    sortorder: "asc",
-                    caption:"Detalle de documento: XX",
-                    editurl:"{{ path('masdocumentos_guardaDetDocGrid') }}",
-
+                    caption: 'MOVIMIENTO DE PRODUCTOS',
+                    grouping:true, 
+                    footerrow: true,
+                    groupingView : { 
+                        groupField : ['txNomProducto'], 
+                        groupSummary: [true],
+                        groupColumnShow: [true],
+                        groupText: ['<b>{0}</b>'],
+                        groupDataSorted: true
+                    },
             });
-            jQuery("#detdoc").hideCol('inidmasdocumento');
-            jQuery("#detdoc").hideCol('id');
-            jQuery("#detdoc").hideCol('idproducto');
+            jQuery("#kardex").hideCol('idDetDocumentos');
+            jQuery("#kardex").hideCol('inidMasDocumento');
+            jQuery("#kardex").hideCol('Productos_idProducto');
 
-            jQuery("#detdoc").jqGrid('navGrid',"#pagered",{add: false,edit:false,del:false,search:false});
-            jQuery("#detdoc").jqGrid('inlineNav',"#pagered");
-
-            jQuery("#detdoc").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });
-            //jQuery("#detdoc").click(function(){
-                    //jQuery("#masdoc").trigger('reloadGrid');
-                    //jQuery("#detdoc").trigger('reloadGrid');
-            //});
-        });
-        
+            jQuery("#kardex").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
+            jQuery("#kardex").jqGrid('navGrid',"#paginacion",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
+            jQuery("#kardex").jqGrid('inlineNav',"#paginacion");
+            
+            jQuery("#existenc").jqGrid({        
+                    url:"{{ path('informes_kardexResumen') }}",
+                    datatype: "json",
+                    width:'100%',
+                    heigth:'500',
+                    colNames:['IDProducto','Ref.','Producto','Entrada','Salida','Existencias'],
+                    colModel:[
+                            {name:'Productos_idProducto',index:'Productos_idProducto',editable:false},
+                            {name:'txRefInterna',index:'txRefInterna',editable:false},
+                            {name:'txNomProducto',index:'txNomProducto',editable:false},
+                            {name:'sumEntrada',index:'sumEntrada',editable:false,search: false},
+                            {name:'sumSalida',index:'sumSalida',editable:false,search: false},
+                            {name:'inExistencia',index:'inExistencia',editable:false,search: false},
+                    ],
+                    rowNum:1000,
+                    rowList:[1000,2000,3000],
+                    pager: '#pagina',
+                    sortname: 'txNomProducto',
+                    sortorder: 'asc',
+                    viewrecords: true,
+                    caption: 'RESUMEN EXISTENCIAS DE PRODUCTOS',
+                    footerrow: true,
+            });
+            jQuery("#existenc").hideCol('Productos_idProducto');
+            jQuery("#existenc").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
+            jQuery("#existenc").jqGrid('navGrid',"#pagina",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
+            jQuery("#existenc").jqGrid('inlineNav',"#pagina");
+       }); 
     </script>
 {% endblock %}
 
@@ -223,13 +86,11 @@
   {{ parent() }}     
 
   {% block sitecontent %}
-    <div>
-        <table id="masdoc" ></table>
+    <div height="500px">
+        <table id="kardex" ></table>
         <div id="paginacion" ></div>
-    </div>
-    <div>
-        <table id="detdoc" ></table>
-        <div id="pagered" ></div>
+        <table id="existenc" ></table>
+        <div id="pagina" ></div>
     </div>
   {% endblock %}
 {% endblock %}
