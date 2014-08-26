@@ -34,7 +34,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         $this->displayParentBlock("head", $context, $blocks);
         echo "     
     <script type=\"text/javascript\">
-        var idMasDocumento, txnomter, gvaluni;
+        var idMasDocumento, txnomter, gvaluni, selIRow = 1;;
         \$(document).ready(function(){
             jQuery(\"#masdoc\").jqGrid({        
                     url:\"";
@@ -233,8 +233,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                     
                             }},
                             {name:'dbvalunitario',index:'dbvalunitario',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"},
-                                editoptions:{defaultValue:1,
-                    
+                                editoptions:{defaultValue:1, dataInit: function (elem) { \$(elem).focus(function () { this.select(); }) },
                                 dataEvents: [{ type:'change',
                                                 fn: function(e) {
                                                     var rowid = jQuery(\"#detdoc\").jqGrid('getGridParam','selrow');
@@ -245,8 +244,26 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                                     var incant = \$(fila).val(); 
                                                     dbvaltot = incant * dbvaluni;
                                                     jQuery(\"#detdoc\").jqGrid('setCell', rowid, 'dbvaltotal', dbvaltot);
-                                                }}
-                                    ]
+                                            }},
+                                            {
+                                type: 'keydown',
+                                                fn: function (e) {
+                                                    var key = e.charCode || e.keyCode;
+                                                    if (key == 9)//tab
+                                                    {
+                                                        var grid = \$('#detdoc');
+                                                        //Save editing for current row
+                                                        grid.jqGrid('saveRow', selIRow, false, 'clientArray');
+                                                        //If at bottom of grid, create new row
+                                                        if (selIRow++ == grid.getDataIDs().length) {
+                                                            grid.addRowData(selIRow, {});
+                                                        }
+                                                        //Enter edit row for next row in grid
+                                                        grid.jqGrid('editRow', selIRow, false, 'clientArray');
+                                                    }
+                                                }
+                                            }
+                                        ]
                                 }},
                             {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
                     ],
@@ -258,7 +275,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     sortorder: \"asc\",
                     caption:\"Detalle de documento: XX\",
                     editurl:\"";
-        // line 202
+        // line 219
         echo $this->env->getExtension('routing')->getPath("masdocumentos_guardaDetDocGrid");
         echo "\",
 
@@ -281,22 +298,22 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 ";
     }
 
-    // line 222
+    // line 239
     public function block_main($context, array $blocks = array())
     {
-        // line 223
+        // line 240
         echo "  ";
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
 
   ";
-        // line 225
+        // line 242
         $this->displayBlock('sitecontent', $context, $blocks);
     }
 
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 226
+        // line 243
         echo "    <div>
         <table id=\"masdoc\" ></table>
         <div id=\"paginacion\" ></div>
@@ -320,6 +337,6 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 
     public function getDebugInfo()
     {
-        return array (  300 => 226,  294 => 225,  288 => 223,  285 => 222,  262 => 202,  182 => 125,  172 => 118,  131 => 80,  127 => 79,  118 => 73,  93 => 51,  69 => 30,  51 => 15,  42 => 9,  33 => 4,  30 => 3,);
+        return array (  317 => 243,  311 => 242,  305 => 240,  302 => 239,  279 => 219,  182 => 125,  172 => 118,  131 => 80,  127 => 79,  118 => 73,  93 => 51,  69 => 30,  51 => 15,  42 => 9,  33 => 4,  30 => 3,);
     }
 }

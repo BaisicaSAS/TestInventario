@@ -60,7 +60,15 @@ class __TwigTemplate_eb0a10195cc1f92ea6f9c3ad0adeeeae90fddb0e3540a290f9878c1bb08
                 <li><a href=\" ";
         // line 14
         echo $this->env->getExtension('routing')->getPath("informes_rotacion");
-        echo " \">Rotación</a></li>
+        echo " \">Rotación mensual</a></li>
+                <li><a href=\" ";
+        // line 15
+        echo $this->env->getExtension('routing')->getPath("informes_rentabilidad");
+        echo " \">Rentabilidad productos</a></li>
+                <li><a href=\" ";
+        // line 16
+        echo $this->env->getExtension('routing')->getPath("informes_precios");
+        echo " \">Historico Precios (Venta/Compra)</a></li>
             </ul>
         </div>    
 ";
@@ -78,6 +86,6 @@ class __TwigTemplate_eb0a10195cc1f92ea6f9c3ad0adeeeae90fddb0e3540a290f9878c1bb08
 
     public function getDebugInfo()
     {
-        return array (  62 => 14,  58 => 13,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  32 => 4,  29 => 3,);
+        return array (  70 => 16,  66 => 15,  62 => 14,  58 => 13,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  32 => 4,  29 => 3,);
     }
 }
