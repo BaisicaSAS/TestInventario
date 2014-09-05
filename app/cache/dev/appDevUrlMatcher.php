@@ -667,6 +667,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::indexAction',  '_route' => 'masdocumentos',);
             }
 
+            // masdocumentos_print
+            if (0 === strpos($pathinfo, '/masdocumentos/print') && preg_match('#^/masdocumentos/print/(?P<piddoc>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'masdocumentos_print')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::printAction',));
+            }
+
             if (0 === strpos($pathinfo, '/masdocumentos/list')) {
                 // masdocumentos_listMasDocGrid
                 if ($pathinfo === '/masdocumentos/listMasDocGrid') {

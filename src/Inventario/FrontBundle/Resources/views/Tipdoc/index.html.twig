@@ -3,6 +3,13 @@
 {% block sitecontent -%}
 
     <h1>Tipos de documento</h1>
+    <ul>
+        <li>
+            <a href="{{ path('tipdoc_new') }}">
+                Crear nuevo tipo de documento
+            </a>
+        </li>
+    </ul>
 
     <table class="records_list">
         <thead>
@@ -40,11 +47,4 @@
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('tipdoc_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

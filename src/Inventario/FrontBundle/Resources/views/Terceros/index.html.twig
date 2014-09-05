@@ -7,7 +7,14 @@
 
 {% block sitecontent -%}
 
-    <h1>Terceros list</h1>
+    <h1>Terceros</h1>
+    <ul>
+        <li>
+            <a href="{{ path('terceros_new') }}">
+                Crear Tercero
+            </a>
+        </li>
+    </ul>
 
     <table id="listado_terceros">
         <thead>
@@ -57,11 +64,4 @@
 
     <div id='pagerTerceros' ></div>
     <div id='resultado' ></div>
-    <ul>
-        <li>
-            <a href="{{ path('terceros_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

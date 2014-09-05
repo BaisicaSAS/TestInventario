@@ -30,8 +30,8 @@ class TercerosController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
-        $entities = $connection->prepare("SELECT a.idTercero, a.txNomTercero "
-                . "FROM Terceros a WHERE a.inTipoTer IN (:tipo,2) AND a.InActivo=1");
+        $entities = $connection->prepare("SELECT a.idTercero, a.txNomTercero, a.txDescuento, a.txDiasDescuento, a.inTipoDesc, a.idListaPrecios "
+                . "FROM Terceros a WHERE a.inTipoTer IN (:tipo,2,1,0) AND a.InActivo=1");
         
         $entities->bindParam('tipo',$tipo);
             

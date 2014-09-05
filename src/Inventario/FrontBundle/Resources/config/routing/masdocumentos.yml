@@ -2,6 +2,10 @@ masdocumentos:
     pattern:  /
     defaults: { _controller: "InventarioFrontBundle:Masdocumentos:index" }
 
+masdocumentos_print:
+    pattern:  /print/{piddoc}
+    defaults: { _controller: "InventarioFrontBundle:Masdocumentos:print" }
+
 masdocumentos_listMasDocGrid:
     pattern:  /listMasDocGrid
     defaults: { _controller: "InventarioFrontBundle:Masdocumentos:listMasDocGrid" }

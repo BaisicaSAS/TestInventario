@@ -29,6 +29,16 @@ class __TwigTemplate_11d2df0e00b964001ecbeb2b6aa99ae01cbe2aee455073b3cfc10241afe
     {
         // line 5
         echo "<h1>Tipos de documento</h1>
+    <ul>
+        <li>
+            <a href=\"";
+        // line 8
+        echo $this->env->getExtension('routing')->getPath("tipdoc_new");
+        echo "\">
+                Crear nuevo tipo de documento
+            </a>
+        </li>
+    </ul>
 
     <table class=\"records_list\">
         <thead>
@@ -44,49 +54,49 @@ class __TwigTemplate_11d2df0e00b964001ecbeb2b6aa99ae01cbe2aee455073b3cfc10241afe
         </thead>
         <tbody>
         ";
-        // line 20
+        // line 27
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["entities"]) ? $context["entities"] : $this->getContext($context, "entities")));
         foreach ($context['_seq'] as $context["_key"] => $context["entity"]) {
-            // line 21
+            // line 28
             echo "            <tr>
                 <td><a href=\"";
-            // line 22
+            // line 29
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("tipdoc_show", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">";
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"), "html", null, true);
             echo "</a></td>
                 <td>";
-            // line 23
+            // line 30
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txtipdoc"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 24
+            // line 31
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txnomdoc"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 25
+            // line 32
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "inafecta"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 26
+            // line 33
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "intipter"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 27
+            // line 34
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txobservplantilla"), "html", null, true);
             echo "</td>
                 <td>
                 <ul>
                     <li>
                         <a href=\"";
-            // line 31
+            // line 38
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("tipdoc_show", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">Ver</a>
                     </li>
                     <li>
                         <a href=\"";
-            // line 34
+            // line 41
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("tipdoc_edit", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">Modificar</a>
                     </li>
@@ -98,20 +108,10 @@ class __TwigTemplate_11d2df0e00b964001ecbeb2b6aa99ae01cbe2aee455073b3cfc10241afe
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['entity'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 40
+        // line 47
         echo "        </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href=\"";
-        // line 45
-        echo $this->env->getExtension('routing')->getPath("tipdoc_new");
-        echo "\">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     ";
     }
 
@@ -127,6 +127,6 @@ class __TwigTemplate_11d2df0e00b964001ecbeb2b6aa99ae01cbe2aee455073b3cfc10241afe
 
     public function getDebugInfo()
     {
-        return array (  109 => 45,  102 => 40,  90 => 34,  84 => 31,  77 => 27,  73 => 26,  69 => 25,  65 => 24,  61 => 23,  55 => 22,  52 => 21,  48 => 20,  31 => 5,  28 => 3,);
+        return array (  112 => 47,  100 => 41,  94 => 38,  87 => 34,  83 => 33,  79 => 32,  75 => 31,  71 => 30,  65 => 29,  62 => 28,  58 => 27,  36 => 8,  31 => 5,  28 => 3,);
     }
 }

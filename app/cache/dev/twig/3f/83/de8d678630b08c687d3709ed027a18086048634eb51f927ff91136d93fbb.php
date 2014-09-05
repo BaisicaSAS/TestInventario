@@ -34,20 +34,32 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         $this->displayParentBlock("head", $context, $blocks);
         echo "     
     <script type=\"text/javascript\">
-        var idMasDocumento, txnomter, gvaluni, selIRow = 1;;
+        var idMasDocumento, txnomter, gvaluni, selIRow = 1;
+        var descActual, diasActual;
+        var Hoy = new Date();
+        var arTerceros = [];
+        var arTipdoc = [];
         \$(document).ready(function(){
             jQuery(\"#masdoc\").jqGrid({        
                     url:\"";
-        // line 9
+        // line 13
         echo $this->env->getExtension('routing')->getPath("masdocumentos_listMasDocGrid");
         echo "\",
                     datatype: \"json\",
                     width:'100%',
-                    colNames:['Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
+                    colNames:['Imprimir','Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
                     colModel:[
+                            {name:'Imprimir', sortable:false, formatter: urlprint, width:'50px' ,
+                                urlprint: function (cellvalue, options, rowObject)
+                                {
+                                  return cellvalue.replace(\"";
+        // line 21
+        echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("masdocumentos_print", 1), "html", null, true);
+        echo "\");
+                                },},
                             {name:'id',index:'id', editable:false,search:false,editoptions:{readonly:true}},
                             {name:'txnomdoc',index:'txnomdoc',search:true,editable:true,edittype:\"select\",editoptions:{weight:'50px',dataUrl:\"";
-        // line 15
+        // line 24
         echo $this->env->getExtension('routing')->getPath("tipdoc_listTipDocGrid");
         echo "\",
                                 buildSelect: function (data) {
@@ -57,15 +69,28 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                             for (var i in response) {
                                                     //alert(response[i].inidtipdoc);
                                                     s += '<option value=\"' + response[i].txNomDoc + '\">' + response[i].txNomDoc + '</option>';
+                                                    arTipdoc[i] = {\"tip\":response[i].txNomDoc,\"afe\":response[i].inTipTer};
                                             }
                                             //alert(s + \"</select>\");
                                             return s + \"</select>\";
-                                        }, async:false,                            
-                                    }
+                                        },                           
+                                        async:false,                            
+                                dataEvents: [{ type:'change',
+                                                fn: function(e) {
+                                                    var Id = objectFindByKey(arTipdoc, \"tip\", \$(e.target).val());
+                                                    var vturl=\"";
+        // line 41
+        echo $this->env->getExtension('routing')->getPath("terceros_listTerGrid", array("tipo" => "0"));
+        echo "\";
+                                                    vturl = vturl.replace('0',  arTipdoc[Id]['afe']);
+                                                    jQuery(\"#masdoc\").jqGrid('setColProp', 'txnomtercero',{editoptions: {dataUrl: vturl}});
+                                                }
+                                            }]
+                                }
                             },
                             {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:true,editable:true,editoptions:{weight:'30px', align:'center'}},\t\t
                             {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:\"select\",editoptions:{weight:'50px',dataUrl:\"";
-        // line 30
+        // line 49
         echo $this->env->getExtension('routing')->getPath("terceros_listTerGrid", array("tipo" => "0"));
         echo "\",
                                 buildSelect: function (data) {
@@ -75,21 +100,61 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                             for (var i in response) {
                                                     //alert(response[i].inidtipdoc);
                                                     s += '<option value=\"' + response[i].txNomTercero + '\">' + response[i].txNomTercero + '</option>';
+                                                    arTerceros[i] = {\"ter\":response[i].txNomTercero,\"desc\":response[i].txDescuento,\"dias\":response[i].txDiasDescuento};
                                             }
                                             //alert(s + \"</select>\");
                                             return s + \"</select>\";
-                                        }, async:false,                            
-                                    }
+                                        }, 
+                                        async:false,                            
+                                dataEvents: [{ type:'change',
+                                                fn: function(e) {
+                                                    //var row = \$(e.target).val();
+                                                    var rowid = jQuery(\"#masdoc\").jqGrid('getGridParam','selrow');
+                                                    var Id = objectFindByKey(arTerceros, \"ter\", \$(e.target).val());
+
+                                                    var fila = '#'+rowid+'_txcondPago';    
+                                                    \$(fila).val(arTerceros[Id][\"desc\"]+'% a '+arTerceros[Id][\"dias\"]+' días');
+                                                    descActual = arTerceros[Id][\"desc\"];
+                                                    diasActual = arTerceros[Id][\"dias\"];
+                                                    
+
+                                                    //var fila = '#'+rowid+'_fefecha';    
+                                                    //var NFecha = new Date();
+                                                    //NFecha.setTime(Date.parse(\$(fila).val()));
+                                                    //alert(NFecha) ;
+                                                    //var Venc = new Date(NFecha+ (diasActual*86400));
+                                                    //alert(Venc) ;
+                                                    //var fila = '#'+rowid+'_fevencimiento';    
+                                                    //\$(fila).val(Venc);
+                                                }
+                                            }
+                                ]}
                             },
                             {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{defaultValue:0,decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},\t\t
                             {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{default:0,decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
                             {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{default:0,decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
                             {name:'txcondPago',index:'txcondPago',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},\t\t
-                            {name:'fefecha',index:'fefecha',weight:'50px',search:true,editable:true,formatter:'date', edittype:'text', editoptions: { dataInit:function(el){ \$(el).datepicker({dateFormat:'dd-mm-yy'});}}},
+                            {name:'fefecha',index:'fefecha',weight:'50px',search:true,editable:true,formatter:'date', edittype:'text', editoptions: {defaultValue:Hoy, dataInit:function(el){ \$(el).datepicker({dateFormat:'dd-mm-yy'});},
+                                dataEvents: [{ type:'change',
+                                                fn: function(e) {
+                                                    //var rowid = jQuery(\"#masdoc\").jqGrid('getGridParam','selrow');
+                                                    //var Venc = new Date();
+                                                    //alert(Venc.toString('dd-mm-yy'));
+                                                    //Venc = Date.parse(\$(e.target).val())+(diasActual*86400);
+                                                    //alert(Venc);
+                                                    //var fVenc = new Date(Venc);
+                                                    //alert(fVenc.toString());
+                                                    //var fila = '#'+rowid+'_fevencimiento';    
+                                                    //\$(fila).val(Venc);
+                                                }
+                                            }
+                                            ]
+                                }    
+                            },
                             {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:true,editable:true,formatter:'date',edittype:'text', editoptions:{ dataInit:function(el){ \$(el).datepicker({dateFormat:'dd-mm-yy'});}}},
                             {name:'txobservaciones',index:'txobservaciones',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
                             {name:'txnomvendedor',index:'txnomvendedor',weight:'50px',search:true,editable:true,edittype:\"select\",editoptions:{dataUrl:\"";
-        // line 51
+        // line 110
         echo $this->env->getExtension('routing')->getPath("vendedores_listVenGrid");
         echo "\", align:'center',
                                 buildSelect: function (data) {
@@ -102,9 +167,10 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                             }
                                             //alert(s + \"</select>\");
                                             return s + \"</select>\";
-                                        }, async:false,                            
-                                    }
+                                        }, 
+                                async:false,                            
                             },
+                        },
                     ],
                     rowNum:100,
                     rowList:[100,200,300],
@@ -114,20 +180,21 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     sortorder: \"asc\",
                     caption:\"Documentos\",
                     editurl:\"";
-        // line 73
+        // line 133
         echo $this->env->getExtension('routing')->getPath("masdocumentos_guardaMasDocGrid");
         echo "\",
+
                     onSelectRow: function (ids) {
 
                         var rowid = jQuery(\"#masdoc\").jqGrid('getGridParam','selrow');
                         //idmasd = jQuery(\"#masdoc\").jqGrid('getCell', ids, 'id');
                         nomter = jQuery(\"#masdoc\").jqGrid('getCell', ids, 'txnomtercero');
                         var vurl=\"";
-        // line 79
+        // line 140
         echo $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("piddoc" => "1"));
         echo "\";
                         var vturl=\"";
-        // line 80
+        // line 141
         echo $this->env->getExtension('routing')->getPath("productos_listProGrid", array("pidter" => "1"));
         echo "\";
                         vturl = vturl.replace('1',  nomter);
@@ -154,8 +221,21 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                 .trigger('reloadGrid');
                          }
                         jQuery(\"#detdoc\").jqGrid('setColProp', 'txrefinterna',{editoptions: {dataUrl: vturl}}).trigger('reloadGrid');
-                     }                    
+                     },
             });
+            
+            function objectFindByKey(array, key, value) {
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i][key] === value) {
+                        return i;
+                    }
+                }
+                return null;
+            };
+
+            
+            jQuery(\"#masdoc\").printRow
+            
             jQuery(\"#masdoc\").hideCol('id');
             jQuery(\"#masdoc\").hideCol('dbvalneto');
             jQuery(\"#masdoc\").hideCol('dbvaliva');
@@ -168,7 +248,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
             //DETALLE
             jQuery(\"#detdoc\").jqGrid({        
                     url:\"";
-        // line 118
+        // line 192
         echo $this->env->getExtension('routing')->getPath("masdocumentos_listDetDocGrid", array("piddoc" => "0"));
         echo "\",
                     datatype: \"json\",
@@ -178,7 +258,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                             {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
                             {name:'inidmasdocumento',index:'inidmasdocumento',editable:true,search:true,editoptions:{readonly:true}, editrules: {edithidden : true}},
                             {name:'txrefinterna',index:'txrefinterna',editable:true,edittype:\"select\",editoptions:{dataUrl:\"";
-        // line 125
+        // line 199
         echo $this->env->getExtension('routing')->getPath("productos_listProGrid", array("pidter" => "0"));
         echo "\", 
                                 buildSelect: function (data) {
@@ -245,24 +325,24 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                                     dbvaltot = incant * dbvaluni;
                                                     jQuery(\"#detdoc\").jqGrid('setCell', rowid, 'dbvaltotal', dbvaltot);
                                             }},
-                                            {
-                                type: 'keydown',
-                                                fn: function (e) {
-                                                    var key = e.charCode || e.keyCode;
-                                                    if (key == 9)//tab
-                                                    {
-                                                        var grid = \$('#detdoc');
+                            //                {
+                            //    type: 'keydown',
+                            //                    fn: function (e) {
+                            //                        var key = e.charCode || e.keyCode;
+                            //                        if (key == 9)//tab
+                            //                        {
+                            //                            var grid = \$('#detdoc');
                                                         //Save editing for current row
-                                                        grid.jqGrid('saveRow', selIRow, false, 'clientArray');
+                            //                            grid.jqGrid('saveRow', selIRow, false, 'clientArray');
                                                         //If at bottom of grid, create new row
-                                                        if (selIRow++ == grid.getDataIDs().length) {
-                                                            grid.addRowData(selIRow, {});
-                                                        }
+                            //                            if (selIRow++ == grid.getDataIDs().length) {
+                            //                                grid.addRowData(selIRow, {});
+                            //                            }
                                                         //Enter edit row for next row in grid
-                                                        grid.jqGrid('editRow', selIRow, false, 'clientArray');
-                                                    }
-                                                }
-                                            }
+                            //                            grid.jqGrid('editRow', selIRow, false, 'clientArray');
+                            //                        }
+                            //                    }
+                            //                }
                                         ]
                                 }},
                             {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
@@ -275,7 +355,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     sortorder: \"asc\",
                     caption:\"Detalle de documento: XX\",
                     editurl:\"";
-        // line 219
+        // line 293
         echo $this->env->getExtension('routing')->getPath("masdocumentos_guardaDetDocGrid");
         echo "\",
 
@@ -298,22 +378,22 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 ";
     }
 
-    // line 239
+    // line 313
     public function block_main($context, array $blocks = array())
     {
-        // line 240
+        // line 314
         echo "  ";
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
 
   ";
-        // line 242
+        // line 316
         $this->displayBlock('sitecontent', $context, $blocks);
     }
 
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 243
+        // line 317
         echo "    <div>
         <table id=\"masdoc\" ></table>
         <div id=\"paginacion\" ></div>
@@ -337,6 +417,6 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 
     public function getDebugInfo()
     {
-        return array (  317 => 243,  311 => 242,  305 => 240,  302 => 239,  279 => 219,  182 => 125,  172 => 118,  131 => 80,  127 => 79,  118 => 73,  93 => 51,  69 => 30,  51 => 15,  42 => 9,  33 => 4,  30 => 3,);
+        return array (  397 => 317,  391 => 316,  385 => 314,  382 => 313,  359 => 293,  262 => 199,  252 => 192,  198 => 141,  194 => 140,  184 => 133,  158 => 110,  94 => 49,  83 => 41,  63 => 24,  57 => 21,  46 => 13,  33 => 4,  30 => 3,);
     }
 }

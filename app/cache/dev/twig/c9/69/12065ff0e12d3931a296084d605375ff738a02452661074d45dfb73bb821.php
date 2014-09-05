@@ -44,9 +44,9 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
                     width:'40%',
                     colNames:['Id','Nombre','Act./Inac.'],
                     colModel:[
-                            {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'txnomlista',index:'txnomlista',search:true,editable:true,editoptions:{size:30}},
-                            {name:'txactiva',index:'txactiva',search:true,sortable:false,editable: true, edittype:'select', formatter:'select', editoptions:{value: \"ACTIVA:ACTIVA;INACTIVA:INACTIVA\"},}\t\t
+                            {name:'id',index:'id', editable:false,editoptions:{readonly:true,size:10}},
+                            {name:'txnomlista',index:'txnomlista',editable:true,editoptions:{size:30}},
+                            {name:'txactiva',index:'txactiva',sortable:false,editable: true, edittype:'select', formatter:'select', editoptions:{value: \"ACTIVA:ACTIVA;INACTIVA:INACTIVA\"},}\t\t
                     ],
                     rowNum:30,
                     rowList:[10,20,30],
@@ -102,12 +102,12 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
                     width:'800px',
                     colNames:['Lista','Id','Id Producto', 'Ref. Producto','Producto','Precio'],
                     colModel:[
-                            {name:'idlista',index:'idlista', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'txrefinterna',index:'txrefinterna',editable:false,search:true,width:\"100px\"},
-                            {name:'txnomproducto',index:'txnomproducto',editable:false,search:true,width:\"400px\"},
-                            {name:'idproducto',index:'idproducto',editable:false,search:true},
-                            {name:'dbvalor',index:'dbvalor',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
+                            {name:'idlista',index:'idlista', editable:false,editoptions:{readonly:true,size:10}},
+                            {name:'id',index:'id', editable:false,editoptions:{readonly:true,size:10}},
+                            {name:'txrefinterna',index:'txrefinterna',editable:false,width:\"100px\"},
+                            {name:'txnomproducto',index:'txnomproducto',editable:false,width:\"400px\"},
+                            {name:'idproducto',index:'idproducto',editable:false},
+                            {name:'dbvalor',index:'dbvalor',editable:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],

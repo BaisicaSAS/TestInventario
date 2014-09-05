@@ -89,6 +89,43 @@ class MasdocumentosController extends Controller
         
     }
 
+    public function printAction($piddoc)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("SELECT a.idDetDocumentos as id, a.inidMasDocumento as inidmasdocumento, "
+                . "a.inCantidad as incantidad, a.dbValUnitario as dbvalunitario, a.dbValtotal as dbvaltotal, "
+                . "c.txrefinterna as txrefinterna, c.txNomProducto as txnomproducto, d.txDocumento as txdocumento, "
+                . "d.txNomTercero as txnomtercero, d.txDireccion as txdireccion, d.txTelefonos as txtelefonos "
+                . "FROM DetDocumentos a "
+                . "LEFT JOIN MasDocumentos b ON a.inidMasDocumento = b.idMasDocumento "
+                . "LEFT JOIN Productos c ON a.Productos_idProducto = c.idProducto "
+                . "LEFT JOIN Terceros d ON b.inidTercero= d.idTercero " 
+                . "WHERE a.inidMasDocumento = :piddoc "
+                . "ORDER BY id");
+        
+        $entities->bindParam('piddoc',$piddoc);
+        $entities->execute();
+        
+        /*$result = $entities->fetchAll();
+        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');*/
+
+        return $this->render('InventarioFrontBundle:Masdocumentos:print.html.twig', array(
+            'entities' => $entities,
+        ));
+        //return $response;        
+        
+    }
+
+
+    
     /**
      * Guarda cambios Maestro Doc desde jqGrid.
      *

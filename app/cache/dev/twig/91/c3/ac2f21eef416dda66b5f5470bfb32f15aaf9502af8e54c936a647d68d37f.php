@@ -27,19 +27,18 @@ class __TwigTemplate_91c3ac2f21eef416dda66b5f5470bfb32f15aaf9502af8e54c936a647d6
     // line 3
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 5
-        echo "<div id=\"sitecontent\"> 
-        <div id=\"menubar\"> 
-            <ul id=\"menu\">
-              <li class=\"selected\"><a href=\"";
-        // line 8
+        // line 6
+        echo "<h1>Vendedores</h1>
+    <ul>
+        <li>
+            <a href=\"";
+        // line 9
         echo $this->env->getExtension('routing')->getPath("vendedores_new");
-        echo "\">Crear vendedor</a></li>
-            </ul>
-        </div>    
-    </div>    
-
-    <h1>Vendedores</h1>
+        echo "\">
+                Crear vendedor
+            </a>
+        </li>
+    </ul>
 
     <table class=\"records_list\">
         <thead>
@@ -113,6 +112,6 @@ class __TwigTemplate_91c3ac2f21eef416dda66b5f5470bfb32f15aaf9502af8e54c936a647d6
 
     public function getDebugInfo()
     {
-        return array (  98 => 42,  86 => 36,  80 => 33,  73 => 29,  69 => 28,  63 => 27,  60 => 26,  56 => 25,  36 => 8,  31 => 5,  28 => 3,);
+        return array (  97 => 42,  85 => 36,  79 => 33,  72 => 29,  68 => 28,  62 => 27,  59 => 26,  55 => 25,  36 => 9,  31 => 6,  28 => 3,);
     }
 }

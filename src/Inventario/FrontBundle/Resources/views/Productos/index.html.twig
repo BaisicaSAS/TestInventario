@@ -2,7 +2,14 @@
 
 {% block sitecontent -%}
 
-    <h1>Productos list</h1>
+    <h1>Productos</h1>
+    <ul>
+        <li>
+            <a href="{{ path('productos_new') }}">
+                Crear producto
+            </a>
+        </li>
+    </ul>
 
     <table class="records_list">
         <thead>
@@ -40,11 +47,4 @@
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('productos_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

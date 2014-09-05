@@ -3,14 +3,19 @@
 {% block head %}
     {{ parent() }}     
     <script type="text/javascript">
-        var idMasDocumento, txnomter, gvaluni, selIRow = 1;;
+        var idMasDocumento, txnomter, gvaluni, selIRow = 1;
+        var descActual, diasActual;
+        var Hoy = new Date();
+        var arTerceros = [];
+        var arTipdoc = [];
         $(document).ready(function(){
             jQuery("#masdoc").jqGrid({        
                     url:"{{ path('masdocumentos_listMasDocGrid') }}",
                     datatype: "json",
                     width:'100%',
-                    colNames:['Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
+                    colNames:['Imprimir','Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
                     colModel:[
+                            {name:'Imprimir', sortable:false, formatter: urlprint, width:'50px'},
                             {name:'id',index:'id', editable:false,search:false,editoptions:{readonly:true}},
                             {name:'txnomdoc',index:'txnomdoc',search:true,editable:true,edittype:"select",editoptions:{weight:'50px',dataUrl:"{{path('tipdoc_listTipDocGrid')}}",
                                 buildSelect: function (data) {
@@ -20,11 +25,21 @@
                                             for (var i in response) {
                                                     //alert(response[i].inidtipdoc);
                                                     s += '<option value="' + response[i].txNomDoc + '">' + response[i].txNomDoc + '</option>';
+                                                    arTipdoc[i] = {"tip":response[i].txNomDoc,"afe":response[i].inTipTer};
                                             }
                                             //alert(s + "</select>");
                                             return s + "</select>";
-                                        }, async:false,                            
-                                    }
+                                        },                           
+                                        async:false,                            
+                                dataEvents: [{ type:'change',
+                                                fn: function(e) {
+                                                    var Id = objectFindByKey(arTipdoc, "tip", $(e.target).val());
+                                                    var vturl="{{path('terceros_listTerGrid', {'tipo': '0'})}}";
+                                                    vturl = vturl.replace('0',  arTipdoc[Id]['afe']);
+                                                    jQuery("#masdoc").jqGrid('setColProp', 'txnomtercero',{editoptions: {dataUrl: vturl}});
+                                                }
+                                            }]
+                                }
                             },
                             {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:true,editable:true,editoptions:{weight:'30px', align:'center'}},		
                             {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:"select",editoptions:{weight:'50px',dataUrl:"{{path('terceros_listTerGrid', {'tipo': '0'})}}",
@@ -35,17 +50,57 @@
                                             for (var i in response) {
                                                     //alert(response[i].inidtipdoc);
                                                     s += '<option value="' + response[i].txNomTercero + '">' + response[i].txNomTercero + '</option>';
+                                                    arTerceros[i] = {"ter":response[i].txNomTercero,"desc":response[i].txDescuento,"dias":response[i].txDiasDescuento};
                                             }
                                             //alert(s + "</select>");
                                             return s + "</select>";
-                                        }, async:false,                            
-                                    }
+                                        }, 
+                                        async:false,                            
+                                dataEvents: [{ type:'change',
+                                                fn: function(e) {
+                                                    //var row = $(e.target).val();
+                                                    var rowid = jQuery("#masdoc").jqGrid('getGridParam','selrow');
+                                                    var Id = objectFindByKey(arTerceros, "ter", $(e.target).val());
+
+                                                    var fila = '#'+rowid+'_txcondPago';    
+                                                    $(fila).val(arTerceros[Id]["desc"]+'% a '+arTerceros[Id]["dias"]+' días');
+                                                    descActual = arTerceros[Id]["desc"];
+                                                    diasActual = arTerceros[Id]["dias"];
+                                                    
+
+                                                    //var fila = '#'+rowid+'_fefecha';    
+                                                    //var NFecha = new Date();
+                                                    //NFecha.setTime(Date.parse($(fila).val()));
+                                                    //alert(NFecha) ;
+                                                    //var Venc = new Date(NFecha+ (diasActual*86400));
+                                                    //alert(Venc) ;
+                                                    //var fila = '#'+rowid+'_fevencimiento';    
+                                                    //$(fila).val(Venc);
+                                                }
+                                            }
+                                ]}
                             },
                             {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{defaultValue:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},		
                             {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{default:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
                             {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{default:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
                             {name:'txcondPago',index:'txcondPago',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},		
-                            {name:'fefecha',index:'fefecha',weight:'50px',search:true,editable:true,formatter:'date', edittype:'text', editoptions: { dataInit:function(el){ $(el).datepicker({dateFormat:'dd-mm-yy'});}}},
+                            {name:'fefecha',index:'fefecha',weight:'50px',search:true,editable:true,formatter:'date', edittype:'text', editoptions: {defaultValue:Hoy, dataInit:function(el){ $(el).datepicker({dateFormat:'dd-mm-yy'});},
+                                dataEvents: [{ type:'change',
+                                                fn: function(e) {
+                                                    //var rowid = jQuery("#masdoc").jqGrid('getGridParam','selrow');
+                                                    //var Venc = new Date();
+                                                    //alert(Venc.toString('dd-mm-yy'));
+                                                    //Venc = Date.parse($(e.target).val())+(diasActual*86400);
+                                                    //alert(Venc);
+                                                    //var fVenc = new Date(Venc);
+                                                    //alert(fVenc.toString());
+                                                    //var fila = '#'+rowid+'_fevencimiento';    
+                                                    //$(fila).val(Venc);
+                                                }
+                                            }
+                                            ]
+                                }    
+                            },
                             {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:true,editable:true,formatter:'date',edittype:'text', editoptions:{ dataInit:function(el){ $(el).datepicker({dateFormat:'dd-mm-yy'});}}},
                             {name:'txobservaciones',index:'txobservaciones',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
                             {name:'txnomvendedor',index:'txnomvendedor',weight:'50px',search:true,editable:true,edittype:"select",editoptions:{dataUrl:"{{path('vendedores_listVenGrid')}}", align:'center',
@@ -59,9 +114,10 @@
                                             }
                                             //alert(s + "</select>");
                                             return s + "</select>";
-                                        }, async:false,                            
-                                    }
+                                        }, 
+                                async:false,                            
                             },
+                        },
                     ],
                     rowNum:100,
                     rowList:[100,200,300],
@@ -71,6 +127,7 @@
                     sortorder: "asc",
                     caption:"Documentos",
                     editurl:"{{ path('masdocumentos_guardaMasDocGrid') }}",
+
                     onSelectRow: function (ids) {
 
                         var rowid = jQuery("#masdoc").jqGrid('getGridParam','selrow');
@@ -102,8 +159,21 @@
                                 .trigger('reloadGrid');
                          }
                         jQuery("#detdoc").jqGrid('setColProp', 'txrefinterna',{editoptions: {dataUrl: vturl}}).trigger('reloadGrid');
-                     }                    
+                     },
             });
+            
+            function objectFindByKey(array, key, value) {
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i][key] === value) {
+                        return i;
+                    }
+                }
+                return null;
+            };
+
+            
+            jQuery("#masdoc").printRow
+            
             jQuery("#masdoc").hideCol('id');
             jQuery("#masdoc").hideCol('dbvalneto');
             jQuery("#masdoc").hideCol('dbvaliva');
@@ -187,24 +257,24 @@
                                                     dbvaltot = incant * dbvaluni;
                                                     jQuery("#detdoc").jqGrid('setCell', rowid, 'dbvaltotal', dbvaltot);
                                             }},
-                                            {
-                                type: 'keydown',
-                                                fn: function (e) {
-                                                    var key = e.charCode || e.keyCode;
-                                                    if (key == 9)//tab
-                                                    {
-                                                        var grid = $('#detdoc');
+                            //                {
+                            //    type: 'keydown',
+                            //                    fn: function (e) {
+                            //                        var key = e.charCode || e.keyCode;
+                            //                        if (key == 9)//tab
+                            //                        {
+                            //                            var grid = $('#detdoc');
                                                         //Save editing for current row
-                                                        grid.jqGrid('saveRow', selIRow, false, 'clientArray');
+                            //                            grid.jqGrid('saveRow', selIRow, false, 'clientArray');
                                                         //If at bottom of grid, create new row
-                                                        if (selIRow++ == grid.getDataIDs().length) {
-                                                            grid.addRowData(selIRow, {});
-                                                        }
+                            //                            if (selIRow++ == grid.getDataIDs().length) {
+                            //                                grid.addRowData(selIRow, {});
+                            //                            }
                                                         //Enter edit row for next row in grid
-                                                        grid.jqGrid('editRow', selIRow, false, 'clientArray');
-                                                    }
-                                                }
-                                            }
+                            //                            grid.jqGrid('editRow', selIRow, false, 'clientArray');
+                            //                        }
+                            //                    }
+                            //                }
                                         ]
                                 }},
                             {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:true,width:"200px", formatter:'currency', formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},

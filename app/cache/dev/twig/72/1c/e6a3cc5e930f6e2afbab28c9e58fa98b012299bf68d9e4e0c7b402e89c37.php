@@ -43,7 +43,17 @@ class __TwigTemplate_721ce6a3cc5e930f6e2afbab28c9e58fa98b012299bf68d9e4e0c7b402e
     public function block_sitecontent($context, array $blocks = array())
     {
         // line 10
-        echo "<h1>Terceros list</h1>
+        echo "<h1>Terceros</h1>
+    <ul>
+        <li>
+            <a href=\"";
+        // line 13
+        echo $this->env->getExtension('routing')->getPath("terceros_new");
+        echo "\">
+                Crear Tercero
+            </a>
+        </li>
+    </ul>
 
     <table id=\"listado_terceros\">
         <thead>
@@ -64,69 +74,69 @@ class __TwigTemplate_721ce6a3cc5e930f6e2afbab28c9e58fa98b012299bf68d9e4e0c7b402e
         </thead>
         <tbody>
         ";
-        // line 30
+        // line 37
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["entities"]) ? $context["entities"] : $this->getContext($context, "entities")));
         foreach ($context['_seq'] as $context["_key"] => $context["entity"]) {
-            // line 31
+            // line 38
             echo "            <tr>
                 <td><a href=\"";
-            // line 32
+            // line 39
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("terceros_show", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">";
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"), "html", null, true);
             echo "</a></td>
                 <td>";
-            // line 33
+            // line 40
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txtipdoc"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 34
+            // line 41
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txdocumento"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 35
+            // line 42
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txnomtercero"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 36
+            // line 43
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "intipoter"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 37
+            // line 44
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txdescuento"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 38
+            // line 45
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txdiasdescuento"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 39
+            // line 46
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txdireccion"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 40
+            // line 47
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txtelefonos"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 41
+            // line 48
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "inactivo"), "html", null, true);
             echo "</td>
                 <td>";
-            // line 42
+            // line 49
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "intipodesc"), "html", null, true);
             echo "</td>
                 <td>
                 <ul>
                     <li>
                         <a href=\"";
-            // line 46
+            // line 53
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("terceros_show", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">Ver</a>
                     </li>
                     <li>
                         <a href=\"";
-            // line 49
+            // line 56
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("terceros_edit", array("id" => $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "id"))), "html", null, true);
             echo "\">Modificar</a>
                     </li>
@@ -138,22 +148,12 @@ class __TwigTemplate_721ce6a3cc5e930f6e2afbab28c9e58fa98b012299bf68d9e4e0c7b402e
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['entity'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 55
+        // line 62
         echo "        </tbody>
     </table>
 
     <div id='pagerTerceros' ></div>
     <div id='resultado' ></div>
-    <ul>
-        <li>
-            <a href=\"";
-        // line 62
-        echo $this->env->getExtension('routing')->getPath("terceros_new");
-        echo "\">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     ";
     }
 
@@ -169,6 +169,6 @@ class __TwigTemplate_721ce6a3cc5e930f6e2afbab28c9e58fa98b012299bf68d9e4e0c7b402e
 
     public function getDebugInfo()
     {
-        return array (  151 => 62,  142 => 55,  130 => 49,  124 => 46,  117 => 42,  113 => 41,  109 => 40,  105 => 39,  101 => 38,  97 => 37,  93 => 36,  89 => 35,  85 => 34,  81 => 33,  75 => 32,  72 => 31,  68 => 30,  46 => 10,  43 => 8,  37 => 5,  32 => 4,  29 => 3,);
+        return array (  152 => 62,  140 => 56,  134 => 53,  127 => 49,  123 => 48,  119 => 47,  115 => 46,  111 => 45,  107 => 44,  103 => 43,  99 => 42,  95 => 41,  91 => 40,  85 => 39,  82 => 38,  78 => 37,  51 => 13,  46 => 10,  43 => 8,  37 => 5,  32 => 4,  29 => 3,);
     }
 }
