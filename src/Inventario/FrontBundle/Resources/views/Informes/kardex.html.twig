@@ -11,20 +11,18 @@
                     heigth:'500',
                     colNames:['IDProducto','Ref.','Producto','Tip. Dc.','Num. Doc.','Fecha','Entrada','Salida','IdDet','IdMasD'],
                     colModel:[
-                            {name:'Productos_idProducto',index:'Productos_idProducto',editable:false},
-                            {name:'txRefInterna',index:'txRefInterna',editable:false},
-                            {name:'txNomProducto',index:'txNomProducto',editable:false},
-                            {name:'txTipDoc',index:'txTipDoc',editable:false,search: false},
-                            {name:'txNumDoc',index:'txNumDoc',editable:false,search: false},
-                            {name:'feFecha',index:'feFecha',editable:false,formatter:'date',search: false},
+                            {name:'Productos_idProducto',index:'Productos_idProducto',search:false,sortable:false},
+                            {name:'txRefInterna',index:'txRefInterna',search:false,sortable:false},
+                            {name:'txNomProducto',index:'txNomProducto',search:false,sortable:false},
+                            {name:'txTipDoc',index:'txTipDoc',search:false,sortable:false},
+                            {name:'txNumDoc',index:'txNumDoc',search:false,sortable:false},
+                            {name:'feFecha',index:'feFecha',formatter:'date',search: false,sortable:false},
                             {name:'inEntrada',index:'inEntrada', formatter: 'integer',
-                                align: 'right', editable: true, editoptions: {readonly: true},
-                                summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false},
+                                align: 'right', summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false,sortable:false},
                             {name:'inSalida',index:'inSalida', formatter: 'integer',
-                                align: 'right', editable: true, editoptions: {readonly: true},
-                                summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false},
-                            {name:'idDetDocumentos',index:'idDetDocumentos', editable:false,search: false},
-                            {name:'inidMasDocumento',index:'inidMasDocumento',editable:false,search: false},
+                                align: 'right', summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false,sortable:false},
+                            {name:'idDetDocumentos',index:'idDetDocumentos', search: false,sortable:false},
+                            {name:'inidMasDocumento',index:'inidMasDocumento', search: false,sortable:false},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
@@ -35,6 +33,7 @@
                     caption: 'MOVIMIENTO DE PRODUCTOS',
                     grouping:true, 
                     footerrow: true,
+                    sortable:false, 
                     groupingView : { 
                         groupField : ['txNomProducto'], 
                         groupSummary: [true],
@@ -44,11 +43,13 @@
                     },
             });
             jQuery("#kardex").hideCol('idDetDocumentos');
+            jQuery("#kardex").hideCol('txRefInterna');
+            jQuery("#kardex").hideCol('txNomProducto');
             jQuery("#kardex").hideCol('inidMasDocumento');
             jQuery("#kardex").hideCol('Productos_idProducto');
 
-            jQuery("#kardex").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
-            jQuery("#kardex").jqGrid('navGrid',"#paginacion",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
+            //jQuery("#kardex").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
+            //jQuery("#kardex").jqGrid('navGrid',"#paginacion",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
             jQuery("#kardex").jqGrid('inlineNav',"#paginacion");
             
             jQuery("#existenc").jqGrid({        
@@ -58,12 +59,12 @@
                     heigth:'500',
                     colNames:['IDProducto','Ref.','Producto','Entrada','Salida','Existencias'],
                     colModel:[
-                            {name:'Productos_idProducto',index:'Productos_idProducto',editable:false},
-                            {name:'txRefInterna',index:'txRefInterna',editable:false},
-                            {name:'txNomProducto',index:'txNomProducto',editable:false},
-                            {name:'sumEntrada',index:'sumEntrada',editable:false,search: false},
-                            {name:'sumSalida',index:'sumSalida',editable:false,search: false},
-                            {name:'inExistencia',index:'inExistencia',editable:false,search: false},
+                            {name:'Productos_idProducto',index:'Productos_idProducto',editable:false,sortable:false},
+                            {name:'txRefInterna',index:'txRefInterna',editable:false,sortable:false},
+                            {name:'txNomProducto',index:'txNomProducto',editable:false,sortable:false},
+                            {name:'sumEntrada',index:'sumEntrada',editable:false,search: false,sortable:false},
+                            {name:'sumSalida',index:'sumSalida',editable:false,search: false,sortable:false},
+                            {name:'inExistencia',index:'inExistencia',editable:false,search: false,sortable:false},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
@@ -75,8 +76,8 @@
                     footerrow: true,
             });
             jQuery("#existenc").hideCol('Productos_idProducto');
-            jQuery("#existenc").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
-            jQuery("#existenc").jqGrid('navGrid',"#pagina",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
+            //jQuery("#existenc").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
+            //jQuery("#existenc").jqGrid('navGrid',"#pagina",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
             jQuery("#existenc").jqGrid('inlineNav',"#pagina");
        }); 
     </script>

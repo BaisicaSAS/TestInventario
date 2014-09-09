@@ -151,12 +151,22 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::indexAction',  '_route' => 'informes',);
                 }
 
-                if (0 === strpos($pathinfo, '/informes/kardex')) {
-                    // informes_kardex
-                    if ($pathinfo === '/informes/kardex') {
-                        return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexAction',  '_route' => 'informes_kardex',);
-                    }
+                // informes_kardex
+                if ($pathinfo === '/informes/kardex') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexAction',  '_route' => 'informes_kardex',);
+                }
 
+                // informes_mvtoterceros
+                if ($pathinfo === '/informes/mvtoterceros') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtotercerosAction',  '_route' => 'informes_mvtoterceros',);
+                }
+
+                // informes_histprecios
+                if ($pathinfo === '/informes/histprecios') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::histpreciosAction',  '_route' => 'informes_histprecios',);
+                }
+
+                if (0 === strpos($pathinfo, '/informes/kardex')) {
                     // informes_kardexData
                     if ($pathinfo === '/informes/kardexData') {
                         return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexDataAction',  '_route' => 'informes_kardexData',);
@@ -169,12 +179,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
                 }
 
-                if (0 === strpos($pathinfo, '/informes/mvto')) {
-                    // informes_mvtoterceros
-                    if ($pathinfo === '/informes/mvtoterceros') {
-                        return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtotercerosAction',  '_route' => 'informes_mvtoterceros',);
-                    }
+                // informes_mvtotercerosData
+                if ($pathinfo === '/informes/mvtotercerosData') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtotercerosDataAction',  '_route' => 'informes_mvtotercerosData',);
+                }
 
+                // informes_histpreciosData
+                if (0 === strpos($pathinfo, '/informes/histpreciosData') && preg_match('#^/informes/histpreciosData/(?P<prod>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'informes_histpreciosData')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::histpreciosDataAction',));
+                }
+
+                if (0 === strpos($pathinfo, '/informes/mvto')) {
                     // informes_mvtomeses
                     if ($pathinfo === '/informes/mvtomeses') {
                         return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtomesesAction',  '_route' => 'informes_mvtomeses',);

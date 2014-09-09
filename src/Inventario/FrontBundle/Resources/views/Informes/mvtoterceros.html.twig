@@ -1,0 +1,70 @@
+{% extends "InventarioFrontBundle:informes:index.html.twig" %}
+
+{% block head %}
+    {{ parent() }}     
+    <script type="text/javascript">
+        $(document).ready(function(){
+            jQuery("#terceros").jqGrid({        
+                    url:"{{ path('informes_mvtotercerosData') }}",
+                    datatype: "json",
+                    width:'100%',
+                    heigth:'500px',
+                    colNames:['Tercero','Ref.','Producto','Tip. Dc.','Num. Doc.','Fecha','Entrada','Salida','Valor','IdDet','IdMasD'],
+                    colModel:[
+                            {name:'txNomTercero',index:'txNomTercero',search:false,sortable:false},
+                            {name:'txRefInterna',index:'txRefInterna',search:false,sortable:false},
+                            {name:'txNomProducto',index:'txNomProducto',search:false,sortable:false},
+                            {name:'txTipDoc',index:'txTipDoc',search:false,sortable:false},
+                            {name:'txNumDoc',index:'txNumDoc',search:false,sortable:false},
+                            {name:'feFecha',index:'feFecha',formatter:'date',search:false,sortable:false},
+                            {name:'inEntrada',index:'inEntrada', formatter: 'integer',search:false,
+                                align: 'right', summaryTpl: '<i>{0}</i>',summaryType: 'sum',sortable:false},
+                            {name:'inSalida',index:'inSalida', formatter: 'integer',search:false,
+                                align: 'right', summaryTpl: '<i>{0}</i>',summaryType: 'sum',sortable:false},
+                            {name:'dbValUnitario',index:'dbValUnitario',search:false,sortable:false,formatter:'currency', 
+                                    formatoptions:{defaultValue:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
+                            {name:'idDetDocumentos',index:'idDetDocumentos',search:false,sortable:false},
+                            {name:'inidMasDocumento',index:'inidMasDocumento',search:false,sortable:false},
+                    ],
+                    rowNum:1000,
+                    rowList:[1000,2000,3000],
+                    pager: '#paginacion',
+                    sortname: 'txNomTercero',
+                    sortorder: 'asc',
+                    viewrecords: true,
+                    caption: 'MOVIMIENTO DE TERCEROS',
+                    grouping:true, 
+                    footerrow: true,
+                    groupingView : { 
+                        groupField : ['txNomTercero'], 
+                        groupSummary: [true],
+                        groupColumnShow: [true],
+                        groupText: ['<b>{0}</b>'],
+                        groupDataSorted: true
+                    },
+            });
+            jQuery("#terceros").hideCol('txNomTercero');
+            //jQuery("#terceros").hideCol('txRefInterna');
+            jQuery("#terceros").hideCol('idDetDocumentos');
+            jQuery("#terceros").hideCol('inidMasDocumento');
+            jQuery("#terceros").hideCol('Productos_idProducto');
+
+            //jQuery("#terceros").jqGrid('filterToolbar', { searchOnEnter: false, enableClear: false, ignoreCase: false });
+            //jQuery("#terceros").jqGrid('navGrid',"#paginacion",{reloadAfterSubmit:true});
+            jQuery("#terceros").jqGrid('inlineNav',"#paginacion");
+            
+       }); 
+    </script>
+{% endblock %}
+
+{% block main %}
+  {{ parent() }}     
+
+  {% block sitecontent %}
+    <div height="500px">
+        <table id="terceros" ></table>
+        <div id="paginacion" ></div>
+    </div>
+  {% endblock %}
+{% endblock %}
+

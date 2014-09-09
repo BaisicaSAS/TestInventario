@@ -45,20 +45,18 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
                     heigth:'500',
                     colNames:['IDProducto','Ref.','Producto','Tip. Dc.','Num. Doc.','Fecha','Entrada','Salida','IdDet','IdMasD'],
                     colModel:[
-                            {name:'Productos_idProducto',index:'Productos_idProducto',editable:false},
-                            {name:'txRefInterna',index:'txRefInterna',editable:false},
-                            {name:'txNomProducto',index:'txNomProducto',editable:false},
-                            {name:'txTipDoc',index:'txTipDoc',editable:false,search: false},
-                            {name:'txNumDoc',index:'txNumDoc',editable:false,search: false},
-                            {name:'feFecha',index:'feFecha',editable:false,formatter:'date',search: false},
+                            {name:'Productos_idProducto',index:'Productos_idProducto',search:false,sortable:false},
+                            {name:'txRefInterna',index:'txRefInterna',search:false,sortable:false},
+                            {name:'txNomProducto',index:'txNomProducto',search:false,sortable:false},
+                            {name:'txTipDoc',index:'txTipDoc',search:false,sortable:false},
+                            {name:'txNumDoc',index:'txNumDoc',search:false,sortable:false},
+                            {name:'feFecha',index:'feFecha',formatter:'date',search: false,sortable:false},
                             {name:'inEntrada',index:'inEntrada', formatter: 'integer',
-                                align: 'right', editable: true, editoptions: {readonly: true},
-                                summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false},
+                                align: 'right', summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false,sortable:false},
                             {name:'inSalida',index:'inSalida', formatter: 'integer',
-                                align: 'right', editable: true, editoptions: {readonly: true},
-                                summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false},
-                            {name:'idDetDocumentos',index:'idDetDocumentos', editable:false,search: false},
-                            {name:'inidMasDocumento',index:'inidMasDocumento',editable:false,search: false},
+                                align: 'right', summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false,sortable:false},
+                            {name:'idDetDocumentos',index:'idDetDocumentos', search: false,sortable:false},
+                            {name:'inidMasDocumento',index:'inidMasDocumento', search: false,sortable:false},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
@@ -69,6 +67,7 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
                     caption: 'MOVIMIENTO DE PRODUCTOS',
                     grouping:true, 
                     footerrow: true,
+                    sortable:false, 
                     groupingView : { 
                         groupField : ['txNomProducto'], 
                         groupSummary: [true],
@@ -78,16 +77,18 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
                     },
             });
             jQuery(\"#kardex\").hideCol('idDetDocumentos');
+            jQuery(\"#kardex\").hideCol('txRefInterna');
+            jQuery(\"#kardex\").hideCol('txNomProducto');
             jQuery(\"#kardex\").hideCol('inidMasDocumento');
             jQuery(\"#kardex\").hideCol('Productos_idProducto');
 
-            jQuery(\"#kardex\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
-            jQuery(\"#kardex\").jqGrid('navGrid',\"#paginacion\",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
+            //jQuery(\"#kardex\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
+            //jQuery(\"#kardex\").jqGrid('navGrid',\"#paginacion\",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
             jQuery(\"#kardex\").jqGrid('inlineNav',\"#paginacion\");
             
             jQuery(\"#existenc\").jqGrid({        
                     url:\"";
-        // line 55
+        // line 56
         echo $this->env->getExtension('routing')->getPath("informes_kardexResumen");
         echo "\",
                     datatype: \"json\",
@@ -95,12 +96,12 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
                     heigth:'500',
                     colNames:['IDProducto','Ref.','Producto','Entrada','Salida','Existencias'],
                     colModel:[
-                            {name:'Productos_idProducto',index:'Productos_idProducto',editable:false},
-                            {name:'txRefInterna',index:'txRefInterna',editable:false},
-                            {name:'txNomProducto',index:'txNomProducto',editable:false},
-                            {name:'sumEntrada',index:'sumEntrada',editable:false,search: false},
-                            {name:'sumSalida',index:'sumSalida',editable:false,search: false},
-                            {name:'inExistencia',index:'inExistencia',editable:false,search: false},
+                            {name:'Productos_idProducto',index:'Productos_idProducto',editable:false,sortable:false},
+                            {name:'txRefInterna',index:'txRefInterna',editable:false,sortable:false},
+                            {name:'txNomProducto',index:'txNomProducto',editable:false,sortable:false},
+                            {name:'sumEntrada',index:'sumEntrada',editable:false,search: false,sortable:false},
+                            {name:'sumSalida',index:'sumSalida',editable:false,search: false,sortable:false},
+                            {name:'inExistencia',index:'inExistencia',editable:false,search: false,sortable:false},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
@@ -112,30 +113,30 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
                     footerrow: true,
             });
             jQuery(\"#existenc\").hideCol('Productos_idProducto');
-            jQuery(\"#existenc\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
-            jQuery(\"#existenc\").jqGrid('navGrid',\"#pagina\",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
+            //jQuery(\"#existenc\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
+            //jQuery(\"#existenc\").jqGrid('navGrid',\"#pagina\",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
             jQuery(\"#existenc\").jqGrid('inlineNav',\"#pagina\");
        }); 
     </script>
 ";
     }
 
-    // line 85
+    // line 86
     public function block_main($context, array $blocks = array())
     {
-        // line 86
+        // line 87
         echo "  ";
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
 
   ";
-        // line 88
+        // line 89
         $this->displayBlock('sitecontent', $context, $blocks);
     }
 
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 89
+        // line 90
         echo "    <div height=\"500px\">
         <table id=\"kardex\" ></table>
         <div id=\"paginacion\" ></div>
@@ -157,6 +158,6 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
 
     public function getDebugInfo()
     {
-        return array (  139 => 89,  133 => 88,  127 => 86,  124 => 85,  91 => 55,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  140 => 90,  134 => 89,  128 => 87,  125 => 86,  92 => 56,  41 => 8,  33 => 4,  30 => 3,);
     }
 }

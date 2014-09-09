@@ -6,6 +6,14 @@ informes_kardex:
     pattern:  /kardex
     defaults: { _controller: "InventarioFrontBundle:Informes:kardex" }
 
+informes_mvtoterceros:
+    pattern:  /mvtoterceros
+    defaults: { _controller: "InventarioFrontBundle:Informes:mvtoterceros" }
+
+informes_histprecios:
+    pattern:  /histprecios
+    defaults: { _controller: "InventarioFrontBundle:Informes:histprecios" }
+
 informes_kardexData:
     pattern:  /kardexData
     defaults: { _controller: "InventarioFrontBundle:Informes:kardexData" }
@@ -14,9 +22,13 @@ informes_kardexResumen:
     pattern:  /kardexResumen
     defaults: { _controller: "InventarioFrontBundle:Informes:kardexResumen" }
 
-informes_mvtoterceros:
-    pattern:  /mvtoterceros
-    defaults: { _controller: "InventarioFrontBundle:Informes:mvtoterceros" }
+informes_mvtotercerosData:
+    pattern:  /mvtotercerosData
+    defaults: { _controller: "InventarioFrontBundle:Informes:mvtotercerosData" }
+
+informes_histpreciosData:
+    pattern:  /histpreciosData/{prod}
+    defaults: { _controller: "InventarioFrontBundle:Informes:histpreciosData" }
 
 informes_mvtomeses:
     pattern:  /mvtomeses

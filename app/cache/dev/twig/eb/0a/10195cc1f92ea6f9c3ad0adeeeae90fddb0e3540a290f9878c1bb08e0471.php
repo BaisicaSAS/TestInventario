@@ -48,26 +48,22 @@ class __TwigTemplate_eb0a10195cc1f92ea6f9c3ad0adeeeae90fddb0e3540a290f9878c1bb08
                 <li><a href=\" ";
         // line 11
         echo $this->env->getExtension('routing')->getPath("informes_mvtoterceros");
-        echo "\">Mov. Terceros</a></li>
-                <li><a href=\" ";
+        echo " \">Movimiento por Terceros</a></li>
+                <!--<li><a href=\"";
         // line 12
-        echo $this->env->getExtension('routing')->getPath("informes_mvtomeses");
-        echo " \">Mov. Meses</a></li>
-                <li><a href=\" ";
+        echo "\">Mov. Meses</a></li>-->
+                <!--<li><a href=\"";
         // line 13
-        echo $this->env->getExtension('routing')->getPath("informes_mvtoproductos");
-        echo " \">Mov. Productos</a></li>
-                <li><a href=\" ";
+        echo "\">Mov. Productos</a></li>-->
+                <!--<li><a href=\"";
         // line 14
-        echo $this->env->getExtension('routing')->getPath("informes_rotacion");
-        echo " \">Rotación mensual</a></li>
-                <li><a href=\" ";
+        echo "\">Rotación mensual</a></li>-->
+                <!--<li><a href=\"";
         // line 15
-        echo $this->env->getExtension('routing')->getPath("informes_rentabilidad");
-        echo " \">Rentabilidad productos</a></li>
+        echo "\">Rentabilidad productos</a></li>-->
                 <li><a href=\" ";
         // line 16
-        echo $this->env->getExtension('routing')->getPath("informes_precios");
+        echo $this->env->getExtension('routing')->getPath("informes_histprecios");
         echo " \">Historico Precios (Venta/Compra)</a></li>
             </ul>
         </div>    
@@ -86,6 +82,6 @@ class __TwigTemplate_eb0a10195cc1f92ea6f9c3ad0adeeeae90fddb0e3540a290f9878c1bb08
 
     public function getDebugInfo()
     {
-        return array (  70 => 16,  66 => 15,  62 => 14,  58 => 13,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  32 => 4,  29 => 3,);
+        return array (  66 => 16,  63 => 15,  60 => 14,  57 => 13,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  32 => 4,  29 => 3,  108 => 61,  102 => 60,  96 => 58,  93 => 57,  41 => 8,  33 => 4,  30 => 3,);
     }
 }
