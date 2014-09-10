@@ -5,27 +5,30 @@
     <script type="text/javascript">
         $(document).ready(function(){
             
-            var miselect=$("#productos");
-            /* VACIAMOS EL SELECT Y PONEMOS UNA OPCION QUE DIGA CARGANDO... */
-            miselect.find('option').remove().end().append('').val('');
-
-            $.post("{{path('productos_listProGrid', {'pidter': '0'})}}",
-                    function(data) {
-                            miselect.empty();
-                            for (var i=0; i' + data[i].literal + '');
-                            }
-            }, "json");
+            $.getJSON( "{{path('productos_listProGrid', {'pidter': 'CLIENTE GENERICO'})}}", function( data ) {
+                var sel = document.getElementById('productos');
+                var i = 0;
+                //alert(i);
+                $.each( data, function() {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = data[i].txrefinterna+' '+data[i].txnomproducto;
+                    opt.value = data[i].txrefinterna;
+                    sel.appendChild(opt);
+                    i++; 
+                });
+            });
             
+            
+          
             jQuery("#histprecios").jqGrid({        
                     url:"{{ path('informes_histpreciosData', {'prod': 'ALL'}) }}",
                     datatype: "json",
                     width:'100%',
                     heigth:'500px',
-                    colNames:['Ref.','Producto','Tercero','Tip. Dc.','Num. Doc.','Fecha','Transaccion','Valor','IdDet','IdMasD'],
+                    colNames:['Ref.','Producto','Tip. Dc.','Num. Doc.','Fecha','Transaccion','Valor','IdDet','IdMasD','Tercero'],
                     colModel:[
                             {name:'txRefInterna',index:'txRefInterna',search:false,sortable:false},
                             {name:'txNomProducto',index:'txNomProducto',search:false,sortable:false},
-                            {name:'txNomTercero',index:'txNomTercero',search:false,sortable:false},
                             {name:'txTipDoc',index:'txTipDoc',search:false,sortable:false},
                             {name:'txNumDoc',index:'txNumDoc',search:false,sortable:false},
                             {name:'feFecha',index:'feFecha',formatter:'date',search:false,sortable:false},
@@ -34,6 +37,7 @@
                                     formatoptions:{defaultValue:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
                             {name:'idDetDocumentos',index:'idDetDocumentos',search:false,sortable:false},
                             {name:'inidMasDocumento',index:'inidMasDocumento',search:false,sortable:false},
+                            {name:'txNomTercero',index:'txNomTercero',search:false,sortable:false},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
@@ -51,7 +55,7 @@
                         groupDataSorted: true
                     },
             });
-            jQuery("#histprecios").hideCol('txNomTercero');
+            //jQuery("#histprecios").hideCol('txNomTercero');
             jQuery("#histprecios").hideCol('transaccion');
             //jQuery("#histprecios").hideCol('txRefInterna');
             jQuery("#histprecios").hideCol('idDetDocumentos');
@@ -63,20 +67,24 @@
             jQuery("#histprecios").jqGrid('inlineNav',"#paginacion");
             
        }); 
+        function recargaGrid(value){
+          //alert(value);
+          var newUrl = "{{ path('informes_histpreciosData', {'prod': 'ALL'}) }}";
+          newUrl = newUrl.replace('ALL', value);              
+
+          $("#histprecios").setGridParam({url: newUrl, page: 1}).trigger('reloadGrid');
+        };
     </script>
 {% endblock %}
 
 {% block main %}
-  {{ parent() }}     
-
-  {% block sitecontent %}
-    <div height="500px">
-        <select id="productos"> </selec>
-    </div>
-    <div height="500px">
+    {{ parent() }}     
+    {% block sitecontent %}
+        <h1>Historico de precios productos</h1>
+        <select id="productos" onchange="recargaGrid(this.value)">
+            <option value="ALL">Seleccione un producto </option></select> 
         <table id="histprecios" ></table>
         <div id="paginacion" ></div>
-    </div>
-  {% endblock %}
+    {% endblock %}
 {% endblock %}
 

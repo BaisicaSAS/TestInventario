@@ -23,6 +23,7 @@
     {% endblock %} 
 {% endblock %} </head>
 
+<body> 
 <div id="main">{% block main %}
   <div id="header"> {% block header %}
     <div id="logo">
@@ -46,10 +47,11 @@
     {% endblock %}</div>
   {% endblock %}</div>
   <div id="site_content"> 
-      <div id="content">{% block sitecontent %}
+     {% block sitecontent %}
         <h5>Inventarios Autopartes MAR</h5>
         <p>Herramienta para el control de inventarios</p>
-      {% endblock %}</div>
+      {% endblock %}
   </div>
   {% endblock %}</div>
+</body>      
 </html>

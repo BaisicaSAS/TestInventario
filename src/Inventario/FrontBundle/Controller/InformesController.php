@@ -246,6 +246,17 @@ class InformesController extends Controller
         if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";};
         $sql .=  "UNION ";
         $sql .=  "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .=  "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 'ENTRADA/COMPRA' as transaccion, ";
+        $sql .=  "e.txNomTercero, a.dbValUnitario ";
+        $sql .=  "FROM DetDocumentos a " ;
+        $sql .=  "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .=  "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .=  "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .=  "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
+        $sql .=  "WHERE d.inAfecta = 4 AND a.inCantidad > 0 "; //SIGNO +
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";};
+        $sql .=  "UNION ";
+        $sql .=  "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
         $sql .=  "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 'SALIDA/VENTA' as transaccion, ";
         $sql .=  "e.txNomTercero, a.dbValUnitario ";
         $sql .=  "FROM DetDocumentos a " ;
@@ -266,19 +277,8 @@ class InformesController extends Controller
         $sql .=  "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
         $sql .=  "WHERE d.inAfecta = 4 AND a.inCantidad < 0 "; //SIGNO -
         if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";};
-        $sql .=  "UNION ";
-        $sql .=  "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
-        $sql .=  "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 'ENTRADA/COMPRA' as transaccion, ";
-        $sql .=  "e.txNomTercero, a.dbValUnitario ";
-        $sql .=  "FROM DetDocumentos a " ;
-        $sql .=  "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
-        $sql .=  "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
-        $sql .=  "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
-        $sql .=  "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
-        $sql .=  "WHERE d.inAfecta = 4 AND a.inCantidad > 0 "; //SIGNO +
-        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";};
-        $sql .=  "GROUP BY txNomProducto,  txNomTercero, dbValUnitario ";
-        $sql .=  "ORDER BY txNomTercero, txNomProducto, txRefInterna, transaccion, dbValUnitario, feFecha DESC, idDetDocumentos DESC ";
+        $sql .=  "GROUP BY txNomProducto, dbValUnitario,txNomTercero ";
+        $sql .=  "ORDER BY transaccion, txNomProducto, dbValUnitario, feFecha DESC, idDetDocumentos DESC ";
         
         $entities = $connection->prepare($sql);
         
