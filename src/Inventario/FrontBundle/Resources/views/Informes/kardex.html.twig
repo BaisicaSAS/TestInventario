@@ -4,6 +4,20 @@
     {{ parent() }}     
     <script type="text/javascript">
         $(document).ready(function(){
+
+        
+            $.getJSON( "{{path('productos_listProGrid', {'pidter': 'CLIENTE GENERICO'})}}", function( data ) {
+                var sel1 = document.getElementById('movproductos');
+                var i = 0;
+                //alert(i);
+                $.each( data, function() {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = data[i].txrefinterna+' '+data[i].txnomproducto;
+                    opt.value = data[i].txrefinterna;
+                    sel1.appendChild(opt);
+                    i++; 
+                });
+            });
             jQuery("#kardex").jqGrid({        
                     url:"{{ path('informes_kardexData') }}",
                     datatype: "json",
@@ -87,12 +101,14 @@
   {{ parent() }}     
 
   {% block sitecontent %}
-    <div height="500px">
+        <h1>Informe de Kardex</h1>
+        <select id="movproductos" onchange="recargaGrid(this.value)">
+            <option value="ALL">Seleccione un producto </option></select> 
         <table id="kardex" ></table>
         <div id="paginacion" ></div>
+        
         <table id="existenc" ></table>
         <div id="pagina" ></div>
-    </div>
   {% endblock %}
 {% endblock %}
 

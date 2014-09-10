@@ -35,9 +35,26 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
         echo "     
     <script type=\"text/javascript\">
         \$(document).ready(function(){
+
+        
+            \$.getJSON( \"";
+        // line 9
+        echo $this->env->getExtension('routing')->getPath("productos_listProGrid", array("pidter" => "CLIENTE GENERICO"));
+        echo "\", function( data ) {
+                var sel1 = document.getElementById('movproductos');
+                var i = 0;
+                //alert(i);
+                \$.each( data, function() {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = data[i].txrefinterna+' '+data[i].txnomproducto;
+                    opt.value = data[i].txrefinterna;
+                    sel1.appendChild(opt);
+                    i++; 
+                });
+            });
             jQuery(\"#kardex\").jqGrid({        
                     url:\"";
-        // line 8
+        // line 22
         echo $this->env->getExtension('routing')->getPath("informes_kardexData");
         echo "\",
                     datatype: \"json\",
@@ -88,7 +105,7 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
             
             jQuery(\"#existenc\").jqGrid({        
                     url:\"";
-        // line 56
+        // line 70
         echo $this->env->getExtension('routing')->getPath("informes_kardexResumen");
         echo "\",
                     datatype: \"json\",
@@ -121,28 +138,30 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
 ";
     }
 
-    // line 86
+    // line 100
     public function block_main($context, array $blocks = array())
     {
-        // line 87
+        // line 101
         echo "  ";
         $this->displayParentBlock("main", $context, $blocks);
         echo "     
 
   ";
-        // line 89
+        // line 103
         $this->displayBlock('sitecontent', $context, $blocks);
     }
 
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 90
-        echo "    <div height=\"500px\">
+        // line 104
+        echo "        <h1>Informe de Kardex</h1>
+        <select id=\"movproductos\" onchange=\"recargaGrid(this.value)\">
+            <option value=\"ALL\">Seleccione un producto </option></select> 
         <table id=\"kardex\" ></table>
         <div id=\"paginacion\" ></div>
+        
         <table id=\"existenc\" ></table>
         <div id=\"pagina\" ></div>
-    </div>
   ";
     }
 
@@ -158,6 +177,6 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
 
     public function getDebugInfo()
     {
-        return array (  140 => 90,  134 => 89,  128 => 87,  125 => 86,  92 => 56,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  157 => 104,  151 => 103,  145 => 101,  142 => 100,  109 => 70,  58 => 22,  42 => 9,  33 => 4,  30 => 3,);
     }
 }
