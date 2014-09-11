@@ -7,18 +7,17 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
     {
         parent::__construct($env);
 
-        $this->parent = $this->env->loadTemplate("InventarioFrontBundle:informes:index.html.twig");
+        $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Informes:index.html.twig");
 
         $this->blocks = array(
             'head' => array($this, 'block_head'),
-            'main' => array($this, 'block_main'),
             'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
 
     protected function doGetParent(array $context)
     {
-        return "InventarioFrontBundle:informes:index.html.twig";
+        return "InventarioFrontBundle:Informes:index.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = array())
@@ -119,26 +118,26 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
     }
 
     // line 80
-    public function block_main($context, array $blocks = array())
+    public function block_sitecontent($context, array $blocks = array())
     {
         // line 81
         echo "    ";
-        $this->displayParentBlock("main", $context, $blocks);
+        $this->displayParentBlock("sitecontent", $context, $blocks);
         echo "     
-    ";
-        // line 82
-        $this->displayBlock('sitecontent', $context, $blocks);
-    }
-
-    public function block_sitecontent($context, array $blocks = array())
-    {
-        // line 83
-        echo "        <h1>Historico de precios productos</h1>
-        <select id=\"productos\" onchange=\"recargaGrid(this.value)\">
-            <option value=\"ALL\">Seleccione un producto </option></select> 
+        <h1>Historico de precios productos</h1>
+        <div>
+            <table> 
+                <tr>
+                    <td><label>Filtrar</label></td>
+                    <td><select id=\"productos\" onchange=\"recargaGrid(this.value)\">
+                    <option value=\"ALL\">Seleccione un producto </option></select> </td>
+                </tr>
+            </table>    
+        </div>     
+         
         <table id=\"histprecios\" ></table>
         <div id=\"paginacion\" ></div>
-    ";
+";
     }
 
     public function getTemplateName()
@@ -153,6 +152,6 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
 
     public function getDebugInfo()
     {
-        return array (  136 => 83,  130 => 82,  125 => 81,  122 => 80,  111 => 72,  60 => 24,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  124 => 81,  121 => 80,  110 => 72,  59 => 24,  40 => 8,  32 => 4,  29 => 3,);
     }
 }

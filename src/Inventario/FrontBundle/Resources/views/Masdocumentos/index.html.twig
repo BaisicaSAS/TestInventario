@@ -8,14 +8,14 @@
         var Hoy = new Date();
         var arTerceros = [];
         var arTipdoc = [];
+
         $(document).ready(function(){
             jQuery("#masdoc").jqGrid({        
                     url:"{{ path('masdocumentos_listMasDocGrid') }}",
                     datatype: "json",
                     width:'100%',
-                    colNames:['Imprimir','Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
+                    colNames:['Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
                     colModel:[
-                            {name:'Imprimir', sortable:false, formatter: urlprint, width:'50px'},
                             {name:'id',index:'id', editable:false,search:false,editoptions:{readonly:true}},
                             {name:'txnomdoc',index:'txnomdoc',search:true,editable:true,edittype:"select",editoptions:{weight:'50px',dataUrl:"{{path('tipdoc_listTipDocGrid')}}",
                                 buildSelect: function (data) {
@@ -306,10 +306,7 @@
     </script>
 {% endblock %}
 
-{% block main %}
-  {{ parent() }}     
-
-  {% block sitecontent %}
+{% block sitecontent %}
     <div>
         <table id="masdoc" ></table>
         <div id="paginacion" ></div>
@@ -318,6 +315,5 @@
         <table id="detdoc" ></table>
         <div id="pagered" ></div>
     </div>
-  {% endblock %}
 {% endblock %}
 

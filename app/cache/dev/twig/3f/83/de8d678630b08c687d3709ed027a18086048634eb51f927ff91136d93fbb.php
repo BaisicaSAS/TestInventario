@@ -11,7 +11,6 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 
         $this->blocks = array(
             'head' => array($this, 'block_head'),
-            'main' => array($this, 'block_main'),
             'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
@@ -39,17 +38,17 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         var Hoy = new Date();
         var arTerceros = [];
         var arTipdoc = [];
+
         \$(document).ready(function(){
             jQuery(\"#masdoc\").jqGrid({        
                     url:\"";
-        // line 13
+        // line 14
         echo $this->env->getExtension('routing')->getPath("masdocumentos_listMasDocGrid");
         echo "\",
                     datatype: \"json\",
                     width:'100%',
-                    colNames:['Imprimir','Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
+                    colNames:['Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
                     colModel:[
-                            {name:'Imprimir', sortable:false, formatter: urlprint, width:'50px'},
                             {name:'id',index:'id', editable:false,search:false,editoptions:{readonly:true}},
                             {name:'txnomdoc',index:'txnomdoc',search:true,editable:true,edittype:\"select\",editoptions:{weight:'50px',dataUrl:\"";
         // line 20
@@ -372,21 +371,9 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
     }
 
     // line 309
-    public function block_main($context, array $blocks = array())
-    {
-        // line 310
-        echo "  ";
-        $this->displayParentBlock("main", $context, $blocks);
-        echo "     
-
-  ";
-        // line 312
-        $this->displayBlock('sitecontent', $context, $blocks);
-    }
-
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 313
+        // line 310
         echo "    <div>
         <table id=\"masdoc\" ></table>
         <div id=\"paginacion\" ></div>
@@ -395,7 +382,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
         <table id=\"detdoc\" ></table>
         <div id=\"pagered\" ></div>
     </div>
-  ";
+";
     }
 
     public function getTemplateName()
@@ -410,6 +397,6 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
 
     public function getDebugInfo()
     {
-        return array (  390 => 313,  384 => 312,  378 => 310,  375 => 309,  352 => 289,  255 => 195,  245 => 188,  191 => 137,  187 => 136,  177 => 129,  151 => 106,  87 => 45,  76 => 37,  56 => 20,  46 => 13,  33 => 4,  30 => 3,);
+        return array (  377 => 310,  374 => 309,  351 => 289,  254 => 195,  244 => 188,  190 => 137,  186 => 136,  176 => 129,  150 => 106,  86 => 45,  75 => 37,  55 => 20,  46 => 14,  32 => 4,  29 => 3,);
     }
 }

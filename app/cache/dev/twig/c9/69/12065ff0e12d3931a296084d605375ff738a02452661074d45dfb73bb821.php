@@ -11,7 +11,6 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
 
         $this->blocks = array(
             'head' => array($this, 'block_head'),
-            'main' => array($this, 'block_main'),
             'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
@@ -140,22 +139,9 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
     }
 
     // line 95
-    public function block_main($context, array $blocks = array())
-    {
-        // line 96
-        echo "
-  ";
-        // line 97
-        $this->displayParentBlock("main", $context, $blocks);
-        echo "     
-  ";
-        // line 98
-        $this->displayBlock('sitecontent', $context, $blocks);
-    }
-
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 99
+        // line 96
         echo "        <h1>Listas de precios</h1>
         <table id=\"CONTENEDOR\" width=\"100%\">
             <tr id=\"Fila\" width=\"100%\">
@@ -169,7 +155,7 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
                 </td>
             </tr>
         </table>    
-  ";
+";
     }
 
     public function getTemplateName()
@@ -184,6 +170,6 @@ class __TwigTemplate_c96912065ff0e12d3931a296084d605375ff738a02452661074d45dfb73
 
     public function getDebugInfo()
     {
-        return array (  159 => 99,  153 => 98,  149 => 97,  146 => 96,  143 => 95,  121 => 76,  99 => 57,  66 => 27,  60 => 24,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  145 => 96,  142 => 95,  120 => 76,  98 => 57,  65 => 27,  59 => 24,  40 => 8,  32 => 4,  29 => 3,);
     }
 }

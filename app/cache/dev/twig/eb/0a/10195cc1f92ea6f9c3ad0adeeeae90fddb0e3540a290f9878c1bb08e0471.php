@@ -39,34 +39,31 @@ class __TwigTemplate_eb0a10195cc1f92ea6f9c3ad0adeeeae90fddb0e3540a290f9878c1bb08
     public function block_sitecontent($context, array $blocks = array())
     {
         // line 8
-        echo "        <div id=\"menubar\"> 
-            <ul id=\"menu\">
-                <li><a href=\" ";
+        echo "    <table>
+        <tr>
+            <td><li><a href=\" ";
         // line 10
         echo $this->env->getExtension('routing')->getPath("informes_kardex");
-        echo " \">Kardex</a></li>
-                <li><a href=\" ";
+        echo " \">Kardex</a></li></td>
+            <td><li><a href=\" ";
         // line 11
         echo $this->env->getExtension('routing')->getPath("informes_mvtoterceros");
-        echo " \">Movimiento por Terceros</a></li>
-                <!--<li><a href=\"";
+        echo " \">Movimiento por Terceros</a></li></td>
+            <!--<li><a href=\"";
         // line 12
         echo "\">Mov. Meses</a></li>-->
-                <!--<li><a href=\"";
+            <!--<li><a href=\"";
         // line 13
-        echo "\">Mov. Productos</a></li>-->
-                <!--<li><a href=\"";
-        // line 14
         echo "\">Rotación mensual</a></li>-->
-                <!--<li><a href=\"";
-        // line 15
+            <!--<li><a href=\"";
+        // line 14
         echo "\">Rentabilidad productos</a></li>-->
-                <li><a href=\" ";
-        // line 16
+            <td><li><a href=\" ";
+        // line 15
         echo $this->env->getExtension('routing')->getPath("informes_histprecios");
-        echo " \">Historico Precios (Venta/Compra)</a></li>
-            </ul>
-        </div>    
+        echo " \">Historico Precios (Venta/Compra)</a></li></td>
+        </tr>
+    </table>    
 ";
     }
 
@@ -82,6 +79,6 @@ class __TwigTemplate_eb0a10195cc1f92ea6f9c3ad0adeeeae90fddb0e3540a290f9878c1bb08
 
     public function getDebugInfo()
     {
-        return array (  66 => 16,  63 => 15,  60 => 14,  57 => 13,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  32 => 4,  29 => 3,  108 => 61,  102 => 60,  96 => 58,  93 => 57,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  63 => 15,  60 => 14,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  164 => 115,  161 => 114,  145 => 101,  141 => 100,  108 => 70,  57 => 13,  41 => 9,  32 => 4,  29 => 3,);
     }
 }

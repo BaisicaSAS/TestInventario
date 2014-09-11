@@ -168,20 +168,20 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
                 if (0 === strpos($pathinfo, '/informes/kardex')) {
                     // informes_kardexData
-                    if ($pathinfo === '/informes/kardexData') {
-                        return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexDataAction',  '_route' => 'informes_kardexData',);
+                    if (0 === strpos($pathinfo, '/informes/kardexData') && preg_match('#^/informes/kardexData/(?P<prod>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'informes_kardexData')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexDataAction',));
                     }
 
                     // informes_kardexResumen
-                    if ($pathinfo === '/informes/kardexResumen') {
-                        return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexResumenAction',  '_route' => 'informes_kardexResumen',);
+                    if (0 === strpos($pathinfo, '/informes/kardexResumen') && preg_match('#^/informes/kardexResumen/(?P<prod>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'informes_kardexResumen')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexResumenAction',));
                     }
 
                 }
 
                 // informes_mvtotercerosData
-                if ($pathinfo === '/informes/mvtotercerosData') {
-                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtotercerosDataAction',  '_route' => 'informes_mvtotercerosData',);
+                if (0 === strpos($pathinfo, '/informes/mvtotercerosData') && preg_match('#^/informes/mvtotercerosData/(?P<ter>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'informes_mvtotercerosData')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtotercerosDataAction',));
                 }
 
                 // informes_histpreciosData

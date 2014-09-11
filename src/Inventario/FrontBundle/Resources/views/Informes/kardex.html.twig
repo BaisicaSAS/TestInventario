@@ -1,4 +1,4 @@
-{% extends "InventarioFrontBundle:informes:index.html.twig" %}
+{% extends "InventarioFrontBundle:Informes:index.html.twig" %}
 
 {% block head %}
     {{ parent() }}     
@@ -19,7 +19,7 @@
                 });
             });
             jQuery("#kardex").jqGrid({        
-                    url:"{{ path('informes_kardexData') }}",
+                    url:"{{ path('informes_kardexData', {'prod': 'ALL'}) }}",
                     datatype: "json",
                     width:'100%',
                     heigth:'500',
@@ -41,8 +41,8 @@
                     rowNum:1000,
                     rowList:[1000,2000,3000],
                     pager: '#paginacion',
-                    sortname: 'txNomProducto',
-                    sortorder: 'asc',
+                    sortname: ['txNomProducto','feFecha'],
+                    sortorder: 'desc',
                     viewrecords: true,
                     caption: 'MOVIMIENTO DE PRODUCTOS',
                     grouping:true, 
@@ -67,11 +67,11 @@
             jQuery("#kardex").jqGrid('inlineNav',"#paginacion");
             
             jQuery("#existenc").jqGrid({        
-                    url:"{{ path('informes_kardexResumen') }}",
+                    url:"{{ path('informes_kardexResumen', {'prod': 'ALL'}) }}",
                     datatype: "json",
                     width:'100%',
                     heigth:'500',
-                    colNames:['IDProducto','Ref.','Producto','Entrada','Salida','Existencias'],
+                    colNames:['IDProducto','Ref.','Producto','Entradas','Salidas','Existencias'],
                     colModel:[
                             {name:'Productos_idProducto',index:'Productos_idProducto',editable:false,sortable:false},
                             {name:'txRefInterna',index:'txRefInterna',editable:false,sortable:false},
@@ -94,21 +94,40 @@
             //jQuery("#existenc").jqGrid('navGrid',"#pagina",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
             jQuery("#existenc").jqGrid('inlineNav',"#pagina");
        }); 
+
+        function recargaGrid(value){
+          //alert(value);
+          var newUrlk = "{{ path('informes_kardexData', {'prod': 'ALL'}) }}";
+          var newUrlr = "{{ path('informes_kardexResumen', {'prod': 'ALL'}) }}"
+          newUrlk = newUrlk.replace('ALL', value);              
+          newUrlr = newUrlr.replace('ALL', value);
+          //alert(newUrlr);
+
+          $("#existenc").setGridParam({url: newUrlr, page: 1}).trigger('reloadGrid');
+          $("#kardex").setGridParam({url: newUrlk, page: 1}).trigger('reloadGrid');
+          jQuery("#kardex").hideCol('txNomProducto');
+        };
+
     </script>
 {% endblock %}
 
-{% block main %}
+{% block sitecontent %}
   {{ parent() }}     
-
-  {% block sitecontent %}
         <h1>Informe de Kardex</h1>
-        <select id="movproductos" onchange="recargaGrid(this.value)">
-            <option value="ALL">Seleccione un producto </option></select> 
+        <div>
+            <table> 
+                <tr>
+                    <td><label>Filtrar</label></td>
+                    <td><select id="movproductos" onchange="recargaGrid(this.value)">
+                    <option value="ALL">Seleccione un producto </option></select> </td>
+                </tr>
+            </table>    
+        </div>     
+         
         <table id="kardex" ></table>
         <div id="paginacion" ></div>
         
         <table id="existenc" ></table>
         <div id="pagina" ></div>
-  {% endblock %}
 {% endblock %}
 

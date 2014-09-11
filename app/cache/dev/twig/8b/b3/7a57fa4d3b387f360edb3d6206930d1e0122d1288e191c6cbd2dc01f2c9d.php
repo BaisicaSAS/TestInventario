@@ -37,7 +37,7 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
 <div id=\"main\">";
         // line 27
         $this->displayBlock('main', $context, $blocks);
-        // line 55
+        // line 56
         echo "</div>
 </body>      
 </html>
@@ -125,11 +125,11 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
         $this->displayBlock('header', $context, $blocks);
         // line 48
         echo "</div>
-  <div id=\"site_content\"> 
-     ";
+  <div id=\"site_content\">
+    ";
         // line 50
         $this->displayBlock('sitecontent', $context, $blocks);
-        // line 54
+        // line 55
         echo "  </div>
   ";
     }
@@ -203,10 +203,11 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
     // line 50
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 51
-        echo "        <h5>Inventarios Autopartes MAR</h5>
+        echo " 
+     
+        <h5>Inventarios Autopartes MAR</h5>
         <p>Herramienta para el control de inventarios</p>
-      ";
+    ";
     }
 
     public function getTemplateName()
@@ -216,6 +217,6 @@ class __TwigTemplate_8bb37a57fa4d3b387f360edb3d6206930d1e0122d1288e191c6cbd2dc01
 
     public function getDebugInfo()
     {
-        return array (  207 => 51,  204 => 50,  197 => 45,  193 => 44,  189 => 43,  185 => 42,  181 => 41,  177 => 40,  173 => 39,  169 => 38,  165 => 37,  161 => 35,  158 => 34,  153 => 47,  151 => 34,  145 => 31,  141 => 29,  138 => 28,  133 => 54,  131 => 50,  127 => 48,  124 => 28,  121 => 27,  115 => 22,  111 => 21,  107 => 20,  103 => 19,  96 => 16,  90 => 13,  86 => 12,  81 => 11,  78 => 10,  72 => 5,  67 => 23,  65 => 16,  62 => 15,  60 => 10,  51 => 5,  48 => 4,  41 => 55,  39 => 27,  34 => 24,  32 => 4,  27 => 1,);
+        return array (  204 => 50,  197 => 45,  193 => 44,  189 => 43,  185 => 42,  181 => 41,  177 => 40,  173 => 39,  169 => 38,  165 => 37,  161 => 35,  158 => 34,  153 => 47,  151 => 34,  145 => 31,  141 => 29,  138 => 28,  133 => 55,  131 => 50,  127 => 48,  124 => 28,  121 => 27,  115 => 22,  111 => 21,  107 => 20,  103 => 19,  96 => 16,  90 => 13,  86 => 12,  81 => 11,  78 => 10,  72 => 5,  67 => 23,  65 => 16,  62 => 15,  60 => 10,  51 => 5,  48 => 4,  41 => 56,  39 => 27,  34 => 24,  32 => 4,  27 => 1,);
     }
 }

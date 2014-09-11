@@ -24,52 +24,49 @@ class InformesController extends Controller
      * Genera datos del informe de kardex.
      *
      */
-    public function kardexDataAction()
+    public function kardexDataAction($prod)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
-        $entities = $connection->prepare("SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "WHERE d.inAfecta = 0 "  //SUMA
-                //. "GROUP BY txNomProducto "
-                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC "
-                . "UNION "
-                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad AS inSalida "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "WHERE d.inAfecta = 1 " //RESTA
-                //. "GROUP BY txNomProducto "
-                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC ");
-                . "UNION "
-                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad AS inSalida "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "WHERE d.inAfecta = 4 AND a.inCantidad < 0 " //SIGNO -
-                //. "GROUP BY txNomProducto "
-                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC ");
-                . "UNION "
-                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "WHERE d.inAfecta = 4 AND a.inCantidad > 0 " //SIGNO +
-                //. "GROUP BY txNomProducto "
-                . "ORDER BY txNomProducto, txRefInterna, feFecha DESC, idDetDocumentos DESC "
-                . "");
+        $sql = "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida ";
+        $sql .= "FROM DetDocumentos a ";
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "WHERE d.inAfecta = 0 ";
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad AS inSalida ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "WHERE d.inAfecta = 1 "; //RESTA;
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad AS inSalida ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad < 0 "; //SIGNO -
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad > 0 "; //SIGNO +
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
+        $sql .= "ORDER BY txNomProducto, txRefInterna, feFecha DESC, idDetDocumentos DESC ";
+        $entities = $connection->prepare($sql);
         
-        //$entities->bindParam('tipo',$tipo);
+        if ($prod != 'ALL') {$entities->bindParam('prod',$prod);}
             
         $entities->execute();
         $result = $entities->fetchAll();
@@ -90,57 +87,54 @@ class InformesController extends Controller
      * Genera datos del informe de kardex.
      *
      */
-    public function kardexResumenAction()
+    public function kardexResumenAction($prod)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
-        $entities = $connection->prepare("SELECT Productos_idProducto, txNomProducto, txRefInterna, "
-                . "SUM(inEntrada) as sumEntrada, SUM(inSalida) as sumSalida, (SUM(inEntrada))-(SUM(inSalida)) as inExistencia "
-                . "FROM ("
-                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "WHERE d.inAfecta = 0 "  //SUMA
-                //. "GROUP BY txNomProducto "
-                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC "
-                . "UNION "
-                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad AS inSalida "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "WHERE d.inAfecta = 1 " //RESTA
-                //. "GROUP BY txNomProducto "
-                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC ");
-                . "UNION "
-                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad*-1 AS inSalida "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "WHERE d.inAfecta = 4 AND a.inCantidad < 0 " //SIGNO -
-                //. "GROUP BY txNomProducto "
-                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC ");
-                . "UNION "
-                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "WHERE d.inAfecta = 4 AND a.inCantidad > 0 " //SIGNO +
-                //. "GROUP BY txNomProducto "
-                //. "ORDER BY txNomProducto, txRefInterna, feFecha DESC, idDetDocumentos DESC "
-                . ") Detalle "
-                . "GROUP BY txNomProducto ORDER BY txNomProducto "
-                . "");
+        $sql = "SELECT Productos_idProducto, txNomProducto, txRefInterna, ";
+        $sql .= "SUM(inEntrada) as sumEntrada, SUM(inSalida) as sumSalida, (SUM(inEntrada))-(SUM(inSalida)) as inExistencia ";
+        $sql .= "FROM (";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "WHERE d.inAfecta = 0 ";  //SUMA
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad AS inSalida ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "WHERE d.inAfecta = 1 "; //RESTA
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, a.inCantidad*-1 AS inSalida ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad < 0 "; //SIGNO -
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, 0 AS inSalida ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+         $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad > 0 "; //SIGNO +
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";};
+        $sql .= ") Detalle ";
+        $sql .= "GROUP BY txNomProducto ORDER BY txNomProducto ";
         
-        //$entities->bindParam('tipo',$tipo);
+        $entities = $connection->prepare($sql);
+        
+        if ($prod != 'ALL') {$entities->bindParam('prod',$prod);}
             
         $entities->execute();
         $result = $entities->fetchAll();
@@ -159,60 +153,57 @@ class InformesController extends Controller
      * Genera datos del informe de movimiento por terceros.
      *
      */
-    public function mvtotercerosDataAction()
+    public function mvtotercerosDataAction($ter)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
-        $entities = $connection->prepare("SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, "
-                . "0 AS inSalida, e.txNomTercero, a.dbValUnitario "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero "
-                . "WHERE d.inAfecta = 0 "  //SUMA
-                //. "GROUP BY txNomProducto "
-                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC "
-                . "UNION "
-                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, "
-                . "a.inCantidad AS inSalida, e.txNomTercero, a.dbValUnitario "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero "
-                . "WHERE d.inAfecta = 1 " //RESTA
-                //. "GROUP BY txNomProducto "
-                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC ");
-                . "UNION "
-                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, "
-                . "a.inCantidad AS inSalida, e.txNomTercero, a.dbValUnitario "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero "
-                . "WHERE d.inAfecta = 4 AND a.inCantidad < 0 " //SIGNO -
-                //. "GROUP BY txNomProducto "
-                //. "ORDER BY b.txNomProducto, c.feFecha DESC, a.idDetDocumentos DESC ");
-                . "UNION "
-                . "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, "
-                . "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, "
-                . "0 AS inSalida, e.txNomTercero, a.dbValUnitario "
-                . "FROM DetDocumentos a " 
-                . "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto "
-                . "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento "
-                . "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc "
-                . "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero "
-                . "WHERE d.inAfecta = 4 AND a.inCantidad > 0 " //SIGNO +
-                //. "GROUP BY txNomProducto "
-                . "ORDER BY txNomTercero, txNomProducto, txRefInterna, feFecha DESC, idDetDocumentos DESC "
-                . "");
+        $sql = "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, ";
+        $sql .= "0 AS inSalida, e.txNomTercero, a.dbValUnitario ";
+        $sql .= "FROM DetDocumentos a ";
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
+        $sql .= "WHERE d.inAfecta = 0 ";
+        if ($ter != 'ALL') {$sql .= "AND e.idTercero = :ter ";};
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, ";
+        $sql .= "a.inCantidad AS inSalida, e.txNomTercero, a.dbValUnitario ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
+        $sql .= "WHERE d.inAfecta = 1 ";
+        if ($ter != 'ALL') {$sql .= "AND e.idTercero = :ter ";};
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, ";
+        $sql .= "a.inCantidad AS inSalida, e.txNomTercero, a.dbValUnitario ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad < 0 "; //SIGNO -;
+        if ($ter != 'ALL') {$sql .= "AND e.idTercero = :ter ";};
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, ";
+        $sql .= "0 AS inSalida, e.txNomTercero, a.dbValUnitario ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad > 0 "; //SIGNO +;
+        if ($ter != 'ALL') {$sql .= "AND e.idTercero = :ter ";};
+        $sql .= "ORDER BY txNomTercero, txNomProducto, txRefInterna, feFecha DESC, idDetDocumentos DESC ";
+        $entities = $connection->prepare($sql);
         
-        //$entities->bindParam('tipo',$tipo);
+        if ($ter != 'ALL') {$entities->bindParam('ter',$ter);}
             
         $entities->execute();
         $result = $entities->fetchAll();
@@ -243,7 +234,7 @@ class InformesController extends Controller
         $sql .=  "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
         $sql .=  "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
         $sql .=  "WHERE d.inAfecta = 0 ";  //SUMA
-        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";};
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
         $sql .=  "UNION ";
         $sql .=  "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
         $sql .=  "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 'ENTRADA/COMPRA' as transaccion, ";
@@ -254,7 +245,7 @@ class InformesController extends Controller
         $sql .=  "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
         $sql .=  "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
         $sql .=  "WHERE d.inAfecta = 4 AND a.inCantidad > 0 "; //SIGNO +
-        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";};
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
         $sql .=  "UNION ";
         $sql .=  "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
         $sql .=  "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 'SALIDA/VENTA' as transaccion, ";
@@ -265,8 +256,8 @@ class InformesController extends Controller
         $sql .=  "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
         $sql .=  "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
         $sql .=  "WHERE d.inAfecta = 1 "; //RESTA
-        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";};
-;        $sql .=  "UNION ";
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
+        $sql .=  "UNION ";
         $sql .=  "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
         $sql .=  "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 'SALIDA/VENTA' as transaccion, ";
         $sql .=  "e.txNomTercero, a.dbValUnitario ";
@@ -276,7 +267,7 @@ class InformesController extends Controller
         $sql .=  "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
         $sql .=  "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
         $sql .=  "WHERE d.inAfecta = 4 AND a.inCantidad < 0 "; //SIGNO -
-        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";};
+        if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
         $sql .=  "GROUP BY txNomProducto, dbValUnitario,txNomTercero ";
         $sql .=  "ORDER BY transaccion, txNomProducto, dbValUnitario, feFecha DESC, idDetDocumentos DESC ";
         

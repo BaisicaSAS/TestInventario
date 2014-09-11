@@ -39,34 +39,34 @@ class __TwigTemplate_fd0bb52f4da074896cc02eee2835c478434fe0e27757835e18e309739fc
     public function block_sitecontent($context, array $blocks = array())
     {
         // line 8
-        echo "        <div id=\"menubar\"> 
-            <ul id=\"menu\">
-                <li><a href=\" ";
+        echo "    <table>
+        <tr>
+            <td><li><a href=\" ";
         // line 10
         echo $this->env->getExtension('routing')->getPath("informes_kardex");
-        echo " \">Kardex</a></li>
-                <li><a href=\" ";
+        echo " \">Kardex</a></li></td>
+            <td><li><a href=\" ";
         // line 11
         echo $this->env->getExtension('routing')->getPath("informes_mvtoterceros");
-        echo " \">Movimiento por Terceros</a></li>
-                <!--<li><a href=\"";
+        echo " \">Movimiento por Terceros</a></li></td>
+            <td><li><a href=\" ";
         // line 12
-        echo "\">Mov. Meses</a></li>-->
-                <!--<li><a href=\"";
+        echo $this->env->getExtension('routing')->getPath("informes_histprecios");
+        echo " \">Historico Precios (Venta/Compra)</a></li></td>
+            <!--<td><li><a href=\"";
         // line 13
-        echo "\">Mov. Productos</a></li>-->
-                <!--<li><a href=\"";
+        echo "\">Mov. Meses</a></li></td>-->
+            <!--<td><li><a href=\"";
         // line 14
-        echo "\">Rotación mensual</a></li>-->
-                <!--<li><a href=\"";
+        echo "\">Rotación mensual</a></li></td>-->
+            <!--<td><li><a href=\"";
         // line 15
         echo "\">Rentabilidad productos</a></li>-->
-                <li><a href=\" ";
+            <!--<td><li><a href=\"";
         // line 16
-        echo $this->env->getExtension('routing')->getPath("informes_histprecios");
-        echo " \">Historico Precios (Venta/Compra)</a></li>
-            </ul>
-        </div>    
+        echo "\">Ventas por vendedor</a></li>-->
+        </tr>
+    </table>    
 ";
     }
 
@@ -82,6 +82,6 @@ class __TwigTemplate_fd0bb52f4da074896cc02eee2835c478434fe0e27757835e18e309739fc
 
     public function getDebugInfo()
     {
-        return array (  66 => 16,  63 => 15,  60 => 14,  57 => 13,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  32 => 4,  29 => 3,);
+        return array (  67 => 16,  64 => 15,  61 => 14,  58 => 13,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  32 => 4,  29 => 3,);
     }
 }

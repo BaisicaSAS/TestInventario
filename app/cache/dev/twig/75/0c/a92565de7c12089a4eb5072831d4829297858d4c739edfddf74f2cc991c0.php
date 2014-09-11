@@ -11,7 +11,6 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
 
         $this->blocks = array(
             'head' => array($this, 'block_head'),
-            'main' => array($this, 'block_main'),
             'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
@@ -84,26 +83,14 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
 ";
     }
 
-    // line 49
-    public function block_main($context, array $blocks = array())
-    {
-        // line 50
-        echo "
-  ";
-        // line 51
-        $this->displayParentBlock("main", $context, $blocks);
-        echo "     
-  ";
-        // line 52
-        $this->displayBlock('sitecontent', $context, $blocks);
-    }
-
+    // line 50
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 53
-        echo "        <div> <table id=\"tblclasprod\"></table>
+        // line 51
+        echo "        <h1>Clasificación de productos</h1>
+        <div> <table id=\"tblclasprod\"></table>
         <div id=\"paginacion\"></div> </div> 
-  ";
+";
     }
 
     public function getTemplateName()
@@ -118,6 +105,6 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
 
     public function getDebugInfo()
     {
-        return array (  104 => 53,  98 => 52,  94 => 51,  91 => 50,  88 => 49,  45 => 9,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  90 => 51,  87 => 50,  44 => 9,  40 => 8,  32 => 4,  29 => 3,);
     }
 }

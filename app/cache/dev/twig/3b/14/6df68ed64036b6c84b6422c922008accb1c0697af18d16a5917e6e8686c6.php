@@ -7,18 +7,17 @@ class __TwigTemplate_3b146df68ed64036b6c84b6422c922008accb1c0697af18d16a5917e6e8
     {
         parent::__construct($env);
 
-        $this->parent = $this->env->loadTemplate("InventarioFrontBundle:informes:index.html.twig");
+        $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Informes:index.html.twig");
 
         $this->blocks = array(
             'head' => array($this, 'block_head'),
-            'main' => array($this, 'block_main'),
             'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
 
     protected function doGetParent(array $context)
     {
-        return "InventarioFrontBundle:informes:index.html.twig";
+        return "InventarioFrontBundle:Informes:index.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = array())
@@ -35,10 +34,28 @@ class __TwigTemplate_3b146df68ed64036b6c84b6422c922008accb1c0697af18d16a5917e6e8
         echo "     
     <script type=\"text/javascript\">
         \$(document).ready(function(){
-            jQuery(\"#terceros\").jqGrid({        
+
+        
+            \$.getJSON( \"";
+        // line 9
+        echo $this->env->getExtension('routing')->getPath("terceros_listTerGrid", array("tipo" => "0"));
+        echo "\", function( data ) {
+                var sel1 = document.getElementById('movterceros');
+                var i = 0;
+                //alert(i);
+                \$.each( data, function() {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = data[i].txNomTercero;
+                    opt.value = data[i].idTercero;
+                    sel1.appendChild(opt);
+                    i++; 
+                });
+            });
+
+        jQuery(\"#terceros\").jqGrid({        
                     url:\"";
-        // line 8
-        echo $this->env->getExtension('routing')->getPath("informes_mvtotercerosData");
+        // line 23
+        echo $this->env->getExtension('routing')->getPath("informes_mvtotercerosData", array("ter" => "ALL"));
         echo "\",
                     datatype: \"json\",
                     width:'100%',
@@ -88,31 +105,44 @@ class __TwigTemplate_3b146df68ed64036b6c84b6422c922008accb1c0697af18d16a5917e6e8
             jQuery(\"#terceros\").jqGrid('inlineNav',\"#paginacion\");
             
        }); 
+
+        function recargaGrid(value){
+          //alert(value);
+          var newUrl = \"";
+        // line 75
+        echo $this->env->getExtension('routing')->getPath("informes_mvtotercerosData", array("ter" => "ALL"));
+        echo "\";
+          newUrl = newUrl.replace('ALL', value);
+          //alert(newUrlr);
+
+          \$(\"#terceros\").setGridParam({url: newUrl, page: 1}).trigger('reloadGrid');
+          jQuery(\"#terceros\").hideCol('txNomTercero');
+        };
     </script>
 ";
     }
 
-    // line 60
-    public function block_main($context, array $blocks = array())
-    {
-        // line 61
-        echo "  ";
-        $this->displayParentBlock("main", $context, $blocks);
-        echo "     
-
-  ";
-        // line 63
-        $this->displayBlock('sitecontent', $context, $blocks);
-    }
-
+    // line 85
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 64
-        echo "    <div height=\"500px\">
+        echo " 
+  ";
+        // line 86
+        $this->displayParentBlock("sitecontent", $context, $blocks);
+        echo "     
+        <h1>Movimiento por terceros</h1>
+        <div>
+            <table> 
+                <tr>
+                    <td><label>Filtrar</label></td>
+                    <td><select id=\"movterceros\" onchange=\"recargaGrid(this.value)\">
+                    <option value=\"ALL\">Seleccione un tercero </option></select> </td>
+                </tr>
+            </table>    
+        </div>     
         <table id=\"terceros\" ></table>
         <div id=\"paginacion\" ></div>
-    </div>
-  ";
+";
     }
 
     public function getTemplateName()
@@ -127,6 +157,6 @@ class __TwigTemplate_3b146df68ed64036b6c84b6422c922008accb1c0697af18d16a5917e6e8
 
     public function getDebugInfo()
     {
-        return array (  111 => 64,  105 => 63,  99 => 61,  96 => 60,  41 => 8,  33 => 4,  30 => 3,);
+        return array (  131 => 86,  126 => 85,  113 => 75,  58 => 23,  41 => 9,  32 => 4,  29 => 3,);
     }
 }

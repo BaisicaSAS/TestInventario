@@ -15,15 +15,15 @@ informes_histprecios:
     defaults: { _controller: "InventarioFrontBundle:Informes:histprecios" }
 
 informes_kardexData:
-    pattern:  /kardexData
+    pattern:  /kardexData/{prod}
     defaults: { _controller: "InventarioFrontBundle:Informes:kardexData" }
 
 informes_kardexResumen:
-    pattern:  /kardexResumen
+    pattern:  /kardexResumen/{prod}
     defaults: { _controller: "InventarioFrontBundle:Informes:kardexResumen" }
 
 informes_mvtotercerosData:
-    pattern:  /mvtotercerosData
+    pattern:  /mvtotercerosData/{ter}
     defaults: { _controller: "InventarioFrontBundle:Informes:mvtotercerosData" }
 
 informes_histpreciosData:

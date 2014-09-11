@@ -1,11 +1,26 @@
-{% extends "InventarioFrontBundle:informes:index.html.twig" %}
+{% extends "InventarioFrontBundle:Informes:index.html.twig" %}
 
 {% block head %}
     {{ parent() }}     
     <script type="text/javascript">
         $(document).ready(function(){
-            jQuery("#terceros").jqGrid({        
-                    url:"{{ path('informes_mvtotercerosData') }}",
+
+        
+            $.getJSON( "{{path('terceros_listTerGrid', {'tipo': '0'})}}", function( data ) {
+                var sel1 = document.getElementById('movterceros');
+                var i = 0;
+                //alert(i);
+                $.each( data, function() {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = data[i].txNomTercero;
+                    opt.value = data[i].idTercero;
+                    sel1.appendChild(opt);
+                    i++; 
+                });
+            });
+
+        jQuery("#terceros").jqGrid({        
+                    url:"{{ path('informes_mvtotercerosData', {'ter': 'ALL'}) }}",
                     datatype: "json",
                     width:'100%',
                     heigth:'500px',
@@ -54,17 +69,32 @@
             jQuery("#terceros").jqGrid('inlineNav',"#paginacion");
             
        }); 
+
+        function recargaGrid(value){
+          //alert(value);
+          var newUrl = "{{ path('informes_mvtotercerosData', {'ter': 'ALL'}) }}";
+          newUrl = newUrl.replace('ALL', value);
+          //alert(newUrlr);
+
+          $("#terceros").setGridParam({url: newUrl, page: 1}).trigger('reloadGrid');
+          jQuery("#terceros").hideCol('txNomTercero');
+        };
     </script>
 {% endblock %}
 
-{% block main %}
+{% block sitecontent %} 
   {{ parent() }}     
-
-  {% block sitecontent %}
-    <div height="500px">
+        <h1>Movimiento por terceros</h1>
+        <div>
+            <table> 
+                <tr>
+                    <td><label>Filtrar</label></td>
+                    <td><select id="movterceros" onchange="recargaGrid(this.value)">
+                    <option value="ALL">Seleccione un tercero </option></select> </td>
+                </tr>
+            </table>    
+        </div>     
         <table id="terceros" ></table>
         <div id="paginacion" ></div>
-    </div>
-  {% endblock %}
 {% endblock %}
 

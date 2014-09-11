@@ -7,18 +7,17 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
     {
         parent::__construct($env);
 
-        $this->parent = $this->env->loadTemplate("InventarioFrontBundle:informes:index.html.twig");
+        $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Informes:index.html.twig");
 
         $this->blocks = array(
             'head' => array($this, 'block_head'),
-            'main' => array($this, 'block_main'),
             'sitecontent' => array($this, 'block_sitecontent'),
         );
     }
 
     protected function doGetParent(array $context)
     {
-        return "InventarioFrontBundle:informes:index.html.twig";
+        return "InventarioFrontBundle:Informes:index.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = array())
@@ -55,7 +54,7 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
             jQuery(\"#kardex\").jqGrid({        
                     url:\"";
         // line 22
-        echo $this->env->getExtension('routing')->getPath("informes_kardexData");
+        echo $this->env->getExtension('routing')->getPath("informes_kardexData", array("prod" => "ALL"));
         echo "\",
                     datatype: \"json\",
                     width:'100%',
@@ -78,8 +77,8 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
                     rowNum:1000,
                     rowList:[1000,2000,3000],
                     pager: '#paginacion',
-                    sortname: 'txNomProducto',
-                    sortorder: 'asc',
+                    sortname: ['txNomProducto','feFecha'],
+                    sortorder: 'desc',
                     viewrecords: true,
                     caption: 'MOVIMIENTO DE PRODUCTOS',
                     grouping:true, 
@@ -106,12 +105,12 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
             jQuery(\"#existenc\").jqGrid({        
                     url:\"";
         // line 70
-        echo $this->env->getExtension('routing')->getPath("informes_kardexResumen");
+        echo $this->env->getExtension('routing')->getPath("informes_kardexResumen", array("prod" => "ALL"));
         echo "\",
                     datatype: \"json\",
                     width:'100%',
                     heigth:'500',
-                    colNames:['IDProducto','Ref.','Producto','Entrada','Salida','Existencias'],
+                    colNames:['IDProducto','Ref.','Producto','Entradas','Salidas','Existencias'],
                     colModel:[
                             {name:'Productos_idProducto',index:'Productos_idProducto',editable:false,sortable:false},
                             {name:'txRefInterna',index:'txRefInterna',editable:false,sortable:false},
@@ -134,35 +133,54 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
             //jQuery(\"#existenc\").jqGrid('navGrid',\"#pagina\",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
             jQuery(\"#existenc\").jqGrid('inlineNav',\"#pagina\");
        }); 
+
+        function recargaGrid(value){
+          //alert(value);
+          var newUrlk = \"";
+        // line 100
+        echo $this->env->getExtension('routing')->getPath("informes_kardexData", array("prod" => "ALL"));
+        echo "\";
+          var newUrlr = \"";
+        // line 101
+        echo $this->env->getExtension('routing')->getPath("informes_kardexResumen", array("prod" => "ALL"));
+        echo "\"
+          newUrlk = newUrlk.replace('ALL', value);              
+          newUrlr = newUrlr.replace('ALL', value);
+          //alert(newUrlr);
+
+          \$(\"#existenc\").setGridParam({url: newUrlr, page: 1}).trigger('reloadGrid');
+          \$(\"#kardex\").setGridParam({url: newUrlk, page: 1}).trigger('reloadGrid');
+          jQuery(\"#kardex\").hideCol('txNomProducto');
+        };
+
     </script>
 ";
     }
 
-    // line 100
-    public function block_main($context, array $blocks = array())
-    {
-        // line 101
-        echo "  ";
-        $this->displayParentBlock("main", $context, $blocks);
-        echo "     
-
-  ";
-        // line 103
-        $this->displayBlock('sitecontent', $context, $blocks);
-    }
-
+    // line 114
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 104
-        echo "        <h1>Informe de Kardex</h1>
-        <select id=\"movproductos\" onchange=\"recargaGrid(this.value)\">
-            <option value=\"ALL\">Seleccione un producto </option></select> 
+        // line 115
+        echo "  ";
+        $this->displayParentBlock("sitecontent", $context, $blocks);
+        echo "     
+        <h1>Informe de Kardex</h1>
+        <div>
+            <table> 
+                <tr>
+                    <td><label>Filtrar</label></td>
+                    <td><select id=\"movproductos\" onchange=\"recargaGrid(this.value)\">
+                    <option value=\"ALL\">Seleccione un producto </option></select> </td>
+                </tr>
+            </table>    
+        </div>     
+         
         <table id=\"kardex\" ></table>
         <div id=\"paginacion\" ></div>
         
         <table id=\"existenc\" ></table>
         <div id=\"pagina\" ></div>
-  ";
+";
     }
 
     public function getTemplateName()
@@ -177,6 +195,6 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
 
     public function getDebugInfo()
     {
-        return array (  157 => 104,  151 => 103,  145 => 101,  142 => 100,  109 => 70,  58 => 22,  42 => 9,  33 => 4,  30 => 3,);
+        return array (  164 => 115,  161 => 114,  145 => 101,  141 => 100,  108 => 70,  57 => 22,  41 => 9,  32 => 4,  29 => 3,);
     }
 }

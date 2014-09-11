@@ -1,4 +1,4 @@
-{% extends "InventarioFrontBundle:informes:index.html.twig" %}
+{% extends "InventarioFrontBundle:Informes:index.html.twig" %}
 
 {% block head %}
     {{ parent() }}     
@@ -77,14 +77,20 @@
     </script>
 {% endblock %}
 
-{% block main %}
+{% block sitecontent %}
     {{ parent() }}     
-    {% block sitecontent %}
         <h1>Historico de precios productos</h1>
-        <select id="productos" onchange="recargaGrid(this.value)">
-            <option value="ALL">Seleccione un producto </option></select> 
+        <div>
+            <table> 
+                <tr>
+                    <td><label>Filtrar</label></td>
+                    <td><select id="productos" onchange="recargaGrid(this.value)">
+                    <option value="ALL">Seleccione un producto </option></select> </td>
+                </tr>
+            </table>    
+        </div>     
+         
         <table id="histprecios" ></table>
         <div id="paginacion" ></div>
-    {% endblock %}
 {% endblock %}
 
