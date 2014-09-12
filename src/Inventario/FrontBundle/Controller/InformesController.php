@@ -24,7 +24,7 @@ class InformesController extends Controller
      * Genera datos del informe de kardex.
      *
      */
-    public function kardexDataAction($prod)
+    public function kardexDataAction($prod,$desde,$hasta)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
@@ -34,7 +34,7 @@ class InformesController extends Controller
         $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
         $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
         $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
-        $sql .= "WHERE d.inAfecta = 0 ";
+        $sql .= "WHERE d.inAfecta = 0 AND c.feFecha BETWEEN :desde AND :hasta ";
         if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
         $sql .= "UNION ";
         $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
@@ -43,7 +43,7 @@ class InformesController extends Controller
         $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
         $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
         $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
-        $sql .= "WHERE d.inAfecta = 1 "; //RESTA;
+        $sql .= "WHERE d.inAfecta = 1 AND c.feFecha BETWEEN :desde AND :hasta "; //RESTA;
         if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
         $sql .= "UNION ";
         $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
@@ -52,7 +52,7 @@ class InformesController extends Controller
         $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
         $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
         $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
-        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad < 0 "; //SIGNO -
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad < 0 AND c.feFecha BETWEEN :desde AND :hasta "; //SIGNO -
         if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
         $sql .= "UNION ";
         $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
@@ -61,12 +61,14 @@ class InformesController extends Controller
         $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
         $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
         $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
-        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad > 0 "; //SIGNO +
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad > 0 AND c.feFecha BETWEEN :desde AND :hasta "; //SIGNO +
         if ($prod != 'ALL') {$sql .= "AND b.txRefInterna = :prod ";}
         $sql .= "ORDER BY txNomProducto, txRefInterna, feFecha DESC, idDetDocumentos DESC ";
         $entities = $connection->prepare($sql);
         
         if ($prod != 'ALL') {$entities->bindParam('prod',$prod);}
+        $entities->bindParam('desde',$desde);
+        $entities->bindParam('hasta',$hasta);
             
         $entities->execute();
         $result = $entities->fetchAll();
@@ -153,57 +155,59 @@ class InformesController extends Controller
      * Genera datos del informe de movimiento por terceros.
      *
      */
-    public function mvtotercerosDataAction($ter)
+    public function mvtotercerosDataAction($ter,$desde,$hasta)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $connection = $em->getConnection();
         $sql = "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
         $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, ";
-        $sql .= "0 AS inSalida, e.txNomTercero, a.dbValUnitario ";
+        $sql .= "0 AS inSalida, e.txNomTercero, a.dbValUnitario, a.dbValTotal ";
         $sql .= "FROM DetDocumentos a ";
         $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
         $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
         $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
         $sql .= "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
-        $sql .= "WHERE d.inAfecta = 0 ";
+        $sql .= "WHERE d.inAfecta = 0 AND c.feFecha BETWEEN :desde AND :hasta ";
         if ($ter != 'ALL') {$sql .= "AND e.idTercero = :ter ";};
         $sql .= "UNION ";
         $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
         $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, ";
-        $sql .= "a.inCantidad AS inSalida, e.txNomTercero, a.dbValUnitario ";
+        $sql .= "a.inCantidad AS inSalida, e.txNomTercero, a.dbValUnitario, a.dbValTotal ";
         $sql .= "FROM DetDocumentos a " ;
         $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
         $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
         $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
         $sql .= "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
-        $sql .= "WHERE d.inAfecta = 1 ";
+        $sql .= "WHERE d.inAfecta = 1 AND c.feFecha BETWEEN :desde AND :hasta ";
         if ($ter != 'ALL') {$sql .= "AND e.idTercero = :ter ";};
         $sql .= "UNION ";
         $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
         $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, ";
-        $sql .= "a.inCantidad AS inSalida, e.txNomTercero, a.dbValUnitario ";
+        $sql .= "a.inCantidad AS inSalida, e.txNomTercero, a.dbValUnitario, a.dbValTotal ";
         $sql .= "FROM DetDocumentos a " ;
         $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
         $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
         $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
         $sql .= "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
-        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad < 0 "; //SIGNO -;
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad < 0 AND c.feFecha BETWEEN :desde AND :hasta "; //SIGNO -;
         if ($ter != 'ALL') {$sql .= "AND e.idTercero = :ter ";};
         $sql .= "UNION ";
         $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
         $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, ";
-        $sql .= "0 AS inSalida, e.txNomTercero, a.dbValUnitario ";
+        $sql .= "0 AS inSalida, e.txNomTercero, a.dbValUnitario, a.dbValTotal ";
         $sql .= "FROM DetDocumentos a " ;
         $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
         $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
         $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
         $sql .= "LEFT JOIN Terceros e ON c.inidTercero = e.idTercero ";
-        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad > 0 "; //SIGNO +;
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad > 0 AND c.feFecha BETWEEN :desde AND :hasta "; //SIGNO +;
         if ($ter != 'ALL') {$sql .= "AND e.idTercero = :ter ";};
-        $sql .= "ORDER BY txNomTercero, txNomProducto, txRefInterna, feFecha DESC, idDetDocumentos DESC ";
+        $sql .= "ORDER BY txNomTercero, feFecha DESC, idDetDocumentos DESC ";
         $entities = $connection->prepare($sql);
         
         if ($ter != 'ALL') {$entities->bindParam('ter',$ter);}
+        $entities->bindParam('desde',$desde);
+        $entities->bindParam('hasta',$hasta);
             
         $entities->execute();
         $result = $entities->fetchAll();
@@ -219,6 +223,80 @@ class InformesController extends Controller
         return $response;        
 
     }
+    /**
+     * Genera datos del informe de movimiento por terceros.
+     *
+     */
+    public function mvtovendedoresDataAction($ven,$desde,$hasta)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $sql = "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, ";
+        $sql .= "0 AS inSalida, e.txNomVendedor, a.dbValUnitario, a.dbValTotal ";
+        $sql .= "FROM DetDocumentos a ";
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "LEFT JOIN Vendedores e ON c.Vendedores_idVendedor = e.idVendedor ";
+        $sql .= "WHERE d.inAfecta = 0 AND c.feFecha BETWEEN :desde AND :hasta ";
+        if ($ven != 'ALL') {$sql .= "AND e.idVendedor = :ven ";};
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, ";
+        $sql .= "a.inCantidad AS inSalida, e.txNomVendedor, a.dbValUnitario, a.dbValTotal ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "LEFT JOIN Vendedores e ON c.Vendedores_idVendedor = e.idVendedor ";
+        $sql .= "WHERE d.inAfecta = 1 AND c.feFecha BETWEEN :desde AND :hasta ";
+        if ($ven != 'ALL') {$sql .= "AND e.idVendedor = :ven ";};
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, 0 as inEntrada, ";
+        $sql .= "a.inCantidad AS inSalida, e.txNomVendedor, a.dbValUnitario, a.dbValTotal ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "LEFT JOIN Vendedores e ON c.Vendedores_idVendedor = e.idVendedor ";
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad < 0 AND c.feFecha BETWEEN :desde AND :hasta "; //SIGNO -;
+        if ($ven != 'ALL') {$sql .= "AND e.idVendedor = :ven ";};
+        $sql .= "UNION ";
+        $sql .= "SELECT a.idDetDocumentos, a.Productos_idProducto, d.txTipDoc, c.txNumDoc, ";
+        $sql .= "a.inidMasDocumento, c.feFecha, b.txNomProducto, b.txRefInterna, a.inCantidad as inEntrada, ";
+        $sql .= "0 AS inSalida, e.txNomVendedor, a.dbValUnitario, a.dbValTotal ";
+        $sql .= "FROM DetDocumentos a " ;
+        $sql .= "LEFT JOIN Productos b ON a.Productos_idProducto = b.idProducto ";
+        $sql .= "LEFT JOIN MasDocumentos c ON a.inidMasDocumento = c.idMasDocumento ";
+        $sql .= "LEFT JOIN TipDoc d ON c.inidTipDoc = d.idTipDoc ";
+        $sql .= "LEFT JOIN Vendedores e ON c.Vendedores_idVendedor = e.idVendedor ";
+        $sql .= "WHERE d.inAfecta = 4 AND a.inCantidad > 0 AND c.feFecha BETWEEN :desde AND :hasta "; //SIGNO +;
+        if ($ven != 'ALL') {$sql .= "AND e.idVendedor = :ven ";};
+        $sql .= "ORDER BY txNomVendedor, feFecha DESC, idDetDocumentos DESC ";
+        $entities = $connection->prepare($sql);
+        
+        if ($ven != 'ALL') {$entities->bindParam('ven',$ven);}
+        
+        $entities->bindParam('desde',$desde);
+        $entities->bindParam('hasta',$hasta);
+            
+        $entities->execute();
+        $result = $entities->fetchAll();
+        
+        /*
+         * DEVOLVER JSON
+         */        
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        $response = new Response($serializer->serialize($result, 'json')); 
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;        
+
+    }
+    
     public function histpreciosDataAction($prod)
     {
         $sql = "";
@@ -304,6 +382,14 @@ class InformesController extends Controller
     public function mvtotercerosAction()
     {
         return $this->render('InventarioFrontBundle:Informes:mvtoterceros.html.twig');
+    }
+    /**
+     * 
+     *
+     */
+    public function mvtovendedoresAction()
+    {
+        return $this->render('InventarioFrontBundle:Informes:mvtovendedores.html.twig');
     }
     /**
      * 

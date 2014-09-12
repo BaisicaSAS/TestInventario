@@ -156,9 +156,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexAction',  '_route' => 'informes_kardex',);
                 }
 
-                // informes_mvtoterceros
-                if ($pathinfo === '/informes/mvtoterceros') {
-                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtotercerosAction',  '_route' => 'informes_mvtoterceros',);
+                if (0 === strpos($pathinfo, '/informes/mvto')) {
+                    // informes_mvtoterceros
+                    if ($pathinfo === '/informes/mvtoterceros') {
+                        return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtotercerosAction',  '_route' => 'informes_mvtoterceros',);
+                    }
+
+                    // informes_mvtovendedores
+                    if ($pathinfo === '/informes/mvtovendedores') {
+                        return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtovendedoresAction',  '_route' => 'informes_mvtovendedores',);
+                    }
+
                 }
 
                 // informes_histprecios
@@ -168,7 +176,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
                 if (0 === strpos($pathinfo, '/informes/kardex')) {
                     // informes_kardexData
-                    if (0 === strpos($pathinfo, '/informes/kardexData') && preg_match('#^/informes/kardexData/(?P<prod>[^/]++)$#s', $pathinfo, $matches)) {
+                    if (0 === strpos($pathinfo, '/informes/kardexData') && preg_match('#^/informes/kardexData/(?P<prod>[^/]++)/(?P<desde>[^/]++)/(?P<hasta>[^/]++)$#s', $pathinfo, $matches)) {
                         return $this->mergeDefaults(array_replace($matches, array('_route' => 'informes_kardexData')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::kardexDataAction',));
                     }
 
@@ -179,9 +187,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
                 }
 
-                // informes_mvtotercerosData
-                if (0 === strpos($pathinfo, '/informes/mvtotercerosData') && preg_match('#^/informes/mvtotercerosData/(?P<ter>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'informes_mvtotercerosData')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtotercerosDataAction',));
+                if (0 === strpos($pathinfo, '/informes/mvto')) {
+                    // informes_mvtotercerosData
+                    if (0 === strpos($pathinfo, '/informes/mvtotercerosData') && preg_match('#^/informes/mvtotercerosData/(?P<ter>[^/]++)/(?P<desde>[^/]++)/(?P<hasta>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'informes_mvtotercerosData')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtotercerosDataAction',));
+                    }
+
+                    // informes_mvtovendedoresData
+                    if (0 === strpos($pathinfo, '/informes/mvtovendedoresData') && preg_match('#^/informes/mvtovendedoresData/(?P<ven>[^/]++)/(?P<desde>[^/]++)/(?P<hasta>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'informes_mvtovendedoresData')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::mvtovendedoresDataAction',));
+                    }
+
                 }
 
                 // informes_histpreciosData

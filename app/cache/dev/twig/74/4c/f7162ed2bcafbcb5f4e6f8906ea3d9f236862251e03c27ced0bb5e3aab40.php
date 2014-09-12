@@ -59,8 +59,9 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
         echo $this->env->getExtension('routing')->getPath("informes_histpreciosData", array("prod" => "ALL"));
         echo "\",
                     datatype: \"json\",
-                    width:'100%',
-                    heigth:'500px',
+                    //width:'100%',
+                    heigth:'400px',
+                    mtype: 'POST',
                     colNames:['Ref.','Producto','Tip. Dc.','Num. Doc.','Fecha','Transaccion','Valor','IdDet','IdMasD','Tercero'],
                     colModel:[
                             {name:'txRefInterna',index:'txRefInterna',search:false,sortable:false},
@@ -75,9 +76,9 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
                             {name:'inidMasDocumento',index:'inidMasDocumento',search:false,sortable:false},
                             {name:'txNomTercero',index:'txNomTercero',search:false,sortable:false},
                     ],
+                    pager: '#paginacion',
                     rowNum:1000,
                     rowList:[1000,2000,3000],
-                    pager: '#paginacion',
                     sortname: 'txNomTercero',
                     sortorder: 'asc',
                     viewrecords: true,
@@ -100,13 +101,13 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
 
             //jQuery(\"#histprecios\").jqGrid('filterToolbar', { searchOnEnter: false, enableClear: false, ignoreCase: false });
             //jQuery(\"#histprecios\").jqGrid('navGrid',\"#paginacion\",{reloadAfterSubmit:true});
-            jQuery(\"#histprecios\").jqGrid('inlineNav',\"#paginacion\");
+            //jQuery(\"#histprecios\").jqGrid('inlineNav',\"#paginacion\");
             
        }); 
         function recargaGrid(value){
           //alert(value);
           var newUrl = \"";
-        // line 72
+        // line 73
         echo $this->env->getExtension('routing')->getPath("informes_histpreciosData", array("prod" => "ALL"));
         echo "\";
           newUrl = newUrl.replace('ALL', value);              
@@ -117,10 +118,10 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
 ";
     }
 
-    // line 80
+    // line 81
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 81
+        // line 82
         echo "    ";
         $this->displayParentBlock("sitecontent", $context, $blocks);
         echo "     
@@ -135,8 +136,8 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
             </table>    
         </div>     
          
-        <table id=\"histprecios\" ></table>
-        <div id=\"paginacion\" ></div>
+        <div><table id=\"histprecios\" ></table>
+        <div id=\"paginacion\" ></div></div>
 ";
     }
 
@@ -152,6 +153,6 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
 
     public function getDebugInfo()
     {
-        return array (  124 => 81,  121 => 80,  110 => 72,  59 => 24,  40 => 8,  32 => 4,  29 => 3,);
+        return array (  125 => 82,  122 => 81,  111 => 73,  59 => 24,  40 => 8,  32 => 4,  29 => 3,);
     }
 }

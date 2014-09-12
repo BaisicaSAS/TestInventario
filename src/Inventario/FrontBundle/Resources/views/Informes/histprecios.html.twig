@@ -23,8 +23,9 @@
             jQuery("#histprecios").jqGrid({        
                     url:"{{ path('informes_histpreciosData', {'prod': 'ALL'}) }}",
                     datatype: "json",
-                    width:'100%',
-                    heigth:'500px',
+                    //width:'100%',
+                    heigth:'400px',
+                    mtype: 'POST',
                     colNames:['Ref.','Producto','Tip. Dc.','Num. Doc.','Fecha','Transaccion','Valor','IdDet','IdMasD','Tercero'],
                     colModel:[
                             {name:'txRefInterna',index:'txRefInterna',search:false,sortable:false},
@@ -39,9 +40,9 @@
                             {name:'inidMasDocumento',index:'inidMasDocumento',search:false,sortable:false},
                             {name:'txNomTercero',index:'txNomTercero',search:false,sortable:false},
                     ],
+                    pager: '#paginacion',
                     rowNum:1000,
                     rowList:[1000,2000,3000],
-                    pager: '#paginacion',
                     sortname: 'txNomTercero',
                     sortorder: 'asc',
                     viewrecords: true,
@@ -64,7 +65,7 @@
 
             //jQuery("#histprecios").jqGrid('filterToolbar', { searchOnEnter: false, enableClear: false, ignoreCase: false });
             //jQuery("#histprecios").jqGrid('navGrid',"#paginacion",{reloadAfterSubmit:true});
-            jQuery("#histprecios").jqGrid('inlineNav',"#paginacion");
+            //jQuery("#histprecios").jqGrid('inlineNav',"#paginacion");
             
        }); 
         function recargaGrid(value){
@@ -90,7 +91,7 @@
             </table>    
         </div>     
          
-        <table id="histprecios" ></table>
-        <div id="paginacion" ></div>
+        <div><table id="histprecios" ></table>
+        <div id="paginacion" ></div></div>
 {% endblock %}
 

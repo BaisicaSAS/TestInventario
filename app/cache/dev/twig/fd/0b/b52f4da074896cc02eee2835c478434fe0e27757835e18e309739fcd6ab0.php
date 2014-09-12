@@ -53,18 +53,19 @@ class __TwigTemplate_fd0bb52f4da074896cc02eee2835c478434fe0e27757835e18e309739fc
         // line 12
         echo $this->env->getExtension('routing')->getPath("informes_histprecios");
         echo " \">Historico Precios (Venta/Compra)</a></li></td>
-            <!--<td><li><a href=\"";
+            <td><li><a href=\" ";
         // line 13
-        echo "\">Mov. Meses</a></li></td>-->
+        echo $this->env->getExtension('routing')->getPath("informes_mvtovendedores");
+        echo " \">Ventas por vendedor</a></li>
             <!--<td><li><a href=\"";
         // line 14
-        echo "\">Rotación mensual</a></li></td>-->
+        echo "\">Mov. Meses</a></li></td>-->
             <!--<td><li><a href=\"";
         // line 15
-        echo "\">Rentabilidad productos</a></li>-->
+        echo "\">Rotación mensual</a></li></td>-->
             <!--<td><li><a href=\"";
         // line 16
-        echo "\">Ventas por vendedor</a></li>-->
+        echo "\">Rentabilidad productos</a></li>-->
         </tr>
     </table>    
 ";
@@ -82,6 +83,6 @@ class __TwigTemplate_fd0bb52f4da074896cc02eee2835c478434fe0e27757835e18e309739fc
 
     public function getDebugInfo()
     {
-        return array (  67 => 16,  64 => 15,  61 => 14,  58 => 13,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  32 => 4,  29 => 3,);
+        return array (  68 => 16,  65 => 15,  62 => 14,  58 => 13,  54 => 12,  50 => 11,  46 => 10,  42 => 8,  39 => 7,  32 => 4,  29 => 3,);
     }
 }

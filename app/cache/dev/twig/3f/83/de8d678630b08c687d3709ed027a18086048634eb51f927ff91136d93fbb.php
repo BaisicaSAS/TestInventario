@@ -50,7 +50,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     colNames:['Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
                     colModel:[
                             {name:'id',index:'id', editable:false,search:false,editoptions:{readonly:true}},
-                            {name:'txnomdoc',index:'txnomdoc',search:true,editable:true,edittype:\"select\",editoptions:{weight:'50px',dataUrl:\"";
+                            {name:'txnomdoc',index:'txnomdoc',search:false,editable:true,edittype:\"select\",editoptions:{weight:'50px',dataUrl:\"";
         // line 20
         echo $this->env->getExtension('routing')->getPath("tipdoc_listTipDocGrid");
         echo "\",
@@ -80,8 +80,8 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                             }]
                                 }
                             },
-                            {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:true,editable:true,editoptions:{weight:'30px', align:'center'}},\t\t
-                            {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:true,editable:true,edittype:\"select\",editoptions:{weight:'50px',dataUrl:\"";
+                            {name:'txnumdoc',index:'txnumdoc',weight:'50px',search:false,editable:true,editoptions:{weight:'30px', align:'center'}},\t\t
+                            {name:'txnomtercero',index:'txnomtercero',weight:'50px',search:false,editable:true,edittype:\"select\",editoptions:{weight:'50px',dataUrl:\"";
         // line 45
         echo $this->env->getExtension('routing')->getPath("terceros_listTerGrid", array("tipo" => "0"));
         echo "\",
@@ -122,11 +122,11 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                             }
                                 ]}
                             },
-                            {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{defaultValue:0,decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},\t\t
-                            {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{default:0,decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
-                            {name:'dbtotal',index:'dbvaliva',weight:'50px',search:true,editable:false, formatter:'currency', formatoptions:{default:0,decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
-                            {name:'txcondPago',index:'txcondPago',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},\t\t
-                            {name:'fefecha',index:'fefecha',weight:'50px',search:true,editable:true,formatter:'date', edittype:'text', editoptions: {defaultValue:Hoy, dataInit:function(el){ \$(el).datepicker({dateFormat:'dd-mm-yy'});},
+                            {name:'dbvalneto',index:'dbvalneto',weight:'50px',search:false,editable:false, formatter:'currency', formatoptions:{defaultValue:0,decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},\t\t
+                            {name:'dbvaliva',index:'dbvaliva',weight:'50px',search:false,editable:false, formatter:'currency', formatoptions:{default:0,decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
+                            {name:'dbtotal',index:'dbvaliva',weight:'50px',search:false,editable:false, formatter:'currency', formatoptions:{default:0,decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
+                            {name:'txcondPago',index:'txcondPago',weight:'50px',search:false,editable:true,editoptions:{align:'center'}},\t\t
+                            {name:'fefecha',index:'fefecha',weight:'50px',search:false,editable:true,formatter:'date', edittype:'text', editoptions: {defaultValue:Hoy, dataInit:function(el){ \$(el).datepicker({dateFormat:'dd-mm-yy'});},
                                 dataEvents: [{ type:'change',
                                                 fn: function(e) {
                                                     //var rowid = jQuery(\"#masdoc\").jqGrid('getGridParam','selrow');
@@ -143,9 +143,9 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                             ]
                                 }    
                             },
-                            {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:true,editable:true,formatter:'date',edittype:'text', editoptions:{ dataInit:function(el){ \$(el).datepicker({dateFormat:'dd-mm-yy'});}}},
-                            {name:'txobservaciones',index:'txobservaciones',weight:'50px',search:true,editable:true,editoptions:{align:'center'}},
-                            {name:'txnomvendedor',index:'txnomvendedor',weight:'50px',search:true,editable:true,edittype:\"select\",editoptions:{dataUrl:\"";
+                            {name:'fevencimiento',index:'fevencimiento',weight:'50px',search:false,editable:true,formatter:'date',edittype:'text', editoptions:{ dataInit:function(el){ \$(el).datepicker({dateFormat:'dd-mm-yy'});}}},
+                            {name:'txobservaciones',index:'txobservaciones',weight:'50px',search:false,editable:true,editoptions:{align:'center'}},
+                            {name:'txnomvendedor',index:'txnomvendedor',weight:'50px',search:false,editable:true,edittype:\"select\",editoptions:{dataUrl:\"";
         // line 106
         echo $this->env->getExtension('routing')->getPath("vendedores_listVenGrid");
         echo "\", align:'center',
@@ -247,9 +247,9 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                     width:'100%',
                     colNames:['Id','Id Doc.','Ref.', 'Producto', 'Cantidad','Val. Unitario','Val. Total'],
                     colModel:[
-                            {name:'id',index:'id', editable:false,search:true,editoptions:{readonly:true,size:10}},
-                            {name:'inidmasdocumento',index:'inidmasdocumento',editable:true,search:true,editoptions:{readonly:true}, editrules: {edithidden : true}},
-                            {name:'txrefinterna',index:'txrefinterna',editable:true,edittype:\"select\",editoptions:{dataUrl:\"";
+                            {name:'id',index:'id', editable:false,search:false,editoptions:{readonly:true,size:10}},
+                            {name:'inidmasdocumento',index:'inidmasdocumento',editable:true,search:false,editoptions:{readonly:true}, editrules: {edithidden : true}},
+                            {name:'txrefinterna',index:'txrefinterna',editable:true,search:false,edittype:\"select\",editoptions:{dataUrl:\"";
         // line 195
         echo $this->env->getExtension('routing')->getPath("productos_listProGrid", array("pidter" => "0"));
         echo "\", 
@@ -285,8 +285,8 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                 },
                                 
                             },
-                            {name:'txnomproducto',index:'txnomproducto',editable:true,edittype:\"text\", editoptions:{readonly:true}},
-                            {name:'incantidad',index:'incantidad',editable:true,search:true,editoptions:{defaultValue:1,
+                            {name:'txnomproducto',index:'txnomproducto',editable:true,search:false,edittype:\"text\", editoptions:{readonly:true}},
+                            {name:'incantidad',index:'incantidad',editable:true,search:false,editoptions:{defaultValue:1,
                                 dataEvents: [{ type:'change',
                                                 fn: function(e) {
                                                     var rowid = jQuery(\"#detdoc\").jqGrid('getGridParam','selrow');
@@ -304,7 +304,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                                     ]
                                     
                             }},
-                            {name:'dbvalunitario',index:'dbvalunitario',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"},
+                            {name:'dbvalunitario',index:'dbvalunitario',editable:true,search:false,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"},
                                 editoptions:{defaultValue:1, dataInit: function (elem) { \$(elem).focus(function () { this.select(); }) },
                                 dataEvents: [{ type:'change',
                                                 fn: function(e) {
@@ -337,7 +337,7 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
                             //                }
                                         ]
                                 }},
-                            {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:true,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
+                            {name:'dbvaltotal',index:'dbvaltotal',editable:true,search:false,width:\"200px\", formatter:'currency', formatoptions:{decimalSeparator:\".\", thousandsSeparator: \",\", decimalPlaces: 0, prefix: \"\$ \"}},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
@@ -375,8 +375,8 @@ class __TwigTemplate_3f83de8d678630b08c687d3709ed027a18086048634eb51f927ff91136d
     {
         // line 310
         echo "    <div>
-        <table id=\"masdoc\" ></table>
         <div id=\"paginacion\" ></div>
+        <table id=\"masdoc\" ></table>
     </div>
     <div>
         <table id=\"detdoc\" ></table>

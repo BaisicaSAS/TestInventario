@@ -51,22 +51,38 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
                     i++; 
                 });
             });
+
+            var now = new Date();
+            var month = (now.getMonth()+1);               
+            var fin = now.getDate();
+            if(month < 10) 
+                month = \"0\" + month;
+            fin = 31;
+            if(month == 2) 
+                fin = \"28\";
+            if((month == 4) | (month == 7) | (month == 9) | (month == 11))
+                fin = \"30\";
+            var fecha = now.getFullYear() + '-' + month + '-01';
+            \$('#desde').val(fecha);
+            fecha = now.getFullYear() + '-' + month + '-' + fin;
+            \$('#hasta').val(fecha);
+            
             jQuery(\"#kardex\").jqGrid({        
                     url:\"";
-        // line 22
-        echo $this->env->getExtension('routing')->getPath("informes_kardexData", array("prod" => "ALL"));
+        // line 38
+        echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("informes_kardexData", array("prod" => "ALL", "desde" => "2014-01-01", "hasta" => "2025-01-01")), "html", null, true);
         echo "\",
                     datatype: \"json\",
-                    width:'100%',
-                    heigth:'500',
+                    //width:'100%',
+                    heigth:'400px',
                     colNames:['IDProducto','Ref.','Producto','Tip. Dc.','Num. Doc.','Fecha','Entrada','Salida','IdDet','IdMasD'],
                     colModel:[
                             {name:'Productos_idProducto',index:'Productos_idProducto',search:false,sortable:false},
-                            {name:'txRefInterna',index:'txRefInterna',search:false,sortable:false},
-                            {name:'txNomProducto',index:'txNomProducto',search:false,sortable:false},
-                            {name:'txTipDoc',index:'txTipDoc',search:false,sortable:false},
+                            {name:'txRefInterna',index:'txRefInterna',search:false,sortable:false,width:'120px'},
+                            {name:'txNomProducto',index:'txNomProducto',search:false,sortable:false,width:'250px'},
+                            {name:'txTipDoc',index:'txTipDoc',search:false,sortable:false,width:'80px'},
                             {name:'txNumDoc',index:'txNumDoc',search:false,sortable:false},
-                            {name:'feFecha',index:'feFecha',formatter:'date',search: false,sortable:false},
+                            {name:'feFecha',index:'feFecha',formatter:'date',search: false,sortable:false,width:'80px'},
                             {name:'inEntrada',index:'inEntrada', formatter: 'integer',
                                 align: 'right', summaryTpl: '<i>{0}</i>',summaryType: 'sum',search: false,sortable:false},
                             {name:'inSalida',index:'inSalida', formatter: 'integer',
@@ -87,7 +103,7 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
                     groupingView : { 
                         groupField : ['txNomProducto'], 
                         groupSummary: [true],
-                        groupColumnShow: [true],
+                        groupColumnShow: [false],
                         groupText: ['<b>{0}</b>'],
                         groupDataSorted: true
                     },
@@ -104,20 +120,20 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
             
             jQuery(\"#existenc\").jqGrid({        
                     url:\"";
-        // line 70
+        // line 86
         echo $this->env->getExtension('routing')->getPath("informes_kardexResumen", array("prod" => "ALL"));
         echo "\",
                     datatype: \"json\",
-                    width:'100%',
-                    heigth:'500',
+                    //width:'100%',
+                    heigth:'400px',
                     colNames:['IDProducto','Ref.','Producto','Entradas','Salidas','Existencias'],
                     colModel:[
                             {name:'Productos_idProducto',index:'Productos_idProducto',editable:false,sortable:false},
-                            {name:'txRefInterna',index:'txRefInterna',editable:false,sortable:false},
-                            {name:'txNomProducto',index:'txNomProducto',editable:false,sortable:false},
-                            {name:'sumEntrada',index:'sumEntrada',editable:false,search: false,sortable:false},
-                            {name:'sumSalida',index:'sumSalida',editable:false,search: false,sortable:false},
-                            {name:'inExistencia',index:'inExistencia',editable:false,search: false,sortable:false},
+                            {name:'txRefInterna',index:'txRefInterna',editable:false,sortable:false,width:'120px'},
+                            {name:'txNomProducto',index:'txNomProducto',editable:false,sortable:false,width:'250px'},
+                            {name:'sumEntrada',index:'sumEntrada',editable:false,search: false,sortable:false,width:'80px',align:'center'},
+                            {name:'sumSalida',index:'sumSalida',editable:false,search: false,sortable:false,width:'80px',align:'center'},
+                            {name:'inExistencia',index:'inExistencia',editable:false,search: false,sortable:false,width:'80px',align:'center'},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
@@ -131,36 +147,37 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
             jQuery(\"#existenc\").hideCol('Productos_idProducto');
             //jQuery(\"#existenc\").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, ignoreCase: true });
             //jQuery(\"#existenc\").jqGrid('navGrid',\"#pagina\",{reloadAfterSubmit:true, add: false,edit:false,del:false,search:false});
-            jQuery(\"#existenc\").jqGrid('inlineNav',\"#pagina\");
+            //jQuery(\"#existenc\").jqGrid('inlineNav',\"#pagina\");
        }); 
 
         function recargaGrid(value){
           //alert(value);
-          var newUrlk = \"";
-        // line 100
-        echo $this->env->getExtension('routing')->getPath("informes_kardexData", array("prod" => "ALL"));
-        echo "\";
           var newUrlr = \"";
-        // line 101
+        // line 116
         echo $this->env->getExtension('routing')->getPath("informes_kardexResumen", array("prod" => "ALL"));
         echo "\"
-          newUrlk = newUrlk.replace('ALL', value);              
-          newUrlr = newUrlr.replace('ALL', value);
+          newUrlr = newUrlr.replace('ALL', \$('#movproductos').val());
+          var newUrlk = \"";
+        // line 118
+        echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("informes_kardexData", array("prod" => "ALL", "desde" => "FDESDE", "hasta" => "FHASTA")), "html", null, true);
+        echo "\";
+          newUrlk = newUrlk.replace('ALL', \$('#movproductos').val());              
+          newUrlk = newUrlk.replace('FDESDE', \$('#desde').val());
+          newUrlk = newUrlk.replace('FHASTA', \$('#hasta').val());
           //alert(newUrlr);
 
           \$(\"#existenc\").setGridParam({url: newUrlr, page: 1}).trigger('reloadGrid');
           \$(\"#kardex\").setGridParam({url: newUrlk, page: 1}).trigger('reloadGrid');
-          jQuery(\"#kardex\").hideCol('txNomProducto');
         };
 
     </script>
 ";
     }
 
-    // line 114
+    // line 131
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 115
+        // line 132
         echo "  ";
         $this->displayParentBlock("sitecontent", $context, $blocks);
         echo "     
@@ -173,13 +190,25 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
                     <option value=\"ALL\">Seleccione un producto </option></select> </td>
                 </tr>
             </table>    
+            <table> 
+                <tr>
+                    <td><label>Desde</label></td>
+                    <td><input id=\"desde\" type=date  onchange=\"recargaGrid(this.value)\"></td>
+                    <td><label>Hasta</label></td>
+                    <td><input id=\"hasta\" type=date  onchange=\"recargaGrid(this.value)\"></td>
+                </tr>
+            </table>    
         </div>     
          
-        <table id=\"kardex\" ></table>
-        <div id=\"paginacion\" ></div>
-        
-        <table id=\"existenc\" ></table>
-        <div id=\"pagina\" ></div>
+        <table> 
+            <tr>
+                <td><table id=\"kardex\" ></table>
+                <div id=\"paginacion\" ></div></td>
+
+                <td><table id=\"existenc\" ></table>
+                <div id=\"pagina\" ></div></td>
+            </tr>
+        </table>    
 ";
     }
 
@@ -195,6 +224,6 @@ class __TwigTemplate_efee4ac80ee4aa84ca44508d3c0ff421e204eceb67f41e4821e071cbbca
 
     public function getDebugInfo()
     {
-        return array (  164 => 115,  161 => 114,  145 => 101,  141 => 100,  108 => 70,  57 => 22,  41 => 9,  32 => 4,  29 => 3,);
+        return array (  181 => 132,  178 => 131,  162 => 118,  157 => 116,  124 => 86,  73 => 38,  41 => 9,  32 => 4,  29 => 3,);
     }
 }

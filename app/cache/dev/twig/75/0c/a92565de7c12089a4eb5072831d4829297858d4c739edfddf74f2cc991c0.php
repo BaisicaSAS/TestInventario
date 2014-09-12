@@ -45,7 +45,7 @@ class __TwigTemplate_750ca92565de7c12089a4eb5072831d4829297858d4c739edfddf74f2cc
         echo "\",
                 datatype: 'json',
                 height:'400px',
-                width:'900px', 
+                //width:'900px', 
                 mtype: 'POST',
                 colNames:['Id','Descripción', 'Aplicación','Pertenece a', 'Apl.', 'Grupo'],
                 colModel:[

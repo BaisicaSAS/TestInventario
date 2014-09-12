@@ -19,32 +19,51 @@
                 });
             });
 
+            var now = new Date();
+            var month = (now.getMonth()+1);               
+            var fin = now.getDate();
+            if(month < 10) 
+                month = "0" + month;
+            fin = 31;
+            if(month == 2) 
+                fin = "28";
+            if((month == 4) | (month == 7) | (month == 9) | (month == 11))
+                fin = "30";
+            var fecha = now.getFullYear() + '-' + month + '-01';
+            $('#desde').val(fecha);
+            fecha = now.getFullYear() + '-' + month + '-' + fin;
+            $('#hasta').val(fecha);
+            
         jQuery("#terceros").jqGrid({        
-                    url:"{{ path('informes_mvtotercerosData', {'ter': 'ALL'}) }}",
+                    url:"{{ path('informes_mvtotercerosData', {'ter': 'ALL', 'desde': '2014-01-01', 'hasta': '2025-01-01'}) }}",
                     datatype: "json",
-                    width:'100%',
-                    heigth:'500px',
-                    colNames:['Tercero','Ref.','Producto','Tip. Dc.','Num. Doc.','Fecha','Entrada','Salida','Valor','IdDet','IdMasD'],
+                    width:'90%',
+                    heigth:'400px',
+                    colNames:['Tercero','Ref.','Producto','Tip. Dc.','Num. Doc.','Fecha','Entrada','Salida','Valor Uni.','Total','IdDet','IdMasD'],
                     colModel:[
-                            {name:'txNomTercero',index:'txNomTercero',search:false,sortable:false},
-                            {name:'txRefInterna',index:'txRefInterna',search:false,sortable:false},
-                            {name:'txNomProducto',index:'txNomProducto',search:false,sortable:false},
-                            {name:'txTipDoc',index:'txTipDoc',search:false,sortable:false},
+                            {name:'txNomTercero',index:'txNomTercero',search:false,sortable:false,width:"250px"},
+                            {name:'txRefInterna',index:'txRefInterna',search:false,sortable:false,width:"100px"},
+                            {name:'txNomProducto',index:'txNomProducto',search:false,sortable:false,width:"250px"},
+                            {name:'txTipDoc',index:'txTipDoc',search:false,sortable:false,width:"20px"},
                             {name:'txNumDoc',index:'txNumDoc',search:false,sortable:false},
-                            {name:'feFecha',index:'feFecha',formatter:'date',search:false,sortable:false},
-                            {name:'inEntrada',index:'inEntrada', formatter: 'integer',search:false,
+                            {name:'feFecha',index:'feFecha',formatter:'date',search:false,sortable:false,width:"80px"},
+                            {name:'inEntrada',index:'inEntrada', formatter: 'integer',search:false,width:"80px",
                                 align: 'right', summaryTpl: '<i>{0}</i>',summaryType: 'sum',sortable:false},
-                            {name:'inSalida',index:'inSalida', formatter: 'integer',search:false,
+                            {name:'inSalida',index:'inSalida', formatter: 'integer',search:false,width:"80px",
                                 align: 'right', summaryTpl: '<i>{0}</i>',summaryType: 'sum',sortable:false},
                             {name:'dbValUnitario',index:'dbValUnitario',search:false,sortable:false,formatter:'currency', 
-                                    formatoptions:{defaultValue:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "}},
+                                    formatoptions:{defaultValue:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "},
+                                    align: 'right'},
+                            {name:'dbValTotal',index:'dbValTotal',search:false,sortable:false,formatter:'currency', 
+                                    formatoptions:{defaultValue:0,decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$ "},
+                                    align: 'right', summaryTpl: '<i>{0}</i>',summaryType: 'sum'},
                             {name:'idDetDocumentos',index:'idDetDocumentos',search:false,sortable:false},
                             {name:'inidMasDocumento',index:'inidMasDocumento',search:false,sortable:false},
                     ],
                     rowNum:1000,
                     rowList:[1000,2000,3000],
                     pager: '#paginacion',
-                    sortname: 'txNomTercero',
+                    sortname: ['txNomTercero','feFecha'],
                     sortorder: 'asc',
                     viewrecords: true,
                     caption: 'MOVIMIENTO DE TERCEROS',
@@ -53,7 +72,7 @@
                     groupingView : { 
                         groupField : ['txNomTercero'], 
                         groupSummary: [true],
-                        groupColumnShow: [true],
+                        groupColumnShow: [false],
                         groupText: ['<b>{0}</b>'],
                         groupDataSorted: true
                     },
@@ -66,15 +85,17 @@
 
             //jQuery("#terceros").jqGrid('filterToolbar', { searchOnEnter: false, enableClear: false, ignoreCase: false });
             //jQuery("#terceros").jqGrid('navGrid',"#paginacion",{reloadAfterSubmit:true});
-            jQuery("#terceros").jqGrid('inlineNav',"#paginacion");
+            //jQuery("#terceros").jqGrid('inlineNav',"#paginacion");
             
        }); 
 
         function recargaGrid(value){
           //alert(value);
-          var newUrl = "{{ path('informes_mvtotercerosData', {'ter': 'ALL'}) }}";
-          newUrl = newUrl.replace('ALL', value);
-          //alert(newUrlr);
+          var newUrl = "{{ path('informes_mvtotercerosData', {'ter': 'ALL','desde':'FDESDE','hasta':'FHASTA'}) }}";
+          newUrl = newUrl.replace('ALL', $('#movterceros').val());
+          newUrl = newUrl.replace('FDESDE', $('#desde').val());
+          newUrl = newUrl.replace('FHASTA', $('#hasta').val());
+          //alert(newUrl);
 
           $("#terceros").setGridParam({url: newUrl, page: 1}).trigger('reloadGrid');
           jQuery("#terceros").hideCol('txNomTercero');
@@ -93,8 +114,16 @@
                     <option value="ALL">Seleccione un tercero </option></select> </td>
                 </tr>
             </table>    
+            <table> 
+                <tr>
+                    <td><label>Desde</label></td>
+                    <td><input id="desde" type=date  onchange="recargaGrid(this.value)"></td>
+                    <td><label>Hasta</label></td>
+                    <td><input id="hasta" type=date  onchange="recargaGrid(this.value)"></td>
+                </tr>
+            </table>    
         </div>     
-        <table id="terceros" ></table>
+        <table id="terceros"  </table>
         <div id="paginacion" ></div>
 {% endblock %}
 
