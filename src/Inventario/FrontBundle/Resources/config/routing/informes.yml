@@ -18,6 +18,10 @@ informes_histprecios:
     pattern:  /histprecios
     defaults: { _controller: "InventarioFrontBundle:Informes:histprecios" }
 
+informes_rentabilidad:
+    pattern:  /rentabilidad
+    defaults: { _controller: "InventarioFrontBundle:Informes:rentabilidad" }
+
 informes_kardexData:
     pattern:  /kardexData/{prod}/{desde}/{hasta}
     defaults: { _controller: "InventarioFrontBundle:Informes:kardexData" }
@@ -35,8 +39,12 @@ informes_mvtovendedoresData:
     defaults: { _controller: "InventarioFrontBundle:Informes:mvtovendedoresData" }
 
 informes_histpreciosData:
-    pattern:  /histpreciosData/{prod}
+    pattern:  /histpreciosData/{prod}/{desde}/{hasta}
     defaults: { _controller: "InventarioFrontBundle:Informes:histpreciosData" }
+
+informes_rentabilidadData:
+    pattern:  /rentabilidadData/{prod}/{desde}/{hasta}
+    defaults: { _controller: "InventarioFrontBundle:Informes:rentabilidadData" }
 
 informes_mvtomeses:
     pattern:  /mvtomeses

@@ -41,7 +41,7 @@ class MasdocumentosController extends Controller
                 . "LEFT JOIN Terceros b ON a.inidTercero = b.idTercero "
                 . "LEFT JOIN TipDoc c ON a.inidTipDoc = c.idTipDoc "
                 . "LEFT JOIN Vendedores d ON a.Vendedores_idVendedor = d.idVendedor "
-                . "ORDER BY txnomdoc, id");
+                . "ORDER BY fefecha, id");
         
         $entities->execute();
         
@@ -89,9 +89,9 @@ class MasdocumentosController extends Controller
         
     }
 
-    public function printAction($piddoc)
+    public function printAction($piddoc=1)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $connection = $em->getConnection();
         $entities = $connection->prepare("SELECT a.idDetDocumentos as id, a.inidMasDocumento as inidmasdocumento, "
                 . "a.inCantidad as incantidad, a.dbValUnitario as dbvalunitario, a.dbValtotal as dbvaltotal, "

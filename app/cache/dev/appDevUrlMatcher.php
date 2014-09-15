@@ -174,6 +174,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::histpreciosAction',  '_route' => 'informes_histprecios',);
                 }
 
+                // informes_rentabilidad
+                if ($pathinfo === '/informes/rentabilidad') {
+                    return array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::rentabilidadAction',  '_route' => 'informes_rentabilidad',);
+                }
+
                 if (0 === strpos($pathinfo, '/informes/kardex')) {
                     // informes_kardexData
                     if (0 === strpos($pathinfo, '/informes/kardexData') && preg_match('#^/informes/kardexData/(?P<prod>[^/]++)/(?P<desde>[^/]++)/(?P<hasta>[^/]++)$#s', $pathinfo, $matches)) {
@@ -201,8 +206,13 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 }
 
                 // informes_histpreciosData
-                if (0 === strpos($pathinfo, '/informes/histpreciosData') && preg_match('#^/informes/histpreciosData/(?P<prod>[^/]++)$#s', $pathinfo, $matches)) {
+                if (0 === strpos($pathinfo, '/informes/histpreciosData') && preg_match('#^/informes/histpreciosData/(?P<prod>[^/]++)/(?P<desde>[^/]++)/(?P<hasta>[^/]++)$#s', $pathinfo, $matches)) {
                     return $this->mergeDefaults(array_replace($matches, array('_route' => 'informes_histpreciosData')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::histpreciosDataAction',));
+                }
+
+                // informes_rentabilidadData
+                if (0 === strpos($pathinfo, '/informes/rentabilidadData') && preg_match('#^/informes/rentabilidadData/(?P<prod>[^/]++)/(?P<desde>[^/]++)/(?P<hasta>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'informes_rentabilidadData')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\InformesController::rentabilidadDataAction',));
                 }
 
                 if (0 === strpos($pathinfo, '/informes/mvto')) {

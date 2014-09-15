@@ -9,14 +9,19 @@
         var arTerceros = [];
         var arTipdoc = [];
 
+        
+        
         $(document).ready(function(){
             jQuery("#masdoc").jqGrid({        
                     url:"{{ path('masdocumentos_listMasDocGrid') }}",
                     datatype: "json",
                     width:'100%',
-                    colNames:['Id','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
+                    colNames:['Imprimir','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
                     colModel:[
-                            {name:'id',index:'id', editable:false,search:false,editoptions:{readonly:true}},
+                            {name:'id',index:'id', editable:false,search:false,formatter:'showlink', 
+                                formatoptions: {
+                                    baseLinkUrl: "{{ path('masdocumentos_print', {'piddoc': id }) }}"}
+                            },                           
                             {name:'txnomdoc',index:'txnomdoc',search:false,editable:true,edittype:"select",editoptions:{weight:'50px',dataUrl:"{{path('tipdoc_listTipDocGrid')}}",
                                 buildSelect: function (data) {
                                             var response = jQuery.parseJSON(data);
@@ -170,11 +175,8 @@
                 }
                 return null;
             };
-
             
-            jQuery("#masdoc").printRow
-            
-            jQuery("#masdoc").hideCol('id');
+            //jQuery("#masdoc").hideCol('id');
             jQuery("#masdoc").hideCol('dbvalneto');
             jQuery("#masdoc").hideCol('dbvaliva');
             jQuery("#masdoc").hideCol('dbtotal');
@@ -307,6 +309,7 @@
 {% endblock %}
 
 {% block sitecontent %}
+    <h1>Documentos</h1>
     <div>
         <div id="paginacion" ></div>
         <table id="masdoc" ></table>

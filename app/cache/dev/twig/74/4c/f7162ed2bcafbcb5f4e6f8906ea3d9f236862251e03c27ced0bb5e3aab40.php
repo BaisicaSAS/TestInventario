@@ -51,12 +51,27 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
                 });
             });
             
+            var now = new Date();
+            var month = (now.getMonth()+1);               
+            var fin = now.getDate();
+            if(month < 10) 
+                month = \"0\" + month;
+            fin = 31;
+            if(month == 2) 
+                fin = \"28\";
+            if((month == 4) | (month == 7) | (month == 9) | (month == 11))
+                fin = \"30\";
+            var fecha = now.getFullYear() + '-' + month + '-01';
+            \$('#desde').val(fecha);
+            fecha = now.getFullYear() + '-' + month + '-' + fin;
+            \$('#hasta').val(fecha);
             
+           
           
             jQuery(\"#histprecios\").jqGrid({        
                     url:\"";
-        // line 24
-        echo $this->env->getExtension('routing')->getPath("informes_histpreciosData", array("prod" => "ALL"));
+        // line 39
+        echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("informes_histpreciosData", array("prod" => "ALL", "desde" => "2014-01-01", "hasta" => "2025-01-01")), "html", null, true);
         echo "\",
                     datatype: \"json\",
                     //width:'100%',
@@ -107,10 +122,12 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
         function recargaGrid(value){
           //alert(value);
           var newUrl = \"";
-        // line 73
-        echo $this->env->getExtension('routing')->getPath("informes_histpreciosData", array("prod" => "ALL"));
+        // line 88
+        echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("informes_histpreciosData", array("prod" => "ALL", "desde" => "FDESDE", "hasta" => "FHASTA")), "html", null, true);
         echo "\";
-          newUrl = newUrl.replace('ALL', value);              
+          newUrl = newUrl.replace('ALL', \$('#productos').val());              
+          newUrl = newUrl.replace('FDESDE', \$('#desde').val());
+          newUrl = newUrl.replace('FHASTA', \$('#hasta').val());
 
           \$(\"#histprecios\").setGridParam({url: newUrl, page: 1}).trigger('reloadGrid');
         };
@@ -118,10 +135,10 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
 ";
     }
 
-    // line 81
+    // line 98
     public function block_sitecontent($context, array $blocks = array())
     {
-        // line 82
+        // line 99
         echo "    ";
         $this->displayParentBlock("sitecontent", $context, $blocks);
         echo "     
@@ -132,6 +149,14 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
                     <td><label>Filtrar</label></td>
                     <td><select id=\"productos\" onchange=\"recargaGrid(this.value)\">
                     <option value=\"ALL\">Seleccione un producto </option></select> </td>
+                </tr>
+            </table>    
+            <table> 
+                <tr>
+                    <td><label>Desde</label></td>
+                    <td><input id=\"desde\" type=date  onchange=\"recargaGrid(this.value)\"></td>
+                    <td><label>Hasta</label></td>
+                    <td><input id=\"hasta\" type=date  onchange=\"recargaGrid(this.value)\"></td>
                 </tr>
             </table>    
         </div>     
@@ -153,6 +178,6 @@ class __TwigTemplate_744cf7162ed2bcafbcb5f4e6f8906ea3d9f236862251e03c27ced0bb5e3
 
     public function getDebugInfo()
     {
-        return array (  125 => 82,  122 => 81,  111 => 73,  59 => 24,  40 => 8,  32 => 4,  29 => 3,);
+        return array (  142 => 99,  139 => 98,  126 => 88,  74 => 39,  40 => 8,  32 => 4,  29 => 3,);
     }
 }

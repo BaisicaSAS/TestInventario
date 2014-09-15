@@ -1,15 +1,7 @@
+{% extends "InventarioFrontBundle:Default:index.html.twig" %}
 
 {% block sitecontent -%}
     <table id="doc_print">
-        <tbody>
-            cabecera = entities;
-        <tr>
-            <td>{{ cabecera.txnomcliente }}</td>
-            <td>{{ cabecera.txtelefonos }}</td>
-        </tr>
-        <tr>
-            <td>{{ entities.txdireccion }}</td>
-        </tr>
         {% for entity in entities %}
             <tr>
                 <td>{{ entity.incantidad }}</td>
