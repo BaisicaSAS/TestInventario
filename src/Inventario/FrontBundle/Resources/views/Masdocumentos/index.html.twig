@@ -8,7 +8,7 @@
         var Hoy = new Date();
         var arTerceros = [];
         var arTipdoc = [];
-
+        var idReg = 1;
         
         
         $(document).ready(function(){
@@ -18,10 +18,7 @@
                     width:'100%',
                     colNames:['Imprimir','Tipo Doc.','Num. Doc.', 'Tercero', 'Val. Neto', 'Val IVA.', 'Val. Total', 'Cond. Pago', 'Fecha', 'Vencimiento', 'Observaciones', 'Vendedor' ],
                     colModel:[
-                            {name:'id',index:'id', editable:false,search:false,formatter:'showlink', 
-                                formatoptions: {
-                                    baseLinkUrl: "{{ path('masdocumentos_print', {'piddoc': id }) }}"}
-                            },                           
+                            {name:'id',index:'id', editable:false,search:false,edittype: "text",width:'55px',formatter: editLink},
                             {name:'txnomdoc',index:'txnomdoc',search:false,editable:true,edittype:"select",editoptions:{weight:'50px',dataUrl:"{{path('tipdoc_listTipDocGrid')}}",
                                 buildSelect: function (data) {
                                             var response = jQuery.parseJSON(data);
@@ -135,6 +132,10 @@
 
                     onSelectRow: function (ids) {
 
+                        var rowidant = idMasDocumento;
+                        var filaant = '#'+rowidant;    
+                        $(filaant).find("td").css("background-color", "#E5F0F2");
+                        
                         var rowid = jQuery("#masdoc").jqGrid('getGridParam','selrow');
                         //idmasd = jQuery("#masdoc").jqGrid('getCell', ids, 'id');
                         nomter = jQuery("#masdoc").jqGrid('getCell', ids, 'txnomtercero');
@@ -156,17 +157,29 @@
                                  jQuery("#detdoc").jqGrid('setCaption', "Detalle documento--:      [ "  + TDoc + " - " + NDoc + " ]")
                                     .trigger('reloadGrid');
                              }
-                         } else {
+                        } else {
 
                              jQuery("#detdoc").jqGrid('setGridParam', { url: vurl, page: 1 }).trigger('reloadGrid');
                              //alert("."+vurl);
                              jQuery("#detdoc").jqGrid('setCaption',".Detalle documento:      [ " + TDoc + " - " + NDoc + " ]")
                                 .trigger('reloadGrid');
-                         }
+                        }
+
+                        //Cambia el color de la fila
+                        var rowid = jQuery("#masdoc").jqGrid('getGridParam','selrow');
+                        var fila = '#'+rowid;    
+                        $(fila).find("td").css("background-color", "#F91C54");
+                       //Cambia el color de la fila
+    
                         jQuery("#detdoc").jqGrid('setColProp', 'txrefinterna',{editoptions: {dataUrl: vturl}}).trigger('reloadGrid');
                      },
             });
             
+            function editLink(cellValue, options, rowdata, action)
+            {   var vurl =  "{{path('masdocumentos_print', {'piddoc': 'IDDOC'})}}";
+                vurl = vurl.replace('IDDOC',rowdata.id);
+                return '<a href='+ vurl+ ' >Imprimir </a>';
+            }
             function objectFindByKey(array, key, value) {
                 for (var i = 0; i < array.length; i++) {
                     if (array[i][key] === value) {

@@ -1,17 +1,16 @@
-{% extends "InventarioFrontBundle:Default:index.html.twig" %}
+{% extends "InventarioFrontBundle:Default:plantillaprint.html.twig" %}
 
-{% block sitecontent -%}
-    <table id="doc_print">
+{% block sitecontent %}
+    <table id="doc_print" background="#FFFFFF" color="#000" border-top="0px" >
         {% for entity in entities %}
-            <tr>
-                <td>{{ entity.incantidad }}</td>
-                <td>{{ entity.txrefinterna }}</td>
-                <td>{{ entity.txnomproducto }}</td>
-                <td>{{ entity.dbvalunitario }}</td>
-                <td>{{ entity.dbvaltotal }}</td>
+            <tr background="#FFFFFF">
+                <td background="#FFFFFF" width="150px">{{ entity.incantidad }}</td>
+                <td background="#FFFFFF" width="150px">{{ entity.txrefinterna }}</td>
+                <td background="#FFFFFF" width="300px">{{ entity.txnomproducto }}</td>
+                <td background="#FFFFFF" width="210px">{{ entity.dbvalunitario }}</td>
+                <td background="#FFFFFF" width="210px">{{ entity.dbvaltotal }}</td>
             </tr>
         {% endfor %}
-        </tbody>
     </table>
-
 {% endblock %}
+

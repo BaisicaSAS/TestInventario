@@ -7,7 +7,7 @@ class __TwigTemplate_4ee90ba9cd77008d387b20f1f42d45af4f7c1d45c815e1a1b014648c916
     {
         parent::__construct($env);
 
-        $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Default:index.html.twig");
+        $this->parent = $this->env->loadTemplate("InventarioFrontBundle:Default:plantillaprint.html.twig");
 
         $this->blocks = array(
             'sitecontent' => array($this, 'block_sitecontent'),
@@ -16,7 +16,7 @@ class __TwigTemplate_4ee90ba9cd77008d387b20f1f42d45af4f7c1d45c815e1a1b014648c916
 
     protected function doGetParent(array $context)
     {
-        return "InventarioFrontBundle:Default:index.html.twig";
+        return "InventarioFrontBundle:Default:plantillaprint.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = array())
@@ -28,31 +28,31 @@ class __TwigTemplate_4ee90ba9cd77008d387b20f1f42d45af4f7c1d45c815e1a1b014648c916
     public function block_sitecontent($context, array $blocks = array())
     {
         // line 4
-        echo "<table id=\"doc_print\">
+        echo "    <table id=\"doc_print\" background=\"#FFFFFF\" color=\"#000\" border-top=\"0px\" >
         ";
         // line 5
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["entities"]) ? $context["entities"] : $this->getContext($context, "entities")));
         foreach ($context['_seq'] as $context["_key"] => $context["entity"]) {
             // line 6
-            echo "            <tr>
-                <td>";
+            echo "            <tr background=\"#FFFFFF\">
+                <td background=\"#FFFFFF\" width=\"150px\">";
             // line 7
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "incantidad"), "html", null, true);
             echo "</td>
-                <td>";
+                <td background=\"#FFFFFF\" width=\"150px\">";
             // line 8
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txrefinterna"), "html", null, true);
             echo "</td>
-                <td>";
+                <td background=\"#FFFFFF\" width=\"300px\">";
             // line 9
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "txnomproducto"), "html", null, true);
             echo "</td>
-                <td>";
+                <td background=\"#FFFFFF\" width=\"210px\">";
             // line 10
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "dbvalunitario"), "html", null, true);
             echo "</td>
-                <td>";
+                <td background=\"#FFFFFF\" width=\"210px\">";
             // line 11
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["entity"]) ? $context["entity"] : $this->getContext($context, "entity")), "dbvaltotal"), "html", null, true);
             echo "</td>
@@ -63,9 +63,7 @@ class __TwigTemplate_4ee90ba9cd77008d387b20f1f42d45af4f7c1d45c815e1a1b014648c916
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['entity'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
         // line 14
-        echo "        </tbody>
-    </table>
-
+        echo "    </table>
 ";
     }
 

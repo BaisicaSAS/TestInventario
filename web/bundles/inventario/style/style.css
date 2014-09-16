@@ -161,13 +161,20 @@ ul#menu li a:hover
 { color: #B60000;}
 
 #site_content
-{ width: 95%;
+{ width: 90%;
   overflow: hidden;
   margin: 0 auto 0 auto;
   padding: 5px 20px 5px 20px;
   background: #FFF;
-  border: 3px solid #FF4444;} 
+  border: 2px solid #FF4444;} 
 
+#site_printcont
+{ width: 90%;
+  overflow: hidden;
+  margin: 0 auto 0 auto;
+  padding: 5px 20px 5px 20px;
+  background: #FFF;
+  border: 0px;} 
 
 #content
 { text-align: left;

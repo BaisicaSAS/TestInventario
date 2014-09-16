@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+
+<head> {% block head %}
+    <title>{% block title %}Prueba Inventario{% endblock %}</title>
+    <meta name="description" content="Esta es una prueba de desarrollo en PHP, de uso academico" />
+    <meta name="keywords" content="prueba, desarrollo" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/inventario/style/style.css') }}" />
+        <link rel="stylesheet" type="text/css" media="all" href="{{ asset('bundles/jqgrid/css/flick/jquery-ui-1.8.16.custom.css') }}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('bundles/jqgrid/css/ui.jqgrid.css') }}" />
+    {% endblock %}
+
+    {% block javascripts %}   
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src=" {{asset('bundles/jquery/js/i18n/grid.locale-es.js') }}"></script>
+        <script type="text/javascript" src=" {{asset('bundles/jquery/js/jquery.jqGrid.min.js') }}" ></script>
+        <script type="text/javascript" src=" {{asset('bundles/jqgrid/js/i18n/grid.locale-es.js') }}" ></script>
+        <script type="text/javascript" src=" {{asset('bundles/jqgrid/js/jquery.jqGrid.min.js') }}" ></script>
+    {% endblock %} 
+{% endblock %} </head>
+
+<body> 
+  <div id="site_printcont">
+    {% block sitecontent %} 
+     
+        <h5>Inventarios Autopartes MAR</h5>
+        <p>Herramienta para el control de inventarios</p>
+    {% endblock %}
+  </div>
+</body>      
+</html>

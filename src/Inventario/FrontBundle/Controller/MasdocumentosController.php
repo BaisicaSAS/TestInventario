@@ -89,7 +89,7 @@ class MasdocumentosController extends Controller
         
     }
 
-    public function printAction($piddoc=1)
+    public function printAction($piddoc)
     {
         $em = $this->getDoctrine()->getManager();
         $connection = $em->getConnection();
