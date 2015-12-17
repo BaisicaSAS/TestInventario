@@ -28,7 +28,7 @@
     <parameter key="database_driver">pdo_mysql</parameter>
     <parameter key="database_host">127.0.0.1</parameter>
     <parameter key="database_port">null</parameter>
-    <parameter key="database_name">Inventario</parameter>
+    <parameter key="database_name">inventario</parameter>
     <parameter key="database_user">root</parameter>
     <parameter key="database_password">root</parameter>
     <parameter key="mailer_transport">smtp</parameter>
@@ -443,8 +443,8 @@
     <parameter key="assetic.read_from">C:/xampp/htdocs/Inventario/app/../web</parameter>
     <parameter key="assetic.write_to">C:/xampp/htdocs/Inventario/app/../web</parameter>
     <parameter key="assetic.variables" type="collection"/>
-    <parameter key="assetic.java.bin">C:\Windows\system32\java.EXE</parameter>
-    <parameter key="assetic.node.bin">C:\Program Files\nodejs\\node.EXE</parameter>
+    <parameter key="assetic.java.bin">C:\ProgramData\Oracle\Java\javapath\java.EXE</parameter>
+    <parameter key="assetic.node.bin">/usr/bin/node</parameter>
     <parameter key="assetic.ruby.bin">/usr/bin/ruby</parameter>
     <parameter key="assetic.sass.bin">/usr/bin/sass</parameter>
     <parameter key="assetic.filter.cssrewrite.class">Assetic\Filter\CssRewriteFilter</parameter>
@@ -2259,7 +2259,7 @@
         <argument key="driver">pdo_mysql</argument>
         <argument key="host">127.0.0.1</argument>
         <argument key="port">null</argument>
-        <argument key="dbname">Inventario</argument>
+        <argument key="dbname">inventario</argument>
         <argument key="user">root</argument>
         <argument key="password">root</argument>
         <argument key="charset">UTF8</argument>

@@ -1,0 +1,39 @@
+{% extends "InventarioFrontBundle:Default:plantillaprint.html.twig" %}
+
+{% block sitecontent %}
+        {% set num = 1 %}
+        {% for entity in entities %}
+            {% if num == 1 %}
+                <table id="doc_print" background="#FFFFFF" color="#000" border-top="0px" >
+                    <tr background="#FFFFFF"></tr>
+                    <tr background="#FFFFFF"></tr>
+                    <tr background="#FFFFFF"></tr>
+                    <tr background="#FFFFFF"></tr>
+                    <tr background="#FFFFFF">
+                        <td background="#FFFFFF" width="400px">{{ entity.txnomtercero }}</td>
+                        <td background="#FFFFFF" width="400px">{{ entity.txtelefonos }}</td>
+                    </tr>
+                </table>
+                <table id="doc_print" background="#FFFFFF" color="#000" border-top="0px" >
+                    <tr background="#FFFFFF">
+                        <td background="#FFFFFF" width="800px">{{ entity.txdireccion }}</td>
+                    </tr>
+                    <tr background="#FFFFFF"></tr>
+                    <tr background="#FFFFFF"></tr>
+                    <tr background="#FFFFFF"></tr>
+                    <tr background="#FFFFFF"></tr>
+                </table>
+    <table id="doc_print" background="#FFFFFF" color="#000" border-top="0px" >
+            {% endif %}
+            <tr background="#FFFFFF">
+                <td background="#FFFFFF" width="150px">{{ entity.incantidad }}</td>
+                <td background="#FFFFFF" width="150px">{{ entity.txrefinterna }}</td>
+                <td background="#FFFFFF" width="300px">{{ entity.txnomproducto }}</td>
+                <td style="text-align:right" background="#FFFFFF" width="210px">$ {{ entity.dbvalunitario|number_format(0, ',', '.') }}</td>
+                <td style="text-align:right" background="#FFFFFF" width="210px">$ {{ entity.dbvaltotal|number_format(0, ',', '.') }}</td>
+            </tr>
+            {% set num = 2 %}
+        {% endfor %}
+    </table>
+{% endblock %}
+

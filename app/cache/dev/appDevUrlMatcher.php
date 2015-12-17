@@ -709,7 +709,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             }
 
             // masdocumentos_print
-            if (0 === strpos($pathinfo, '/masdocumentos/print') && preg_match('#^/masdocumentos/print/(?P<piddoc>[^/]++)$#s', $pathinfo, $matches)) {
+            if (0 === strpos($pathinfo, '/masdocumentos/printdoc') && preg_match('#^/masdocumentos/printdoc/(?P<piddoc>[^/]++)$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'masdocumentos_print')), array (  '_controller' => 'Inventario\\FrontBundle\\Controller\\MasdocumentosController::printAction',));
             }
 

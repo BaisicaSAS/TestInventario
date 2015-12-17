@@ -117,7 +117,7 @@ class MasdocumentosController extends Controller
         $response = new Response($serializer->serialize($result, 'json')); 
         $response->headers->set('Content-Type', 'application/json');*/
 
-        return $this->render('InventarioFrontBundle:Masdocumentos:print.html.twig', array(
+        return $this->render('InventarioFrontBundle:Masdocumentos:printdoc.html.twig', array(
             'entities' => $entities,
         ));
         //return $response;        

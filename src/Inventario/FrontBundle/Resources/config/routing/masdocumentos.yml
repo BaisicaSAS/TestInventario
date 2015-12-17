@@ -3,7 +3,7 @@ masdocumentos:
     defaults: { _controller: "InventarioFrontBundle:Masdocumentos:index" }
 
 masdocumentos_print:
-    pattern:  /print/{piddoc}
+    pattern:  /printdoc/{piddoc}
     defaults: { _controller: "InventarioFrontBundle:Masdocumentos:print" }
 
 masdocumentos_listMasDocGrid:
