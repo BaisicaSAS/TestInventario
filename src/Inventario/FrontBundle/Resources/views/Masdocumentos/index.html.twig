@@ -3,7 +3,8 @@
 {% block head %}
     {{ parent() }}     
     <script type="text/javascript">
-        var idMasDocumento, txnomter, gvaluni, selIRow = 1;
+        var idMasDocumento, idDetDocumento, txnomter, gvaluni, selIRow = 1;
+        var idProducto;
         var descActual, diasActual;
         var Hoy = new Date();
         var arTerceros = [];
@@ -189,7 +190,7 @@
                 return null;
             };
             
-            //jQuery("#masdoc").hideCol('id');
+            jQuery("#masdoc").hideCol('id');
             jQuery("#masdoc").hideCol('dbvalneto');
             jQuery("#masdoc").hideCol('dbvaliva');
             jQuery("#masdoc").hideCol('dbtotal');
@@ -216,11 +217,12 @@
                                             s += '<option value="0">Seleccione producto</option>'
                                             for (var i in response) {
                                                     //alert(response[i].inidtipdoc);
-                                                    s += '<option value="' + response[i].txnomproducto+'|'+ response[i].dbvalor +'">' + response[i].txrefinterna+"-"+response[i].txnomproducto + '</option>';
+                                                    s += '<option value="' + response[i].txnomproducto+'|'+response[i].dbvalor+'">' + response[i].txrefinterna+"-"+response[i].txnomproducto + '</option>';
                                             }
                                             //alert(s + "</select>");
                                             return s + "</select>";
                                         }, 
+                                async:false,                            
                                 dataEvents: [{ type:'change',
                                                 fn: function(e) {
                                                     var row = $(e.target).val();
@@ -228,6 +230,8 @@
                                                     var rowid = jQuery("#detdoc").jqGrid('getGridParam','selrow');
                                                     
                                                     jQuery("#detdoc").jqGrid('setCell', rowid, 'txnomproducto', arr[0]);
+                                                    //jQuery("#detdoc").jqGrid('setCell', rowid, 'txrefinterna', arr[2]);
+                                                    
                                                     
                                                     var fila = '#'+rowid+'_dbvalunitario';    
                                                     $(fila).val(arr[1]);
@@ -302,13 +306,23 @@
                     sortorder: "asc",
                     caption:"Detalle de documento: XX",
                     editurl:"{{ path('masdocumentos_guardaDetDocGrid') }}",
+                    onSelectRow: function (id) {
+
+                            idProducto = jQuery("#detdoc").jqGrid('getCell', id, 'txrefinterna');
+                            //alert(idProducto);
+                            jQuery('#detdoc').editRow(id, false); 
+                            jQuery("#detdoc").jqGrid('setCell', rowid, 'txrefinterna', idProducto);
+
+                            //jQuery("#detdoc").jqGrid('setColProp', 'txrefinterna',{editoptions: {dataUrl: vturl}}).trigger('reloadGrid');
+                        
+                    },                    
 
             });
             jQuery("#detdoc").hideCol('inidmasdocumento');
             jQuery("#detdoc").hideCol('id');
             jQuery("#detdoc").hideCol('idproducto');
 
-            jQuery("#detdoc").jqGrid('navGrid',"#pagered",{add: false,edit:false,del:false,search:false});
+            jQuery("#detdoc").jqGrid('navGrid',"#pagered",{add: false,edit:false,del:true,search:false});
             jQuery("#detdoc").jqGrid('inlineNav',"#pagered");
 
             jQuery("#detdoc").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false });

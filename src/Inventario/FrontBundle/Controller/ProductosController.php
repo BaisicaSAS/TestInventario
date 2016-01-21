@@ -130,7 +130,6 @@ class ProductosController extends Controller
         $entity = new Productos();
         $form   = $this->createCreateForm($entity);
 
-        echo "pasa";
         return $this->render('InventarioFrontBundle:Productos:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),

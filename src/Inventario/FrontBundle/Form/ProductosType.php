@@ -22,10 +22,17 @@ class ProductosType extends AbstractType
             ->add('txdescripcion')
             ->add('inactivo', 'choice', array(
                     'choices' => array(
-                        '0' => 'Inactivo',
-                        '1' => 'Activo')))
-            ->add('idclasifproductos')
-            ->add('idmarcaproductos')
+                        '1' => 'Activo',
+                        '0' => 'Inactivo')))
+            ->add('idclasifproductos','entity',array(
+                'class' => 'InventarioFrontBundle:Clasifproductos',
+                'property' => 'id',
+                'data' => '1'))
+            ->add('idmarcaproductos','entity',array(
+                'class' => 'InventarioFrontBundle:Clasifproductos',
+                'property' => 'id',
+                'data' => '2'))
+            //->add('')
         ;
     }
     
