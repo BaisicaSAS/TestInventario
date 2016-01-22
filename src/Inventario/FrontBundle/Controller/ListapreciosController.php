@@ -98,6 +98,25 @@ class ListapreciosController extends Controller
     }
 
     /**
+     * Actualizar la tabla de detalle de lista de precios luego de guardar el maestro.
+     *
+     */    
+     protected function actualizarDetLP($pidlista)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $connection = $em->getConnection();
+        $entities = $connection->prepare("INSERT INTO DetListaPrecios (Productos_idProducto, "
+                . "ListaPrecios_idListaPrecios, dbValor) SELECT idProducto, :pidlista, 0 "
+                . "FROM Productos p WHERE NOT EXISTS (SELECT d.Productos_idProducto FROM DetListaPrecios d WHERE p.idProducto = d.Productos_idProducto)");
+        
+        $entities->bindParam('pidlista',$pidlista);
+        $entities->execute();
+        
+        $em->flush();
+        //return $this->render('InventarioFrontBundle:Listaprecios:index.html.twig');
+    }
+
+    /**
      * Guarda cambios desde jqGrid.
      *
      */
@@ -123,6 +142,7 @@ class ListapreciosController extends Controller
             $listaprecio->setTxnomlista($txnomlista);
             $em->persist($listaprecio);
             $em->flush();
+            $this->actualizarDetLP($id);
         } elseif ($_POST['oper']=='del') {
             $listaprecio = $em->getRepository('InventarioFrontBundle:Listaprecios')->find($id);
             $em->remove($listaprecio);

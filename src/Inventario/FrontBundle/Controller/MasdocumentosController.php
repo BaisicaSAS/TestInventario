@@ -96,7 +96,7 @@ class MasdocumentosController extends Controller
         $entities = $connection->prepare("SELECT a.idDetDocumentos as id, a.inidMasDocumento as inidmasdocumento, "
                 . "a.inCantidad as incantidad, a.dbValUnitario as dbvalunitario, a.dbValtotal as dbvaltotal, "
                 . "c.txrefinterna as txrefinterna, c.txNomProducto as txnomproducto, d.txDocumento as txdocumento, "
-                . "d.txNomTercero as txnomtercero, d.txDireccion as txdireccion, d.txTelefonos as txtelefonos "
+                . "d.txNomTercero as txnomtercero, d.txDireccion as txdireccion, d.txTelefonos as txtelefonos, b.dbTotal as totaldoc "
                 . "FROM DetDocumentos a "
                 . "LEFT JOIN MasDocumentos b ON a.inidMasDocumento = b.idMasDocumento "
                 . "LEFT JOIN Productos c ON a.Productos_idProducto = c.idProducto "
